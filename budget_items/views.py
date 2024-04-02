@@ -6,7 +6,7 @@ def index(request):
 
 
 def budget_items(request):
-    return render(request, "budget_item.html")
+    return render(request, "budget_items.html")
 
 
 def certifications(request):
