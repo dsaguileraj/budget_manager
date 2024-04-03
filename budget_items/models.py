@@ -1,136 +1,144 @@
 from django.db import models
 
+PURCHASE_TYPE_CHOICES = (
+    ("B", "Bienes"),
+    ("S", "Servicios"),
+    ("O", "Obras"),
+    ("C", "Consultoría")
+)
 
-class Department(models.Model):
-    name = models.CharField(max_length=255)
-    director = models.CharField(max_length=255)
+REGIME_CHOICES = (
+    ("C", "Común"),
+    ("S", "Especial"),
+    ("N", "No Aplica")
+)
+
+PRODUCT_TYPE_CHOICES = (
+    ("N", "Normalizado"),
+    ("NN", "No Normalizado"),
+    ("NA", "No Aplica")
+)
+
+BUDGET_TYPE_CHOICES = (
+    ("GC", "Gasto Corriente"),
+    ("PI", "Proyecto de Inversión")
+)
+
+
+class Departments(models.Model):
+    name = models.CharField(
+        max_length = 255,
+        primary_key = True
+    )
+    director = models.CharField(max_length = 255)
 
     def __str__(self):
         return self.name
 
 
-class HiringProcedureType(models.Model):
-    REGIME_CHOICES = (
-        ("common", "Común"),
-        ("special", "Especial"),
-        ("not_applicable", "No aplica"),
-    )
-    PRODUCT_TYPE_CHOICES = (
-        ("normalized", "Normalizado"),
-        ("not_normalized", "No normalizado"),
-        ("not_applicable", "No aplica"),
+class ProceduresTypes(models.Model):
+    name = models.CharField(
+        max_length = 50,
+        primary_key = True
     )
     regime = models.CharField(
-        max_length = 255,
-        choices = REGIME_CHOICES,
-        default = "not_applicable",
+        max_length = 1,
+        choices = REGIME_CHOICES
     )
     product_type = models.CharField(
-        max_length = 255,
-        choices = PRODUCT_TYPE_CHOICES,
-        default = "not_applicable",
+        max_length = 2,
+        choices = PRODUCT_TYPE_CHOICES
     )
-    procedure = models.CharField(
-        max_length = 255
-        )
+    purchase_type = models.CharField(
+        max_length = 1,
+        choices = PURCHASE_TYPE_CHOICES
+    )
 
     def __str__(self):
-        return f"{self.regime} - {self.product_type}"
-    
+        return self.name
 
-class BudgetItem(models.Model):
-    PURCHASE_TYPE_CHOICES = (
-        ('GOODS', 'Bienes'),
-        ('SERVICES', 'Servicios'),
-        ('WORKS', 'Obras'),
-        ('CONSULTING', 'Consultoría'),
-    )
-    regime = models.ForeignKey(
-        HiringProcedureType,
-        on_delete = models.CASCADE,
-        related_name = "budget_items_regime"
-        )
-    product_type = models.ForeignKey(
-        HiringProcedureType,
-        on_delete = models.CASCADE,
-        related_name = "budget_items_product_type"
-        )
-    procedure = models.ForeignKey(
-        HiringProcedureType,
-        on_delete = models.CASCADE,
-        related_name = "budget_items_procedure"
-        )
-    purchase_type = models.CharField(
-        max_length = 255,
-        choices = PURCHASE_TYPE_CHOICES
-        )
+
+class BudgetItems(models.Model):
     budget_item = models.CharField(
-        max_length = 255
-        )
+        max_length = 255,
+        primary_key = True
+    )
     cpc = models.CharField(
         max_length = 15
-        )
+    )
     date = models.DateTimeField(
         auto_now_add = True
-        )
+    )
     budget = models.FloatField()
+    budget_type = models.CharField(
+        max_length = 2,
+        choices = BUDGET_TYPE_CHOICES
+    )
     description = models.TextField()
-    period = models.IntegerField()
     bid = models.BooleanField()
 
-    def __str__(self):
-        return f"{self.budget_item} - {self.description}"
-    
+    regime = models.CharField(max_length = 1)
+    product_type = models.CharField(max_length = 2)
+    purchase_type = models.CharField(max_length = 1)
 
-class Certification(models.Model):
-    budget_item = models.ForeignKey(
-        BudgetItem,
-        on_delete = models.CASCADE,
-        related_name = "certifications_budget_item"
-        )
-    cpc = models.ForeignKey(
-        BudgetItem,
-        on_delete = models.CASCADE,
-        related_name = "certifications_cpc"
-        )
-    regime = models.ForeignKey(
-        HiringProcedureType,
-        on_delete = models.CASCADE,
-        related_name = "certifications_regime"
-        )
-    product_type = models.ForeignKey(
-        BudgetItem,
-        on_delete = models.CASCADE,
-        related_name = "certifications_product_type"
-        )
+    name = models.ForeignKey(
+        ProceduresTypes,
+        on_delete = models.CASCADE
+    )
+
+    def save(self, *args, **kwargs):
+        proceduretype = ProceduresTypes.objects.get(pk = self.name_id)
+        self.regime = proceduretype.regime
+        self.product_type = proceduretype.product_type
+        self.purchase_type = proceduretype.purchase_type
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.budget_item
+
+
+class Certifications(models.Model):
+    number = models.AutoField(primary_key = True)
     procedure = models.ForeignKey(
-        HiringProcedureType,
+        ProceduresTypes,
         on_delete = models.CASCADE,
         related_name = "certifications_procedure"
-        )
+    )
     department = models.ForeignKey(
-        Department,
+        Departments,
         on_delete = models.CASCADE,
         related_name = "certifications_department"
-        )
-    bid = models.ForeignKey(
-        BudgetItem,
-        on_delete = models.CASCADE,
-        related_name = "certifications_bid"
     )
-    purchase_type = models.CharField(
-        max_length=255,
-        choices = BudgetItem.PURCHASE_TYPE_CHOICES
-        )
     date = models.DateTimeField(
         auto_now = True
-        )    
+    )
     budget = models.FloatField()
     description = models.TextField()
     period = models.IntegerField()
 
+    cpc = models.CharField(max_length = 15)
+    budget_type = models.CharField(max_length = 2, choices = BUDGET_TYPE_CHOICES)
+    bid = models.BooleanField()
+
+    regime = models.CharField(max_length = 1)
+    product_type = models.CharField(max_length = 2)
+    purchase_type = models.CharField(max_length = 1)
+
+    budget_item_reference = models.ForeignKey(
+        BudgetItems,
+        on_delete = models.CASCADE
+    )
+
+    def save(self, *args, **kwargs):
+        budget_item = BudgetItems.objects.get(pk = self.budget_item_reference_id)
+        self.cpc = budget_item.cpc
+        self.budget_type = budget_item.budget_type
+        self.bid = budget_item.bid
+        proceduretype = ProceduresTypes.objects.get(pk = budget_item.name_id)
+        self.regime = proceduretype.regime
+        self.product_type = proceduretype.product_type
+        self.purchase_type = proceduretype.purchase_type
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.budget_item.budget_item
-
-
-
+        return self.number

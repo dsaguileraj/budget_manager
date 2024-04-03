@@ -2,4 +2,4 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
-admin.site.register([Certification, BudgetItem, Department, HiringProcedureType])
+admin.site.register([Certifications, BudgetItems, Departments, ProceduresTypes])
