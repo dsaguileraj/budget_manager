@@ -10,6 +10,7 @@ def index(request):
 
 
 class BudgetItemsListView(generic.ListView):
+    model = BudgetItems
     template_name = "budget_items.html"
     context_object_name = "budget_items_list"
 
@@ -25,6 +26,7 @@ class BudgetItemsCreateView(generic.CreateView):
 
 
 class CertificationsListView(generic.ListView):
+    model = Certifications
     template_name = "certifications.html"
     context_object_name = "certifications_list"
 
@@ -50,7 +52,7 @@ class DepartmentsListView(generic.ListView):
 
 class DepartmentsCreateView(generic.CreateView):
     model = Departments
-    fields = ["__all__"]
+    fields = ["name", "director"]
     template_name = "create_department.html"
     success_url = reverse_lazy("departments")
 
@@ -65,6 +67,6 @@ class ProceduresTypesListView(generic.ListView):
 
 class ProceduresTypesCreateView(generic.CreateView):
     model = ProceduresTypes
-    fields = ["__all__"]
+    fields = ["name", "regime", "product_type", "purchase_type"]
     template_name = "create_procedure_type.html"
     success_url = reverse_lazy("procedure_type")
