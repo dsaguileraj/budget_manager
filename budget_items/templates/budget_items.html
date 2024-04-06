@@ -1,5 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Budget Items</h1>
+  {% if budget_items_list %}
+    <h1>Partidas Presupuestarias</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>CPC</th>
+          <th>Descripción</th>
+          <th>Presupuesto</th>
+          <th>Tipo de Presupuesto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for budget_item in budget_items_list %}
+          <tr>
+            <td>{{ budget_item.number }}</td>
+            <td>{{ budget_item.cpc }}</td>
+            <td>{{ budget_item.description }}</td>
+            <td>{{ budget_item.budget }}</td>
+            <td>{{ budget_item.budget_type }}</td>            
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay partidas presupuestarias registradas</p>
+  {% endif %}
 {% endblock %}

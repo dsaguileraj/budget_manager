@@ -5,10 +5,15 @@
     <title>Index</title>
   </head>
   <body>
-    <header>
-      <a href="{% url 'budget_items' %}">Buget Items</a>
-      <a href="{% url 'certifications' %}">Certifications</a>
-    </header>
+    <nav>
+      <ul>        
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="{% url 'budget_items' %}">Partidas Presupuestarias</a></li>
+        <li><a href="{% url 'certifications' %}">Certificaciones</a></li>
+        <li><a href="{% url 'departments' %}">Departamentos</a></li>
+        <li><a href="{% url 'procedures_types' %}">Tipos de Procedimientos</a>
+      </ul>
+    </nav>
     {% block content %}
 
     {% endblock %}

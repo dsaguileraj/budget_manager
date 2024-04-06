@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if procedures_types_list %}
+    <h1>Tipos de Procedimientos</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Régimen</th>
+          <th>Tipo de Producto</th>
+          <th>Tipo de Compra</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for procedure_type in procedures_types_list %}
+          <tr>
+            <td>{{ procedure_type.name }}</td>
+            <td>{{ procedure_type.regime }}</td>
+            <td>{{ procedure_type.product_type }}</td>
+            <td>{{ procedure_type.purchase_type }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay procedimientos registrados</p>
+  {% endif %}
+{% endblock %}

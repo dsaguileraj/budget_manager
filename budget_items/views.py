@@ -14,7 +14,7 @@ class BudgetItemsListView(generic.ListView):
     context_object_name = "budget_items_list"
 
     def get_queryset(self):
-        return BudgetItems.objects.order_by("number")[:10]
+        return BudgetItems.objects.order_by("number")[:50]
 
 
 class BudgetItemsCreateView(generic.CreateView):
@@ -29,7 +29,7 @@ class CertificationsListView(generic.ListView):
     context_object_name = "certifications_list"
 
     def get_queryset(self):
-        return Certifications.objects.order_by("number")[:10]
+        return Certifications.objects.order_by("number")[:50]
 
 
 class CertificationsCreateView(generic.CreateView):
@@ -45,7 +45,7 @@ class DepartmentsListView(generic.ListView):
     context_object_name = "departments_list"
 
     def get_queryset(self):
-        return Departments.objects.order_by("name")[:10]
+        return Departments.objects.order_by("name")[:50]
 
 
 class DepartmentsCreateView(generic.CreateView):
@@ -60,7 +60,7 @@ class ProceduresTypesListView(generic.ListView):
     context_object_name = "procedures_types_list"
 
     def get_queryset(self):
-        return ProceduresTypes.objects.order_by("name")[:10]
+        return ProceduresTypes.objects.order_by("name")[:50]
 
 
 class ProceduresTypesCreateView(generic.CreateView):
