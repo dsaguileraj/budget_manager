@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.views import generic
 from .models import *
 
@@ -16,6 +15,11 @@ class BudgetItemsListView(generic.ListView):
 
     def get_queryset(self):
         return BudgetItems.objects.order_by("number")[:50]
+
+
+class BudgetItemsDetalView(generic.DetailView):
+    model = BudgetItems
+    template_name = "detail_budget_item.html"
 
 
 class BudgetItemsCreateView(generic.CreateView):
@@ -34,6 +38,11 @@ class CertificationsListView(generic.ListView):
         return Certifications.objects.order_by("number")[:50]
 
 
+class CertificationsDetailView(generic.DetailView):
+    model = Certifications
+    template_name = "detail_certification.html"
+
+
 class CertificationsCreateView(generic.CreateView):
     model = Certifications
     fields = ["number", "procedure", "budget_item",
@@ -43,11 +52,17 @@ class CertificationsCreateView(generic.CreateView):
 
 
 class DepartmentsListView(generic.ListView):
+    model = Departments
     template_name = "departments.html"
     context_object_name = "departments_list"
 
     def get_queryset(self):
         return Departments.objects.order_by("name")[:50]
+
+
+class DepartmentsDetailView(generic.DetailView):
+    model = Departments
+    template_name = "detail_department.html"
 
 
 class DepartmentsCreateView(generic.CreateView):
@@ -58,11 +73,17 @@ class DepartmentsCreateView(generic.CreateView):
 
 
 class ProceduresTypesListView(generic.ListView):
+    model = ProceduresTypes
     template_name = "procedures_types.html"
     context_object_name = "procedures_types_list"
 
     def get_queryset(self):
         return ProceduresTypes.objects.order_by("name")[:50]
+
+
+class ProceduresTypesDetailView(generic.DetailView):
+    model = ProceduresTypes
+    template_name = "detail_procedure_type"
 
 
 class ProceduresTypesCreateView(generic.CreateView):
