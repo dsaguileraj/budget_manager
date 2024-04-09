@@ -2,16 +2,16 @@
 
 {% block content %}
   {% if certifications_list %}
-    <h1>Certificaciones</h1>
+    <h1>Certifications</h1>
     <table>
       <thead>
         <tr>
-          <th>Número</th>
-          <th>Descripción</th>
-          <th>Departamento</th>
-          <th>Procedimiento</th>
-          <th>Partida Presupuestaria</th>
-          <th>Presupuesto</th>
+          <th>Number</th>
+          <th>Description</th>
+          <th>Departament</th>
+          <th>Procedure</th>
+          <th>Budget Item</th>
+          <th>Budget</th>
         </tr>
       </thead>
       <tbody>
@@ -28,6 +28,6 @@
       </tbody>
     </table>
   {% else %}
-    <p>No hay certificaciones registradas</p>
+    <p>There are no registered certifications</p>
   {% endif %}
 {% endblock %}

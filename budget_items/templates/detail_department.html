@@ -2,4 +2,8 @@
 
 {% block content %}
     <h1>Department Detail</h1>
+    <p>Name: {{ object.name }}</p>
+    <p>Director: {{ object.director }}</p>
+    <a href="{% url 'departments' %}">Back</a>
+    <a href="{% url 'delete_department' object.pk %}">Delete</a>
 {% endblock %}

@@ -2,15 +2,15 @@
 
 {% block content %}
   {% if budget_items_list %}
-    <h1>Partidas Presupuestarias</h1>
+    <h1>Budget Items</h1>
     <table>
       <thead>
         <tr>
-          <th>Número</th>
+          <th>Number</th>
           <th>CPC</th>
-          <th>Descripción</th>
-          <th>Presupuesto</th>
-          <th>Tipo de Presupuesto</th>
+          <th>Description</th>
+          <th>Budget</th>
+          <th>Budget Type</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +26,6 @@
       </tbody>
     </table>
   {% else %}
-    <p>No hay partidas presupuestarias registradas</p>
+    <p>There are no registered budget items</p>
   {% endif %}
 {% endblock %}

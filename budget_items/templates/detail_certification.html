@@ -2,4 +2,14 @@
 
 {% block content %}
     <h1>Certification Detail</h1>
+    <p>Number: {{ object.number }}</p>
+    <p>Budget Item: {{ object.budget_item }}</p>
+    <p>Description: {{ object.description }}</p>
+    <p>Budget: {{ object.budget }}</p>
+    <p>Procedure: {{ object.procedure }}</p>
+    <p>Period: {{ object.period }}</p>
+    <p>Department: {{ object.department }}</p>
+    <p>Date: {{ object.date }}</p>
+    <a href="{% url 'certifications' %}">Back</a>
+    <a href="{% url 'delete_certification' object.pk %}">Delete</a>
 {% endblock %}

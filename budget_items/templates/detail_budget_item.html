@@ -2,4 +2,14 @@
 
 {% block content %}
     <h1>Budget Item Detail</h1>
+    <p>Number: {{ object.number }}</p>
+    <p>CPC: {{ object.cpc }}</p>
+    <p>Description: {{ object.description }}</p>
+    <p>Purchase Type: {{ object.purchase_type }}</p>
+    <p>Budget Type: {{ object.budget_type }}</p>
+    <p>Budget: {{ object.budget }}</p>
+    <p>BID: {{ object.bid }}</p>
+    <p>Date: {{ object.date }}</p>
+    <a href="{% url 'budget_items' %}">Back</a>
+    <a href="{% url 'delete_budget_item' object.pk %}">Delete</a>
 {% endblock %}

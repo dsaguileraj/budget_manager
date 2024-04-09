@@ -1,27 +1,27 @@
 from django.db import models
 
 PURCHASE_TYPE_CHOICES = (
-    ("B", "Bienes"),
-    ("S", "Servicios"),
-    ("O", "Obras"),
-    ("C", "Consultoría")
+    ("G", "Good"),
+    ("S", "Service"),
+    ("W", "Work"),
+    ("C", "Consultancy")
 )
 
 REGIME_CHOICES = (
-    ("C", "Común"),
-    ("S", "Especial"),
-    ("N", "No Aplica")
+    ("C", "Common"),
+    ("S", "Speciall"),
+    ("N", "Not Applicable")
 )
 
 PRODUCT_TYPE_CHOICES = (
-    ("N", "Normalizado"),
-    ("NN", "No Normalizado"),
-    ("NA", "No Aplica")
+    ("N", "Normalized"),
+    ("NN", "Not Normalized"),
+    ("NA", "Not Applicable")
 )
 
 BUDGET_TYPE_CHOICES = (
-    ("GC", "Gasto Corriente"),
-    ("PI", "Proyecto de Inversión")
+    ("CE", "Current Expense"),
+    ("IP", "Investment Project")
 )
 
 

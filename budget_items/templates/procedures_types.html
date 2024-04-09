@@ -2,14 +2,14 @@
 
 {% block content %}
   {% if procedures_types_list %}
-    <h1>Tipos de Procedimientos</h1>
+    <h1>Procedures Types</h1>
     <table>
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Régimen</th>
-          <th>Tipo de Producto</th>
-          <th>Tipo de Compra</th>
+          <th>Name</th>
+          <th>Regime</th>
+          <th>Product Type</th>
+          <th>Purchase Type</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +24,6 @@
       </tbody>
     </table>
   {% else %}
-    <p>No hay procedimientos registrados</p>
+    <p>There are no registered procedures</p>
   {% endif %}
 {% endblock %}
