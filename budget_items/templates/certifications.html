@@ -17,7 +17,7 @@
       <tbody>
         {% for certification in certifications_list %}
           <tr>
-            <td>{{ certification.number }}</td>
+            <td><a href = "{% url 'detail_certification' certification.pk %}">{{ certification.number }}</a></td>
             <td>{{ certification.description }}</td>
             <td>{{ certification.department }}</td>
             <td>{{ certification.procedure }}</td>
@@ -30,4 +30,5 @@
   {% else %}
     <p>There are no registered certifications</p>
   {% endif %}
+  <a href = "{% url 'create_certification' %}">New</a>
 {% endblock %}

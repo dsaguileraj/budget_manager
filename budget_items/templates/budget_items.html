@@ -16,7 +16,7 @@
       <tbody>
         {% for budget_item in budget_items_list %}
           <tr>
-            <td>{{ budget_item.number }}</td>
+            <td><a href = "{% url 'detail_budget_item' budget_item.pk %}">{{ budget_item.number }}</a></td>
             <td>{{ budget_item.cpc }}</td>
             <td>{{ budget_item.description }}</td>
             <td>{{ budget_item.budget }}</td>
@@ -28,4 +28,5 @@
   {% else %}
     <p>There are no registered budget items</p>
   {% endif %}
+  <a href = "{% url 'create_budget_item' %}">New</a>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Procedure Type Detail</h1>
+    {% csrf_token %}
     <p>Name: {{ object.name }}</p>
     <p>Regime: {{ object.regime }}</p>
     <p>Product Type: {{ object.product_type }}</p>

@@ -15,7 +15,7 @@
       <tbody>
         {% for procedure_type in procedures_types_list %}
           <tr>
-            <td>{{ procedure_type.name }}</td>
+            <td><a href = "{% url 'detail_procedure_type' procedure_type.pk %}">{{ procedure_type.name }}</a></td>
             <td>{{ procedure_type.regime }}</td>
             <td>{{ procedure_type.product_type }}</td>
             <td>{{ procedure_type.purchase_type }}</td>
@@ -26,4 +26,5 @@
   {% else %}
     <p>There are no registered procedures</p>
   {% endif %}
+  <a href = "{% url 'create_procedure_type' %}">New</a>
 {% endblock %}

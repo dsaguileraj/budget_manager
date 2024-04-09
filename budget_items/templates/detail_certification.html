@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Certification Detail</h1>
+    {% csrf_token %}
     <p>Number: {{ object.number }}</p>
     <p>Budget Item: {{ object.budget_item }}</p>
     <p>Description: {{ object.description }}</p>

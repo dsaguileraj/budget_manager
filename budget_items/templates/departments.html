@@ -13,7 +13,7 @@
       <tbody>
         {% for department in departments_list %}
           <tr>
-            <td>{{ department.name }}</td>
+            <td><a href = "{% url 'detail_department' department.pk %}">{{ department.name }}</a></td>
             <td>{{ department.director }}</td>            
           </tr>
         {% endfor %}
@@ -22,4 +22,5 @@
   {% else %}
     <p>There are no registered departments</p>
   {% endif %}
+  <a href = "{% url 'create_department' %}">New</a>
 {% endblock %}
