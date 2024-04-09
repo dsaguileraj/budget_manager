@@ -29,6 +29,11 @@ class BudgetItemsCreateView(generic.CreateView):
     success_url = reverse_lazy("budget_items")
 
 
+class BudgetItemsDeleteView(generic.DeleteView):
+    model = BudgetItems
+    success_url = reverse_lazy("budget_items")
+
+
 class CertificationsListView(generic.ListView):
     model = Certifications
     template_name = "certifications.html"
@@ -48,6 +53,11 @@ class CertificationsCreateView(generic.CreateView):
     fields = ["number", "procedure", "budget_item",
               "department", "budget", "description", "period"]
     template_name = "create_certification.html"
+    success_url = reverse_lazy("certifications")
+
+
+class CertificationsDeleteView(generic.DeleteView):
+    model = Certifications
     success_url = reverse_lazy("certifications")
 
 
@@ -72,6 +82,11 @@ class DepartmentsCreateView(generic.CreateView):
     success_url = reverse_lazy("departments")
 
 
+class DepartmentsDeleteView(generic.DeleteView):
+    model = Departments
+    success_url = reverse_lazy("departments")
+
+
 class ProceduresTypesListView(generic.ListView):
     model = ProceduresTypes
     template_name = "procedures_types.html"
@@ -91,3 +106,8 @@ class ProceduresTypesCreateView(generic.CreateView):
     fields = ["name", "regime", "product_type", "purchase_type"]
     template_name = "create_procedure_type.html"
     success_url = reverse_lazy("procedure_type")
+
+
+class ProceduresTypesDeleteView(generic.DeleteView):
+    model = ProceduresTypes
+    success_url = reverse_lazy("procedures_types")
