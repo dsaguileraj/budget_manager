@@ -5,29 +5,31 @@ from .models import ProceduresTypes
 
 class List(ListView):
     model = ProceduresTypes
-    template_name = "budget_items.html"
-    context_object_name = "budget_items_list"
+    template_name = "list.html"
 
     def get_queryset(self):
-        return ProceduresTypes.objects.order_by("number")[:50]
+        return ProceduresTypes.objects.order_by("pk")[:50]
 
 
 class Detail(DetailView):
     model = ProceduresTypes
-    template_name = "detail_budget_item.html"
+    template_name = "detail.html"
 
 
 class Create(CreateView):
     model = ProceduresTypes
-    fields = ["number", "cpc", "budget", "budget_type", "description", "bid"]
-    template_name = "create_budget_item.html"
-    success_url = reverse_lazy("budget_items")
+    fields = "__all__"
+    template_name = "create.html"
+    success_url = reverse_lazy("procedures_types:list")
 
 
 class Delete(DeleteView):
     model = ProceduresTypes
-    success_url = reverse_lazy("budget_items")
+    success_url = reverse_lazy("procedures_types:list")
 
 
 class Update(UpdateView):
-    pass
+    model = ProceduresTypes
+    fields = "__all__"
+    template_name = "update.html"
+    success_url = reverse_lazy("procedures_types:list")

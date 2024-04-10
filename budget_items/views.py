@@ -5,29 +5,31 @@ from .models import BudgetItems
 
 class List(ListView):
     model = BudgetItems
-    template_name = "budget_items.html"
-    context_object_name = "budget_items_list"
+    template_name = "list.html"
 
     def get_queryset(self):
-        return BudgetItems.objects.order_by("number")[:50]
+        return BudgetItems.objects.order_by("pk")[:50]
 
 
 class Detail(DetailView):
     model = BudgetItems
-    template_name = "detail_budget_item.html"
+    template_name = "detail.html"
 
 
 class Create(CreateView):
     model = BudgetItems
-    fields = ["number", "cpc", "budget", "budget_type", "description", "bid"]
-    template_name = "create_budget_item.html"
-    success_url = reverse_lazy("budget_items")
+    fields = "__all__"
+    template_name = "create.html"
+    success_url = reverse_lazy("budget_items:list")
 
 
 class Delete(DeleteView):
     model = BudgetItems
-    success_url = reverse_lazy("budget_items")
+    success_url = reverse_lazy("budget_items:list")
 
 
 class Update(UpdateView):
-    pass
+    model = BudgetItems
+    fields = "__all__"
+    template_name = "update.html"
+    success_url = reverse_lazy("budget_items:list")
