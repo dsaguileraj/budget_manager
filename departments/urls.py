@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import Create, Delete, Detail, List, Update
 
-app_name = "budget_items"
+app_name = "departments"
 
 urlpatterns = [
     path("", List.as_view(), name = "list"),
