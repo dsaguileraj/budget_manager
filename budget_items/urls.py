@@ -6,7 +6,7 @@ app_name = "budget_items"
 urlpatterns = [
     path("", List.as_view(), name = "list"),
     path("create/", Create.as_view(), name = "create"),
-    path("<str:pk>/", Detail.as_view(), name = "detail"),    
-    path("delete/<str:pk>/", Delete.as_view(), name = "delete"),
-    path("update/<str:pk>/", Update.as_view(), name = "update")
+    path("<int:pk>/", Detail.as_view(), name = "detail"),    
+    path("delete/<int:pk>/", Delete.as_view(), name = "delete"),
+    path("update/<int:pk>/", Update.as_view(), name = "update")
 ]

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Budget Items - List
-{% endblock title %}
+  Certifications - List
+{% endblock %}
 
 {% block body %}
   {% if object_list %}
     {% csrf_token %}
-    <h1>Budget Items</h1>
+    <h1>Certifications</h1>
     <table>
       <thead>
         <tr>
@@ -40,4 +40,4 @@
     <p>There are no registered budget items</p>
   {% endif %}
   <b><a href="{% url 'budget_items:create' %}">Create</a></b>
-{% endblock body %}
+{% endblock %}

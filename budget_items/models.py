@@ -7,9 +7,11 @@ BUDGET_TYPE_CHOICES = (
 
 
 class BudgetItems(models.Model):
-    number = models.CharField(
-        max_length = 255,
+    id = models.AutoField(
         primary_key = True
+    )
+    number = models.CharField(
+        max_length = 255
     )
     cpc = models.CharField(
         max_length = 15

@@ -8,7 +8,6 @@ class Certifications(models.Model):
     number = models.AutoField(
         primary_key = True
     )
-
     procedure = models.ForeignKey(
         ProceduresTypes,
         on_delete = models.CASCADE
