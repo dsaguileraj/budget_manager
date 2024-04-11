@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Certifications - Detail
+{% endblock %}
+
+{% block body %}
+  <h1>Detail - {{ object.number }}</h1>
+  <p>Number: {{ object.number }}</p>
+  <p>Description: {{ object.description }}</p>
+  <p>Procedure: {{ object.procedure }}</p>
+  <p>Budget Item: {{ object.budget_item }}</p>
+  <p>Department: {{ object.department }}</p>
+  <p>Budget: {{ object.budget }}</p>
+  <p>Modification Date: {{ object.date }}</p>
+  <p>Preiod: {{ object.period }}</p>
+  <a href="{% url 'certifications:list' %}">Back</a>
+  <a href="{% url 'certifications:update' object.pk %}">Update</a>
+{% endblock %}

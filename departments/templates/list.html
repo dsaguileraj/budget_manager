@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Departments - List
+{% endblock %}
+
+{% block body %}
+  {% if object_list %}
+    {% csrf_token %}
+    <h1>Departments</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Director</th>
+          <th>‎</th>
+          <th>‎</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.director }}</td>
+            <td>
+              <b><a href="{% url 'departments:detail' object.pk %}">View</a></b>
+            </td>
+            <td>
+              <b><a href="{% url 'departments:delete' object.pk %}">Delete</a></b>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>There are no registered departments</p>
+  {% endif %}
+  <b><a href="{% url 'departments:create' %}">Create</a></b>
+{% endblock %}

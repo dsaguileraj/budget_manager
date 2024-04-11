@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Procedures Types - List
+{% endblock title %}
+
+{% block body %}
+  {% if object_list %}
+    {% csrf_token %}
+    <h1>Procedures Types</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Regime</th>
+          <th>Product Type</th>
+          <th>Purchase Type</th>
+          <th>‎</th>
+          <th>‎</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.regime }}</td>
+            <td>{{ object.product_type }}</td>
+            <td>{{ object.purchase_type }}</td>
+            <td>
+              <b><a href="{% url 'procedures_types:detail' object.pk %}">View</a></b>
+            </td>
+            <td>
+              <b><a href="{% url 'procedures_types:delete' object.pk %}">Delete</a></b>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>There are no registered procedures types</p>
+  {% endif %}
+  <b><a href="{% url 'procedures_types:create' %}">Create</a></b>
+{% endblock body %}

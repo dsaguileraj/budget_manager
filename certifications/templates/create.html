@@ -1,0 +1,14 @@
+{% extends 'base.hmtl' %}
+
+{% block title %}
+  Certifications - Create
+{% endblock title %}
+
+{% block body %}
+  <h1>Create Certification</h1>
+  <form action="{% url 'certifications:create' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+{% endblock body %}

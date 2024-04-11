@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Procedures Types - Detail
+{% endblock title %}
+
+{% block body %}
+    <h1>Detail - {{ object.name }}</h1>
+    <p>Name: {{ object.name }}</p>
+    <p>Regime: {{ object.regime }}</p>
+    <p>Product Type: {{ object.product_type }}</p>
+    <p>Purchase Type: {{ object.purchase_type }}</p>    
+    <a href="{% url 'procedures_types:list' %}">Back</a>
+    <a href="{% url 'procedures_types:update' object.pk %}">Update</a>
+{% endblock body %}
+    

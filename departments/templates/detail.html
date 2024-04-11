@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Departments - Detail
+{% endblock %}
+
+{% block body %}
+  <h1>Detail - {{ object.name }}</h1>
+  <p>Name: {{ object.name }}</p>
+  <p>Director: {{ object.director }}</p>
+  <a href="{% url 'departments:list' %}">Back</a>
+  <a href="{% url 'departments:update' object.pk %}">Update</a>
+{% endblock %}

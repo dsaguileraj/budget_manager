@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Budget Items - Detail
+{% endblock title %}
+
+{% block body %}
+    <h1>Detail - {{ object.number }}</h1>
+    <p>Number: {{ object.number }}</p>
+    <p>CPC: {{ object.cpc }}</p>
+    <p>Description: {{ object.description }}</p>
+    <p>Budget Type: {{ object.budget_type }}</p>
+    <p>Budget: {{ object.budget }}</p>
+    <p>BID: {{ object.bid }}</p>
+    <p>Date: {{ object.date }}</p>
+    <a href="{% url 'budget_items:list' %}">Back</a>
+    <a href="{% url 'budget_items:update' object.pk %}">Update</a>
+{% endblock body %}
+    

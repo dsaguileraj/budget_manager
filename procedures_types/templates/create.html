@@ -1,0 +1,14 @@
+{% extends 'base.hmtl' %}
+
+{% block title %}
+  Procedures Types - Create
+{% endblock title %}
+
+{% block body %}
+  <h1>Create Procedure</h1>
+  <form action="{% url 'procedures_types:create' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+{% endblock body %}

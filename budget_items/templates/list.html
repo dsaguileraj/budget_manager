@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Budget Items - List
+{% endblock title %}
+
+{% block body %}
+  {% if object_list %}
+    {% csrf_token %}
+    <h1>Budget Items</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>CPC</th>
+          <th>Description</th>
+          <th>Budget</th>
+          <th>‎</th>
+          <th>‎</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            <td>{{ object.number }}</td>
+            <td>{{ object.cpc }}</td>
+            <td>{{ object.description }}</td>
+            <td>{{ object.budget }}</td>
+            <td>
+              <b><a href="{% url 'budget_items:detail' object.pk %}">View</a></b>
+            </td>
+            <td>
+              <b><a href="{% url 'budget_items:delete' object.pk %}">Delete</a></b>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>There are no registered budget items</p>
+  {% endif %}
+  <b><a href="{% url 'budget_items:create' %}">Create</a></b>
+{% endblock body %}

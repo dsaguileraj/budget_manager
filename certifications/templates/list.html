@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Certifications - List
+{% endblock %}
+
+{% block body %}
+  {% if object_list %}
+    {% csrf_token %}
+    <h1>Certifications</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Budget Item</th>
+          <th>Description</th>
+          <th>Budget</th>
+          <th>‎</th>
+          <th>‎</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            <td>{{ object.number }}</td>
+            <td>{{ object.budget_item }}</td>
+            <td>{{ object.description }}</td>
+            <td>{{ object.budget }}</td>
+            <td>
+              <b><a href="{% url 'certifications:detail' object.pk %}">View</a></b>
+            </td>
+            <td>
+              <b><a href="{% url 'certifications:delete' object.pk %}">Delete</a></b>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>There are no registered certifications</p>
+  {% endif %}
+  <b><a href="{% url 'certifications:create' %}">Create</a></b>
+{% endblock %}

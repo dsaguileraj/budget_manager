@@ -1,0 +1,14 @@
+{% extends 'base.hmtl' %}
+
+{% block title %}
+  Budget Items - Create
+{% endblock title %}
+
+{% block body %}
+  <h1>Create Budget Item</h1>
+  <form action="{% url 'budget_items:create' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+{% endblock body %}
