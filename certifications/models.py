@@ -5,14 +5,14 @@ from procedures_types.models import ProceduresTypes
 
 
 class Certifications(models.Model):
-    number = models.AutoField(
+    certifications_id = models.AutoField(
         primary_key = True
     )
     procedure = models.ForeignKey(
         ProceduresTypes,
         on_delete = models.CASCADE
     )
-    budget_item = models.ForeignKey(
+    budget_item_id = models.ForeignKey(
         BudgetItems,
         on_delete = models.CASCADE
     )
