@@ -3,33 +3,33 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from .models import Departments
 
 
-class List(ListView):
+class DepartmentsListView(ListView):
     model = Departments
-    template_name = "list.html"
+    template_name = "departments_list.html"
 
     def get_queryset(self):
         return Departments.objects.order_by("pk")[:50]
 
 
-class Detail(DetailView):
+class DepartmentsDetailView(DetailView):
     model = Departments
-    template_name = "detail.html"
+    template_name = "departments_detail.html"
 
 
-class Create(CreateView):
+class DepartmentsCreateView(CreateView):
     model = Departments
     fields = "__all__"
-    template_name = "create.html"
+    template_name = "departments_create.html"
     success_url = reverse_lazy("departments:list")
 
 
-class Delete(DeleteView):
+class DepartmentsDeleteView(DeleteView):
     model = Departments
     success_url = reverse_lazy("departments:list")
 
 
-class Update(UpdateView):
+class DepartmentsUpdateView(UpdateView):
     model = Departments
     fields = "__all__"
-    template_name = "update.html"
+    template_name = "departments_update.html"
     success_url = reverse_lazy("departments:list")

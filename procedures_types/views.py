@@ -3,33 +3,33 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from .models import ProceduresTypes
 
 
-class List(ListView):
+class ProceduresTypesListView(ListView):
     model = ProceduresTypes
-    template_name = "list.html"
+    template_name = "procedures_types_list.html"
 
     def get_queryset(self):
         return ProceduresTypes.objects.order_by("pk")[:50]
 
 
-class Detail(DetailView):
+class ProceduresTypesDetailView(DetailView):
     model = ProceduresTypes
-    template_name = "detail.html"
+    template_name = "procedures_types_detail.html"
 
 
-class Create(CreateView):
+class ProceduresTypesCreateView(CreateView):
     model = ProceduresTypes
     fields = "__all__"
-    template_name = "create.html"
+    template_name = "procedures_types_create.html"
     success_url = reverse_lazy("procedures_types:list")
 
 
-class Delete(DeleteView):
+class ProceduresTypesDeleteView(DeleteView):
     model = ProceduresTypes
     success_url = reverse_lazy("procedures_types:list")
 
 
-class Update(UpdateView):
+class ProceduresTypesUpdateView(UpdateView):
     model = ProceduresTypes
     fields = "__all__"
-    template_name = "update.html"
+    template_name = "procedures_types_update.html"
     success_url = reverse_lazy("procedures_types:list")

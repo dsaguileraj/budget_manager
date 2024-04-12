@@ -3,33 +3,33 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from .models import Certifications
 
 
-class List(ListView):
+class CertificationsListView(ListView):
     model = Certifications
-    template_name = "list.html"
+    template_name = "certifications_list.html"
 
     def get_queryset(self):
         return Certifications.objects.order_by("pk")[:50]
 
 
-class Detail(DetailView):
+class CertificationsDetailView(DetailView):
     model = Certifications
-    template_name = "detail.html"
+    template_name = "certifications_detail.html"
 
 
-class Create(CreateView):
+class CertificationsCreateView(CreateView):
     model = Certifications
     fields = "__all__"
-    template_name = "create.html"
+    template_name = "certifications_create.html"
     success_url = reverse_lazy("certifications:list")
 
 
-class Delete(DeleteView):
+class CertificationsDeleteView(DeleteView):
     model = Certifications
     success_url = reverse_lazy("certifications:list")
 
 
-class Update(UpdateView):
+class CertificationsUpdateView(UpdateView):
     model = Certifications
     fields = "__all__"
-    template_name = "update.html"
+    template_name = "certifications_update.html"
     success_url = reverse_lazy("certifications:list")

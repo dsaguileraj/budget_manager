@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import Create, Delete, Detail, List, Update
+from .views import *
 
 app_name = "budget_items"
 
 urlpatterns = [
-    path("", List.as_view(), name = "list"),
-    path("create/", Create.as_view(), name = "create"),
-    path("<int:pk>/", Detail.as_view(), name = "detail"),    
-    path("delete/<int:pk>/", Delete.as_view(), name = "delete"),
-    path("update/<int:pk>/", Update.as_view(), name = "update")
+    path("", BudgetItemsListView.as_view(), name = "list"),
+    path("create/", BudgetItemsCreateView.as_view(), name = "create"),
+    path("<int:pk>/", BudgetItemsDetailView.as_view(), name = "detail"),    
+    path("delete/<int:pk>/", BudgetItemsDeleteView.as_view(), name = "delete"),
+    path("update/<int:pk>/", BudgetItemsUpdateView.as_view(), name = "update")
 ]
