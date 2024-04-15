@@ -18,7 +18,7 @@ class CertificationsDetailView(DetailView):
 
 class CertificationsCreateView(CreateView):
     model = Certifications
-    fields = "__all__"
+    fields = ["budget_item", "description", "department", "budget", "procedure", "period"]
     template_name = "certifications_create.html"
     success_url = reverse_lazy("certifications:list")
 
@@ -26,10 +26,11 @@ class CertificationsCreateView(CreateView):
 class CertificationsDeleteView(DeleteView):
     model = Certifications
     success_url = reverse_lazy("certifications:list")
+    template_name = "certifications_confirm_delete.html"
 
 
 class CertificationsUpdateView(UpdateView):
     model = Certifications
-    fields = "__all__"
+    fields = ["budget_item", "description", "department", "budget", "procedure", "period"]
     template_name = "certifications_update.html"
     success_url = reverse_lazy("certifications:list")

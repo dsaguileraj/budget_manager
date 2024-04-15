@@ -8,7 +8,7 @@ class DepartmentsListView(ListView):
     template_name = "departments_list.html"
 
     def get_queryset(self):
-        return Departments.objects.order_by("pk")[:50]
+        return Departments.objects.order_by("name")[:50]
 
 
 class DepartmentsDetailView(DetailView):
@@ -18,7 +18,7 @@ class DepartmentsDetailView(DetailView):
 
 class DepartmentsCreateView(CreateView):
     model = Departments
-    fields = "__all__"
+    fields = ["name", "director"]
     template_name = "departments_create.html"
     success_url = reverse_lazy("departments:list")
 
@@ -26,10 +26,11 @@ class DepartmentsCreateView(CreateView):
 class DepartmentsDeleteView(DeleteView):
     model = Departments
     success_url = reverse_lazy("departments:list")
+    template_name = "departments_confirm_delete.html"
 
 
 class DepartmentsUpdateView(UpdateView):
     model = Departments
-    fields = "__all__"
+    fields = ["name", "director"]
     template_name = "departments_update.html"
     success_url = reverse_lazy("departments:list")

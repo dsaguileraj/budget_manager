@@ -7,7 +7,7 @@ BUDGET_TYPE_CHOICES = (
 
 
 class BudgetItems(models.Model):
-    budget_item_id = models.AutoField(
+    id = models.AutoField(
         primary_key = True
     )
     number = models.CharField(

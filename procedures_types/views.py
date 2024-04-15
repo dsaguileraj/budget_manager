@@ -18,7 +18,7 @@ class ProceduresTypesDetailView(DetailView):
 
 class ProceduresTypesCreateView(CreateView):
     model = ProceduresTypes
-    fields = "__all__"
+    fields = ["name", "regime", "product_type", "purchase_type"]
     template_name = "procedures_types_create.html"
     success_url = reverse_lazy("procedures_types:list")
 
@@ -26,10 +26,11 @@ class ProceduresTypesCreateView(CreateView):
 class ProceduresTypesDeleteView(DeleteView):
     model = ProceduresTypes
     success_url = reverse_lazy("procedures_types:list")
+    template_name = "procedures_types_confirm_delete.html"
 
 
 class ProceduresTypesUpdateView(UpdateView):
     model = ProceduresTypes
-    fields = "__all__"
+    fields = ["name", "regime", "product_type", "purchase_type"]
     template_name = "procedures_types_update.html"
     success_url = reverse_lazy("procedures_types:list")

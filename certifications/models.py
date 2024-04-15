@@ -3,16 +3,15 @@ from budget_items.models import BudgetItems
 from departments.models import Departments
 from procedures_types.models import ProceduresTypes
 
-
 class Certifications(models.Model):
-    certifications_id = models.AutoField(
+    number = models.AutoField(
         primary_key = True
     )
     procedure = models.ForeignKey(
         ProceduresTypes,
         on_delete = models.CASCADE
     )
-    budget_item_id = models.ForeignKey(
+    budget_item = models.ForeignKey(
         BudgetItems,
         on_delete = models.CASCADE
     )

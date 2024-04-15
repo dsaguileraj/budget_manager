@@ -4,12 +4,13 @@ PURCHASE_TYPE_CHOICES = (
     ("G", "Good"),
     ("S", "Service"),
     ("W", "Work"),
-    ("C", "Consultancy")
+    ("C", "Consultancy"),
+    ("-", "Goods & Services"),
 )
 
 REGIME_CHOICES = (
     ("C", "Common"),
-    ("S", "Speciall"),
+    ("S", "Special"),
     ("N", "Not Applicable")
 )
 
@@ -21,9 +22,11 @@ PRODUCT_TYPE_CHOICES = (
 
 
 class ProceduresTypes(models.Model):
-    name = models.CharField(
-        max_length = 50,
+    id = models.AutoField(
         primary_key = True
+    )
+    name = models.CharField(
+        max_length = 50
     )
     regime = models.CharField(
         max_length = 1,

@@ -18,7 +18,7 @@ class BudgetItemsDetailView(DetailView):
 
 class BudgetItemsCreateView(CreateView):
     model = BudgetItems
-    fields = "__all__"
+    fields = ["number", "cpc", "description", "budget", "budget_type", "bid"]
     template_name = "budget_items_create.html"
     success_url = reverse_lazy("budget_items:list")
 
@@ -26,10 +26,11 @@ class BudgetItemsCreateView(CreateView):
 class BudgetItemsDeleteView(DeleteView):
     model = BudgetItems
     success_url = reverse_lazy("budget_items:list")
+    template_name = "budget_items_confirm_delete.html"
 
 
 class BudgetItemsUpdateView(UpdateView):
     model = BudgetItems
-    fields = "__all__"
+    fields = ["number", "cpc", "description", "budget", "budget_type", "bid"]
     template_name = "budget_items_update.html"
     success_url = reverse_lazy("budget_items:list")

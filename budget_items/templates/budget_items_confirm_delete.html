@@ -1,0 +1,14 @@
+{% extends 'departments_base.html' %}
+
+{% block title %}
+  Budget Items - Confirm
+{% endblock %}
+
+{% block body %}
+  <h1>Are you sure you want to delete the budget item: {{ object.name }}?</h1>
+  <form action="{% url 'budget_items:delete' object.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'budget_items:list' %}">Cancel</a>
+  </form>
+{% endblock %}
