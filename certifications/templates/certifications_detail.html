@@ -5,15 +5,108 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Detail - {{ object.number }}</h1>
-  <p>Number: {{ object.number }}</p>
+  <table>
+    
+    <thead>
+      <tr>
+        <h1>Certification No. {{ object.number }} - {{ object.department }}</h1>
+        <p>Last modification: {{ object.date }}</p>
+      </tr>
+    </thead>
+    
+    <tbody>
+    
+      <tr>
+        <td>
+          <b>Budget Item</b>
+        </td>
+        <td>{{ object.budget_item }}</td>
+      </tr>
+    
+      <tr>
+        <td>
+          <b>CPC</b>
+        </td>
+        <td>{{ object.budget_item.cpc }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>Purchase Type</b>
+        </td>
+        <td>{{ object.procedure.purchase_type }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>Regime</b>
+        </td>
+        <td>{{ object.procedure.regime }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>BID</b>
+        </td>
+        <td>{{ object.budget_item.bid }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>Budget Type</b>
+        </td>
+        <td>{{ object.budget_item.budget_type }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>Product Type</b>
+        </td>
+        <td>{{ object.procedure.product_type }}</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <b>Procedure</b>
+        </td>
+        <td>{{ object.procedure }}</td>
+      </tr>
+      
+      <tr>
+        <td>
+          <b>Description</b>
+        </td>
+        <td>{{ object.description }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>Budget</b>
+        </td>
+        <td>{{ object.budget }}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <b>Period</b>
+        </td>
+        <td>C{{ object.period }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  {% comment %} <p>Budget Item: {{ object.budget_item }}</p>
+  <p>CPC: {{ object.budget_item.cpc }}</p>
   <p>Description: {{ object.description }}</p>
-  <p>Procedure: {{ object.procedure }}</p>
-  <p>Budget Item: {{ object.budget_item }}</p>
-  <p>Department: {{ object.department }}</p>
   <p>Budget: {{ object.budget }}</p>
+  <p>Procedure: {{ object.procedure }}</p>
+  <p>Regime: {{ object.procedure.regime }}</p>
+  <p>Product Type: {{ object.procedure.product_type }}</p>
+  <p>Purchase Type: {{ object.procedure.purchase_type }}</p>
+  <p>Department: {{ object.department }}</p>
   <p>Modification Date: {{ object.date }}</p>
-  <p>Preiod: {{ object.period }}</p>
-  <a href="{% url 'certifications:list' %}">Back</a>
-  <a href="{% url 'certifications:update' object.pk %}">Update</a>
+  <p>Period: {{ object.period }}</p> {% endcomment %}
+  <a href="{% url 'certifications:list' %}"><button>Back</button></a>
+  <a href="{% url 'certifications:update' object.pk %}"><button>Update</button></a>
 {% endblock %}
