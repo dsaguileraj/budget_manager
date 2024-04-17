@@ -5,9 +5,19 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Detail - {{ object.name }}</h1>
-  <p>Name: {{ object.name }}</p>
-  <p>Director: {{ object.director }}</p>
-  <a href="{% url 'departments:list' %}">Back</a>
-  <a href="{% url 'departments:update' object.pk %}">Update</a>
+  <table>
+    <thead>
+      <h1>Department - {{ object.name }}</h1>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <b>Director</b>
+        </td>
+        <td>{{ object.director }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'departments:list' %}"><button>Back</button></a>
+  <a href="{% url 'departments:update' object.pk %}"><button>Update</button></a>
 {% endblock %}

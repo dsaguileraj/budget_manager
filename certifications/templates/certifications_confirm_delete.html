@@ -8,7 +8,7 @@
   <h1>Are you sure you want to delete the certification: {{ object.name }}?</h1>
   <form action="{% url 'certifications:delete' object.pk %}" method="post">
     {% csrf_token %}
-    <button type="submit">Delete</button>
-    <a href="{% url 'certifications:list' %}">Cancel</a>
+    <button type="submit">Delete</button>    
   </form>
+  <a href="{% url 'certifications:list' %}"><button>Cancel</button></a>
 {% endblock %}

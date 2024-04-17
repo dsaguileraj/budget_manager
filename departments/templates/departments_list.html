@@ -23,10 +23,10 @@
             <td>{{ object.name }}</td>
             <td>{{ object.director }}</td>
             <td>
-              <b><a href="{% url 'departments:detail' object.pk %}">View</a></b>
+              <a href="{% url 'departments:detail' object.pk %}"><button>View</button></a>
             </td>
             <td>
-              <b><a href="{% url 'departments:delete' object.pk %}">Delete</a></b>
+              <a href="{% url 'departments:delete' object.pk %}"><button>Delete</button></a>
             </td>
           </tr>
         {% endfor %}
@@ -35,5 +35,5 @@
   {% else %}
     <p>There are no registered departments</p>
   {% endif %}
-  <b><a href="{% url 'departments:create' %}">Create</a></b>
+  <a href="{% url 'departments:create' %}"><button>Create</button></a>
 {% endblock %}

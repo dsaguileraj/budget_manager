@@ -8,7 +8,7 @@
   <h1>Are you sure you want to delete the department: {{ object.name }}?</h1>
   <form action="{% url 'departments:delete' object.pk %}" method="post">
     {% csrf_token %}
-    <button type="submit">Delete</button>
-    <a href="{% url 'departments:list' %}">Cancel</a>
+    <button type="submit">Delete</button>    
   </form>
+  <a href="{% url 'departments:list' %}"><button>Cancel</button></a>
 {% endblock %}

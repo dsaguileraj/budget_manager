@@ -5,12 +5,32 @@
 {% endblock title %}
 
 {% block body %}
-    <h1>Detail - {{ object.name }}</h1>
-    <p>Name: {{ object.name }}</p>
-    <p>Regime: {{ object.regime }}</p>
-    <p>Product Type: {{ object.product_type }}</p>
-    <p>Purchase Type: {{ object.purchase_type }}</p>    
-    <a href="{% url 'procedures_types:list' %}">Back</a>
-    <a href="{% url 'procedures_types:update' object.pk %}">Update</a>
+    <table>
+        <thead>
+            <h1>Detail - {{ object.name }}</h1>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <b>Regime</b>
+                </td>
+                <td>{{ object.regime }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Product Type</b>
+                </td>
+                <td>{{ object.product_type }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Purchase Type</b>
+                </td>
+                <td>{{ object.purchase_type }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{% url 'procedures_types:list' %}"><button>Back</button></a>
+    <a href="{% url 'procedures_types:update' object.pk %}"><button>Update</button></a>
 {% endblock body %}
     

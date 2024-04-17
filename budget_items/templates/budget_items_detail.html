@@ -5,14 +5,46 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Detail - {{ object.number }}</h1>
-  <p>ID: {{ object.id }}</p>
-  <p>Description: {{ object.description }}</p>
-  <p>CPC: {{ object.cpc }}</p>
-  <p>Modification Date: {{ object.date }}</p>
-  <p>Budget: {{ object.budget }}</p>
-  <p>Budget Type: {{ object.budget_type }}</p>
-  <p>BID: {{ object.bid }}</p>
-  <a href="{% url 'budget_items:list' %}">Back</a>
-  <a href="{% url 'budget_items:update' object.pk %}">Update</a>
+  <table>
+    <thead>
+      <tr>
+        <h1>Budget Item No. {{ object.number }}</h1>
+        <p>Last modification: {{ object.date }}</p>
+      </tr>
+    </thead>
+  <tbody>
+    <tr>
+      <td>
+        <b>Description</b>
+      </td>
+      <td>{{ object.description }}</td>
+    </tr>
+    <tr>
+      <td>
+        <b>CPC</b>
+      </td>
+      <td>{{ object.cpc }}</td>
+    </tr>
+    <tr>
+      <td>
+        <b>Budget</b>
+      </td>
+      <td>{{ object.budget }}</td>
+    </tr>
+    <tr>
+      <td>
+        <b>Budget Type</b>
+      </td>
+      <td>{{ object.budget_type }}</td>
+    </tr>
+    <tr>
+      <td>
+        <b>BID</b>
+      </td>
+      <td>{{ object.bid }}</td>
+    </tr>
+  </tbody>
+</table>
+  <a href="{% url 'budget_items:list' %}"><button>Back</button></a>
+  <a href="{% url 'budget_items:update' object.pk %}"><button>Update</button></a>
 {% endblock %}

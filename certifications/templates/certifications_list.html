@@ -27,10 +27,10 @@
             <td>{{ object.description }}</td>
             <td>{{ object.budget }}</td>
             <td>
-              <b><a href="{% url 'certifications:detail' object.pk %}">View</a></b>
+              <a href="{% url 'certifications:detail' object.pk %}"><button>View</button></a>
             </td>
             <td>
-              <b><a href="{% url 'certifications:delete' object.pk %}">Delete</a></b>
+              <a href="{% url 'certifications:delete' object.pk %}"><button>Delete</button></a>
             </td>
           </tr>
         {% endfor %}
@@ -39,5 +39,5 @@
   {% else %}
     <p>There are no registered certifications</p>
   {% endif %}
-  <b><a href="{% url 'certifications:create' %}">Create</a></b>
+  <a href="{% url 'certifications:create' %}"><button>Create</button></a>
 {% endblock %}

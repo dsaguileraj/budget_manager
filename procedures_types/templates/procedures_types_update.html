@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block body %}
-  <h1>Update - {{ object.number }}</h1>
+  <h1>Update Procedure Type - {{ object.name }}</h1>
   <form action="{% url 'procedures_types:update' object.pk %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}

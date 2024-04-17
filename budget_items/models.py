@@ -1,8 +1,8 @@
 from django.db import models
 
 BUDGET_TYPE_CHOICES = (
-    ("CE", "Current Expense"),
-    ("IP", "Investment Project")
+    ("Current Expense", "Current Expense"),
+    ("Investment Project", "Investment Project")
 )
 
 
@@ -21,7 +21,7 @@ class BudgetItems(models.Model):
     )
     budget = models.FloatField()
     budget_type = models.CharField(
-        max_length = 2,
+        max_length = 18,
         choices = BUDGET_TYPE_CHOICES
     )
     description = models.TextField()

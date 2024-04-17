@@ -27,10 +27,10 @@
             <td>{{ object.product_type }}</td>
             <td>{{ object.purchase_type }}</td>
             <td>
-              <b><a href="{% url 'procedures_types:detail' object.pk %}">View</a></b>
+              <a href="{% url 'procedures_types:detail' object.pk %}"><button>View</button></a>
             </td>
             <td>
-              <b><a href="{% url 'procedures_types:delete' object.pk %}">Delete</a></b>
+              <a href="{% url 'procedures_types:delete' object.pk %}"><button>Delete</button></a>
             </td>
           </tr>
         {% endfor %}
@@ -39,5 +39,5 @@
   {% else %}
     <p>There are no registered procedures types</p>
   {% endif %}
-  <b><a href="{% url 'procedures_types:create' %}">Create</a></b>
+  <a href="{% url 'procedures_types:create' %}"><button>Create</button></a>
 {% endblock body %}

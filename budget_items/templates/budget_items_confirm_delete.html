@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Are you sure you want to delete the budget item: {{ object.name }}?</h1>
+  <h1>Are you sure you want to delete the budget item: {{ object.number }}?</h1>
   <form action="{% url 'budget_items:delete' object.pk %}" method="post">
     {% csrf_token %}
-    <button type="submit">Delete</button>
-    <a href="{% url 'budget_items:list' %}">Cancel</a>
+    <button type="submit">Delete</button>    
   </form>
+  <a href="{% url 'budget_items:list' %}"><button>Cancel</button></a>
 {% endblock %}
