@@ -23,7 +23,11 @@
         {% for object in object_list %}
           <tr>
             <td>{{ object.number }}</td>
-            <td>{{ object.budget_item }}</td>
+            <td>
+              {% for budget_item in object.budget_item.all %}
+                {{ budget_item }}<br>
+              {% endfor %}
+            </td>
             <td>{{ object.description }}</td>
             <td>{{ object.budget }}</td>
             <td>

@@ -15,9 +15,13 @@
     <tbody>
       <tr>
         <td>
-          <b>Budget Item</b>
+          <b>Budget Items</b>
         </td>
-        <td>{{ object.budget_item }}</td>
+        <td>
+          {% for budget_item in object.budget_item.all %}
+            {{ budget_item }}<br>
+          {% endfor %}
+        </td>
       </tr>
       <tr>
         <td>
@@ -36,19 +40,7 @@
           <b>Regime</b>
         </td>
         <td>{{ object.procedure.regime }}</td>
-      </tr>
-      <tr>
-        <td>
-          <b>BID</b>
-        </td>
-        <td>{{ object.budget_item.bid }}</td>
-      </tr>
-      <tr>
-        <td>
-          <b>Budget Type</b>
-        </td>
-        <td>{{ object.budget_item.budget_type }}</td>
-      </tr>
+      </tr>  
       <tr>
         <td>
           <b>Product Type</b>
