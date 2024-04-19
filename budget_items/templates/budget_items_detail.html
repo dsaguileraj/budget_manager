@@ -21,6 +21,12 @@
     </tr>
     <tr>
       <td>
+        <b>Activity</b>
+      </td>
+      <td>{{ object.activity }}</td>
+    </tr>
+    <tr>
+      <td>
         <b>CPC</b>
       </td>
       <td>{{ object.cpc }}</td>
@@ -43,8 +49,23 @@
       </td>
       <td>{{ object.bid }}</td>
     </tr>
-  </tbody>
+    <tr>
+      <td>
+        <b>Certifications</b>
+      </td>
+      <td>
+        <ul>
+          {% for certification  in object.certifications_set.all %}
+            <li>
+              <a href = "{% url 'certifications:detail' certification.pk %}">{{ certification.number }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+  </tbody>  
 </table>
   <a href="{% url 'budget_items:list' %}"><button>Back</button></a>
   <a href="{% url 'budget_items:update' object.pk %}"><button>Update</button></a>
+  <a href="{% url 'budget_items:delete' object.pk %}"><button>Delete</button></a>
 {% endblock %}

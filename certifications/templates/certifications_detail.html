@@ -19,7 +19,7 @@
         </td>
         <td>
           {% for budget_item in object.budget_item.all %}
-            {{ budget_item }}<br>
+            <a href = "{% url 'budget_items:detail' budget_item.pk %}">{{ budget_item }}</a>
           {% endfor %}
         </td>
       </tr>
@@ -27,7 +27,11 @@
         <td>
           <b>CPC</b>
         </td>
-        <td>{{ object.budget_item.cpc }}</td>
+        <td>
+          {% for budget_item in object.budget_item.all %}
+            {{ budget_item.cpc }}
+          {% endfor %}
+        </td>
       </tr>
       <tr>
         <td>
@@ -40,7 +44,27 @@
           <b>Regime</b>
         </td>
         <td>{{ object.procedure.regime }}</td>
-      </tr>  
+      </tr>
+      <tr>
+        <td>
+          <b>BID</b>
+        </td>
+        <td>
+          {% for budget_item in object.budget_item.all %}
+            {{ budget_item.bid }}
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Budget Type</b>
+        </td>
+        <td>
+          {% for budget_item in object.budget_item.all %}
+            {{ budget_item.budget_type }}
+          {% endfor %}
+        </td>
+      </tr>
       <tr>
         <td>
           <b>Product Type</b>
@@ -75,4 +99,5 @@
   </table>
   <a href="{% url 'certifications:list' %}"><button>Back</button></a>
   <a href="{% url 'certifications:update' object.pk %}"><button>Update</button></a>
+  <a href="{% url 'certifications:delete' object.pk %}"><button>Delete</button></a>
 {% endblock %}

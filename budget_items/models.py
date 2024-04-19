@@ -25,7 +25,8 @@ class BudgetItems(models.Model):
         choices = BUDGET_TYPE_CHOICES
     )
     description = models.TextField()
+    activity = models.TextField()
     bid = models.BooleanField()
 
     def __str__(self):
-        return self.number
+        return self.number  

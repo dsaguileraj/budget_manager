@@ -25,7 +25,7 @@
             <td>{{ object.number }}</td>
             <td>
               {% for budget_item in object.budget_item.all %}
-                {{ budget_item }}<br>
+                <a href = "{% url 'budget_items:detail' budget_item.pk %}">{{ budget_item }}</a>
               {% endfor %}
             </td>
             <td>{{ object.description }}</td>

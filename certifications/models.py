@@ -11,8 +11,9 @@ class Certifications(models.Model):
         ProceduresTypes,
         on_delete = models.CASCADE
     )
-    budget_item = models.ManyToManyField(
-        BudgetItems
+    budget_item = models.ForeignKey(
+        BudgetItems,
+        on_delete = models.CASCADE
     )
     department = models.ForeignKey(
         Departments,
