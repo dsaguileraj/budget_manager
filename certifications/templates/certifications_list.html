@@ -8,6 +8,10 @@
   {% if object_list %}
     {% csrf_token %}
     <h1>Certifications</h1>
+    <form method = "GET">
+      <input type = "text" name = "q" placeholder = "Search by number or budget item">
+      <button type = "submit">Search</button>
+    </form>
     <table>
       <thead>
         <tr>
@@ -24,9 +28,7 @@
           <tr>
             <td>{{ object.number }}</td>
             <td>
-              {% for budget_item in object.budget_item.all %}
-                <a href = "{% url 'budget_items:detail' budget_item.pk %}">{{ budget_item }}</a>
-              {% endfor %}
+                <a href = "{% url 'budget_items:detail' object.budget_item.pk %}">{{ object.budget_item }}</a>
             </td>
             <td>{{ object.description }}</td>
             <td>{{ object.budget }}</td>

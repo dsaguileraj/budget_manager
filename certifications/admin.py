@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Certifications, CertificationsBudgetItems
+from .models import Certifications
 
-admin.site.register([Certifications, CertificationsBudgetItems])
+admin.site.register([Certifications])

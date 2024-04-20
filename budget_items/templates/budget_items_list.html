@@ -8,6 +8,10 @@
   {% if object_list %}
     {% csrf_token %}
     <h1>Budget Items</h1>
+    <form method = "GET">
+      <input type = "text" name = "q" placeholder = "Search by number or CPC">
+      <button type = "submit">Search</button>
+    </form>
     <table>
       <thead>
         <tr>
@@ -27,10 +31,10 @@
             <td>{{ object.description }}</td>
             <td>{{ object.budget }}</td>
             <td>
-              <a href="{% url 'budget_items:detail' object.pk %}"><button>View</button></a>
+              <a href = "{% url 'budget_items:detail' object.pk %}"><button>View</button></a>
             </td>
             <td>
-              <a href="{% url 'budget_items:delete' object.pk %}"><button>Delete</button></a>
+              <a href = "{% url 'budget_items:delete' object.pk %}"><button>Delete</button></a>
             </td>
           </tr>
         {% endfor %}
@@ -40,5 +44,5 @@
   {% else %}
     <p>There are no registered budget items</p>
   {% endif %}
-  <a href="{% url 'budget_items:create' %}"><button>Create</button></a>
+  <a href = "{% url 'budget_items:create' %}"><button>Create</button></a>
 {% endblock %}
