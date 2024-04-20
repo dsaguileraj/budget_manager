@@ -1,14 +1,23 @@
+from django.db import models
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.shortcuts import redirect, render
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from .models import ProceduresTypes
 
 
 class ProceduresTypesListView(ListView):
     model = ProceduresTypes
     template_name = "procedures_types_list.html"
+    paginate_by = 50
 
     def get_queryset(self):
-        return ProceduresTypes.objects.order_by("pk")[:50]
+        query = self.request.GET.get("q", "")
+        if query:
+            return ProceduresTypes.objects.filter(
+                models.Q(name__icontains = query) |  models.Q(regime__icontains = query)  |  models.Q(product_type__icontains = query) |  models.Q(purchase_type__icontains = query)
+            ).order_by("name")
+        else:
+            return ProceduresTypes.objects.order_by("name")[:50]
 
 
 class ProceduresTypesDetailView(DetailView):
@@ -23,10 +32,17 @@ class ProceduresTypesCreateView(CreateView):
     success_url = reverse_lazy("procedures_types:list")
 
 
-class ProceduresTypesDeleteView(DeleteView):
-    model = ProceduresTypes
-    success_url = reverse_lazy("procedures_types:list")
-    template_name = "procedures_types_confirm_delete.html"
+def delete_procedure_type(request, pk):
+    try:
+        record = ProceduresTypes.objects.get(pk=pk)
+        record.delete()
+        message = "Record deleted successfully"
+    except ProceduresTypes.DoesNotExist:
+        message = "Record not found"
+    if message == "Record deleted successfully":
+        return redirect(reverse_lazy("procedures_types:list"))
+    else:
+        return render(request, "procedures_types_list.html", {"message": message})
 
 
 class ProceduresTypesUpdateView(UpdateView):

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
-from django.views.generic import DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView
 from django.core.validators import ValidationError
 from .forms import CertificationsForm
 from .models import Certifications
@@ -10,14 +10,13 @@ from .models import Certifications
 class CertificationsListView(ListView):
     model = Certifications
     template_name = "certifications_list.html"
-
     paginate_by = 50
 
     def get_queryset(self):
         query = self.request.GET.get("q", "")
         if query:
             return Certifications.objects.filter(
-                models.Q(number__icontains = query) |  models.Q(budget_item__icontains = query)
+                models.Q(number__icontains = query) |  models.Q(budget_item__icontains = query) |  models.Q(description__icontains = query) |  models.Q(activity__icontains = query)
             ).order_by("number")
         else:
             return Certifications.objects.order_by("number")[:50]
@@ -57,10 +56,17 @@ def create_certification(request):
     return render(request, "certifications_create.html", context)
 
 
-class CertificationsDeleteView(DeleteView):
-    model = Certifications
-    success_url = reverse_lazy("certifications:list")
-    template_name = "certifications_confirm_delete.html"
+def delete_certification(request, pk):
+    try:
+        record = Certifications.objects.get(pk=pk)
+        record.delete()
+        message = "Record deleted successfully"
+    except Certifications.DoesNotExist:
+        message = "Record not found"
+    if message == "Record deleted successfully":
+        return redirect(reverse_lazy("certifications:list"))
+    else:
+        return render(request, "certifications_list.html", {"message": message})
 
 
 class CertificationsUpdateView(UpdateView):

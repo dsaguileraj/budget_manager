@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.shortcuts import redirect, render
 from django.db import models
 from .models import BudgetItems
 
@@ -13,7 +14,7 @@ class BudgetItemsListView(ListView):
         query = self.request.GET.get("q", "")
         if query:
             return BudgetItems.objects.filter(
-                models.Q(number__icontains = query) |  models.Q(cpc__icontains = query)
+                models.Q(number__icontains = query) |  models.Q(cpc__icontains = query) |  models.Q(description__icontains = query) |  models.Q(activity__icontains = query)
             ).order_by("number")
         else:
             return BudgetItems.objects.order_by("number")[:50]
@@ -36,10 +37,17 @@ class BudgetItemsCreateView(CreateView):
     success_url = reverse_lazy("budget_items:list")
 
 
-class BudgetItemsDeleteView(DeleteView):
-    model = BudgetItems
-    success_url = reverse_lazy("budget_items:list")
-    template_name = "budget_items_confirm_delete.html"
+def delete_budget_item(request, pk):
+    try:
+        record = BudgetItems.objects.get(pk=pk)
+        record.delete()
+        message = "Record deleted successfully"
+    except BudgetItems.DoesNotExist:
+        message = "Record not found"
+    if message == "Record deleted successfully":
+        return redirect(reverse_lazy("budget_items:list"))
+    else:
+        return render(request, "budget_items_list.html", {"message": message})
 
 
 class BudgetItemsUpdateView(UpdateView):

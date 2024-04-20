@@ -5,67 +5,72 @@
 {% endblock %}
 
 {% block body %}
-  <table>
-    <thead>
-      <tr>
-        <h1>Budget Item No. {{ object.number }}</h1>
-        <p>Last modification: {{ object.date }}</p>
-      </tr>
-    </thead>
+<table class="table">
+  <caption><b>Last modification:</b> {{ object.date }}</caption>
+  <thead class="table-light">
+    <tr>
+      <h1>Budget Item No. {{ object.number }}</h1>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>Description</b>
       </td>
       <td>{{ object.description }}</td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>Activity</b>
       </td>
       <td>{{ object.activity }}</td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>CPC</b>
       </td>
       <td>{{ object.cpc }}</td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>Budget</b>
       </td>
-      <td>{{ object.budget }}</td>
+      <td>USD {{ object.budget }}</td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>Budget Type</b>
       </td>
       <td>{{ object.budget_type }}</td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>BID</b>
       </td>
       <td>{{ object.bid }}</td>
     </tr>
     <tr>
-      <td>
+      <td style="width: 10%">
         <b>Certifications</b>
       </td>
       <td>
-        <ul>
+        <div class="list-group">
           {% for certification  in object.certifications_set.all %}
-            <li>
-              <a href = "{% url 'certifications:detail' certification.pk %}">{{ certification.number }}</a>
-            </li>
+            <a href="{% url 'certifications:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Certification No. {{ certification.number }} - {{ certification.department }}</h5>
+                <small>{{ certification.date }}</small>
+              </div>
+              <p class="mb-1">{{ certification.description }}</p>
+              <small>USD {{ certification.budget }}</small>
+            </a>
           {% endfor %}
-        </ul>
+        </div>
       </td>
     </tr>
   </tbody>  
 </table>
-  <a href="{% url 'budget_items:list' %}"><button>Back</button></a>
-  <a href="{% url 'budget_items:update' object.pk %}"><button>Update</button></a>
-  <a href="{% url 'budget_items:delete' object.pk %}"><button>Delete</button></a>
+  <a href="{% url 'budget_items:list' %}"><button class="btn btn-outline-primary">Back</button></a>
+  <a href="{% url 'budget_items:update' object.pk %}"><button class="btn btn-outline-success">Update</button></a>
+  <a href="{% url 'budget_items:delete' object.pk %}" ><button class="btn btn-outline-danger">Delete</button></a>
 {% endblock %}

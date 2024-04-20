@@ -8,41 +8,54 @@
   {% if object_list %}
     {% csrf_token %}
     <h1>Budget Items</h1>
-    <form method = "GET">
-      <input type = "text" name = "q" placeholder = "Search by number or CPC">
-      <button type = "submit">Search</button>
-    </form>
-    <table>
-      <thead>
-        <tr>
-          <th>Number</th>
-          <th>CPC</th>
-          <th>Description</th>
-          <th>Budget</th>
-          <th>‎</th>
-          <th>‎</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for object in object_list %}
+    {% if message %}
+      <div class="alert alert-warning" role="alert">
+        {{ message }}
+      </div>
+    {% endif %}
+    <div class="table-responsive-xxl">
+      <table class="table table-hover">
+        <thead class="table-light">
           <tr>
-            <td>{{ object.number }}</td>
-            <td>{{ object.cpc }}</td>
-            <td>{{ object.description }}</td>
-            <td>{{ object.budget }}</td>
-            <td>
-              <a href = "{% url 'budget_items:detail' object.pk %}"><button>View</button></a>
-            </td>
-            <td>
-              <a href = "{% url 'budget_items:delete' object.pk %}"><button>Delete</button></a>
-            </td>
+            <th>Number</th>
+            <th>CPC</th>
+            <th>Description</th>
+            <th>Activity</th>
+            <th>Budget</th>
+            <th>‎</th>
+            <th>‎</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  <p><b>Total: </b>{{ total_budget }}</p>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>{{ object.number }}</td>
+              <td>{{ object.cpc }}</td>
+              <td>{{ object.description }}</td>
+              <td>{{ object.activity }}</td>
+              <td>USD {{ object.budget }}</td>
+              <td>
+                <a href = "{% url 'budget_items:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
+              </td>
+              <td>
+                <a href = "{% url 'budget_items:delete' object.pk %}"><button class="btn btn-outline-danger w-100">Delete</button></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4" class="text-end">Total</th>
+            <th >USD {{ total_budget }}</th>
+            <th colspan="2"><a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   {% else %}
-    <p>There are no registered budget items</p>
+    <div class="alert alert-warning" role="alert">
+      Record not found
+    </div>
+    <a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-primary ">Create</button></a>
   {% endif %}
-  <a href = "{% url 'budget_items:create' %}"><button>Create</button></a>
 {% endblock %}
