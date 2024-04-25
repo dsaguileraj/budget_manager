@@ -13,7 +13,7 @@
         {{ message }}
       </div>
     {% endif %}
-    <div class="table-responsive-xxl">
+    <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
           <tr>
@@ -51,6 +51,7 @@
   <div class="alert alert-warning" role="alert">
     Record not found
   </div>
-  <a href = "{% url 'departments:create' %}"><button class="btn btn-outline-primary ">Create</button></a>
+  <a href="{% url 'departments:list' %}" class="btn btn-outline-primary">Refresh</a>
+  <a href = "{% url 'departments:create' %}" class="btn btn-outline-success">Create</a>
   {% endif %}  
 {% endblock %}

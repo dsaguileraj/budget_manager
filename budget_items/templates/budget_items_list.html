@@ -13,7 +13,7 @@
         {{ message }}
       </div>
     {% endif %}
-    <div class="table-responsive-xxl">
+    <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
           <tr>
@@ -46,16 +46,17 @@
         <tfoot>
           <tr>
             <th colspan="4" class="text-end">Total</th>
-            <th >USD {{ total_budget }}</th>
+            <th>USD {{ total_budget }}</th>
             <th colspan="2"><a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a></th>
           </tr>
         </tfoot>
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning mt-3" role="alert">
       Record not found
     </div>
-    <a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-primary ">Create</button></a>
+    <a href="{% url 'budget_items:list' %}" class="btn btn-outline-primary">Refresh</a>
+    <a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-success">Create</button></a>    
   {% endif %}
 {% endblock %}

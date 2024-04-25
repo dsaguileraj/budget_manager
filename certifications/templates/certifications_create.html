@@ -2,14 +2,61 @@
 
 {% block title %}
   Certifications - Create
-{% endblock title %}
+{% endblock %}
 
 {% block body %}
   <h1>Create Certification</h1>
-  <form action="{% url 'certifications:create' %}" method="POST">
+  <form method="post">
     {% csrf_token %}
-    {{ error_message }}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
+    <div class="row mb-3">
+      <label for="procedure" class="col-sm-2 col-form-label">Procedure:</label>
+      <div class="col-sm-10">
+        <select class="form-select" id="procedure" name="procedure">
+          {% for procedure in procedures %}
+            <option value="{{ procedure.id }}">{{ procedure.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="budget_item" class="col-sm-2 col-form-label">Budget Item:</label>
+      <div class="col-sm-10">
+        <select class="form-select" id="budget_item" name="budget_item">
+          {% for budget_item in budget_items %}
+            <option value="{{ budget_item.number }}">{{ budget_item.number }} - {{ budget_item.activity }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="department" class="col-sm-2 col-form-label">Department:</label>
+      <div class="col-sm-10">
+        <select class="form-select" id="department" name="department">
+          {% for department in departments %}
+            <option value="{{ department.id }}">{{ department.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="budget" class="col-sm-2 col-form-label">Budget (USD):</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="budget" name="budget" required />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="description" class="col-sm-2 col-form-label">Description:</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="period" class="col-sm-2 col-form-label">Period (in months):</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="period" name="period" min="1" required />
+      </div>
+    </div>
+    <a href="{% url 'certifications:list' %}" class="btn btn-outline-primary">Back</a>
+    <button type="submit" class="btn btn-outline-success">Create</button>
   </form>
-{% endblock body %}
+{% endblock %}

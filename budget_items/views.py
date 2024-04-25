@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView
 from django.shortcuts import redirect, render
 from django.db import models
 from .models import BudgetItems
@@ -30,12 +30,29 @@ class BudgetItemsDetailView(DetailView):
     template_name = "budget_items_detail.html"
 
 
-class BudgetItemsCreateView(CreateView):
-    model = BudgetItems
-    fields = ["number", "cpc", "description", "budget", "budget_type", "activity", "bid"]
-    template_name = "budget_items_create.html"
-    success_url = reverse_lazy("budget_items:list")
-
+def create_budget_item(request):
+    if request.method == "POST":
+        number = request.POST["number"]
+        cpc = request.POST["cpc"]
+        budget = request.POST["budget"]
+        budget_type = request.POST["budget_type"]
+        description = request.POST["description"]
+        activity = request.POST["activity"]
+        bid = request.POST.get("bid") == "on"
+        budget_item = BudgetItems.objects.create(
+            number = number,
+            cpc = cpc,
+            budget = budget,
+            budget_type = budget_type,
+            description = description,
+            activity = activity,
+            bid = bid
+        )
+        budget_item.save()
+        return redirect(reverse_lazy("budget_items:list"))
+    else:
+        return render(request, "budget_items_create.html")
+        
 
 def delete_budget_item(request, pk):
     try:

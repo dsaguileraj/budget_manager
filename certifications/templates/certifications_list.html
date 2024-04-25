@@ -13,7 +13,7 @@
         {{ message }}
       </div>
     {% endif %}
-    <div class="table-responsive-xxl">
+    <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
           <tr>
@@ -30,10 +30,10 @@
           {% for object in object_list %}
             <tr>
               <td>{{ object.number }}</td>
-              <td><a href = "{% url 'budget_items:detail' object.budget_item.pk %}">{{ object.budget_item }}</a></td>
+              <td><a href = "{% url 'budget_items:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item }}</a></td>
               <td>{{ object.description }}</td>
               <td>{{ object.budget_item.activity }}</td>
-              <td>{{ object.budget }}</td>
+              <td>USD {{ object.budget }}</td>
               <td>
                 <a href = "{% url 'certifications:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
               </td>
