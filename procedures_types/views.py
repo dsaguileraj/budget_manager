@@ -1,8 +1,8 @@
 from django.db import models
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
-from .models import ProceduresTypes
+from django.views.generic import DetailView, ListView, UpdateView
+from .models import *
 
 
 class ProceduresTypesListView(ListView):
@@ -25,11 +25,27 @@ class ProceduresTypesDetailView(DetailView):
     template_name = "procedures_types_detail.html"
 
 
-class ProceduresTypesCreateView(CreateView):
-    model = ProceduresTypes
-    fields = ["name", "regime", "product_type", "purchase_type"]
-    template_name = "procedures_types_create.html"
-    success_url = reverse_lazy("procedures_types:list")
+def create_procedure_type(request):
+    context = {
+        "regime_choices": REGIME_CHOICES,
+        "product_type_choices": PRODUCT_TYPE_CHOICES,
+        "purchase_type_choices": PURCHASE_TYPE_CHOICES,
+    }
+    if request.method == "POST":
+        name = request.POST["name"]
+        regime = request.POST["regime"]
+        product_type = request.POST["product_type"]
+        purchase_type = request.POST["purchase_type"]
+        procedure_type = ProceduresTypes.objects.create(
+            name = name,
+            regime = regime,
+            product_type = product_type,
+            purchase_type = purchase_type
+        )
+        procedure_type.save()
+        return redirect(reverse_lazy("procedures_types:list"))
+    else:
+        return render(request, "procedures_types_create.html", context)
 
 
 def delete_procedure_type(request, pk):
@@ -45,8 +61,20 @@ def delete_procedure_type(request, pk):
         return render(request, "procedures_types_list.html", {"message": message})
 
 
-class ProceduresTypesUpdateView(UpdateView):
-    model = ProceduresTypes
-    fields = ["name", "regime", "product_type", "purchase_type"]
-    template_name = "procedures_types_update.html"
-    success_url = reverse_lazy("procedures_types:list")
+def update_procedure_type(request, pk):
+    procedure_type = ProceduresTypes.objects.get(pk=pk)
+    context = {
+        "regime_choices": REGIME_CHOICES,
+        "product_type_choices": PRODUCT_TYPE_CHOICES,
+        "purchase_type_choices": PURCHASE_TYPE_CHOICES,
+        "procedure_type": procedure_type
+    }
+    if request.method == "POST":
+        procedure_type.name = request.POST["name"]
+        procedure_type.regime = request.POST["regime"]
+        procedure_type.product_type = request.POST["product_type"]
+        procedure_type.purchase_type = request.POST["purchase_type"]        
+        procedure_type.save()
+        return redirect(reverse_lazy("procedures_types:list"))
+    else:
+        return render(request, "procedures_types_update.html", context)

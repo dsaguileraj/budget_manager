@@ -8,5 +8,5 @@ urlpatterns = [
     path("create/", create_budget_item, name = "create"),
     path("<int:pk>/", BudgetItemsDetailView.as_view(), name = "detail"),    
     path("delete/<int:pk>/", delete_budget_item, name = "delete"),
-    path("update/<int:pk>/", BudgetItemsUpdateView.as_view(), name = "update")
+    path("update/<int:pk>/", update_budget_item, name = "update")
 ]

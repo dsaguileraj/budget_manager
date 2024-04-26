@@ -26,7 +26,7 @@
               <a class="nav-link active" href="{% url 'procedures_types:list' %}">Procedures Types</a>          
             </li>
           </ul>
-          <form class="d-flex" role="search" method="GET">
+          <form action="{% url 'departments:list' %}" class="d-flex" role="search" method="GET">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
             <button class="btn btn-outline-primary" type="submit">Search</button>
           </form>

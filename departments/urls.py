@@ -5,8 +5,8 @@ app_name = "departments"
 
 urlpatterns = [
     path("", DepartmentsListView.as_view(), name = "list"),
-    path("create/", DepartmentsCreateView.as_view(), name = "create"),
+    path("create/", create_department, name = "create"),
     path("<str:pk>/", DepartmentsDetailView.as_view(), name = "detail"),    
     path("delete/<str:pk>/", delete_department, name = "delete"),
-    path("update/<str:pk>/", DepartmentsUpdateView.as_view(), name = "update")
+    path("update/<str:pk>/", update_department, name = "update")
 ]

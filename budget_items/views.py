@@ -1,8 +1,8 @@
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView
 from django.shortcuts import redirect, render
 from django.db import models
-from .models import BudgetItems
+from .models import *
 
 
 class BudgetItemsListView(ListView):
@@ -30,7 +30,7 @@ class BudgetItemsDetailView(DetailView):
     template_name = "budget_items_detail.html"
 
 
-def create_budget_item(request):
+def create_budget_item(request):    
     if request.method == "POST":
         number = request.POST["number"]
         cpc = request.POST["cpc"]
@@ -67,8 +67,17 @@ def delete_budget_item(request, pk):
         return render(request, "budget_items_list.html", {"message": message})
 
 
-class BudgetItemsUpdateView(UpdateView):
-    model = BudgetItems
-    fields = ["number", "cpc", "description", "budget", "budget_type", "activity", "bid"]
-    template_name = "budget_items_update.html"
-    success_url = reverse_lazy("budget_items:list")
+def update_budget_item(request, pk):
+    budget_item = BudgetItems.objects.get(pk=pk)
+    if request.method == "POST":
+        budget_item.number = request.POST["number"]
+        budget_item.cpc = request.POST["cpc"]
+        budget_item.budget = request.POST["budget"]
+        budget_item.budget_type = request.POST["budget_type"]
+        budget_item.description = request.POST["description"]
+        budget_item.activity = request.POST["activity"]
+        budget_item.bid = request.POST.get("bid") == "on"
+        budget_item.save()
+        return redirect(reverse_lazy("budget_items:list"))
+    else:
+        return render(request, "budget_items_update.html", {"budget_item": budget_item})

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView
 from .models import Departments
 
 
@@ -25,11 +25,18 @@ class DepartmentsDetailView(DetailView):
     template_name = "departments_detail.html"
 
 
-class DepartmentsCreateView(CreateView):
-    model = Departments
-    fields = ["name", "director"]
-    template_name = "departments_create.html"
-    success_url = reverse_lazy("departments:list")
+def create_department(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        director = request.POST["director"]
+        department = Departments.objects.create(
+            name = name,
+            director = director
+        )
+        department.save()
+        return redirect(reverse_lazy("departments:list"))
+    else:
+        return render(request, "departments_create.html")
 
 
 def delete_department(request, pk):
@@ -45,8 +52,12 @@ def delete_department(request, pk):
         return render(request, "departments_list.html", {"message": message})
 
 
-class DepartmentsUpdateView(UpdateView):
-    model = Departments
-    fields = ["name", "director"]
-    template_name = "departments_update.html"
-    success_url = reverse_lazy("departments:list")
+def update_department(request, pk):
+    department = Departments.objects.get(pk=pk)
+    if request.method == "POST":
+        department.name = request.POST["name"]
+        department.director = request.POST["director"]    
+        department.save()
+        return redirect(reverse_lazy("departments:list"))
+    else:
+        return render(request, "departments_update.html", {"department": department})

@@ -5,10 +5,40 @@
 {% endblock title %}
 
 {% block body %}
-  <h1>Update Procedure Type - {{ object.name }}</h1>
-  <form action="{% url 'procedures_types:update' object.pk %}" method="POST">
+  <h1>Update Procedure Type - {{ procedure_type.name }}</h1>
+  <form method="POST" class="row">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update</button>
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{ procedure_type.name }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="regime" class="form-label">Regime</label>
+      <select class="form-select" id="regime" name="regime" required>
+        {% for regime in regime_choices %}
+          <option value="{{ regime.0 }}" {% if value == procedure_type.regime %} selected {% endif %}>{{ regime.1 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="product_type" class="form-label">Product Type</label>
+      <select class="form-select" id="product_type" name="product_type" required>
+        {% for product_type in product_type_choices %}
+          <option value="{{ product_type.0 }}" {% if option.value == procedure_type.product_type %} selected {% endif %}>{{ product_type.1 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="purchase_type" class="form-label">Purchase Type</label>
+      <select class="form-select" id="purchase_type" name="purchase_type" required>
+        {% for purchase_type in purchase_type_choices %}
+          <option value="{{ purchase_type.0 }}" {% if value == procedure_type.purchase_type %} selected {% endif %}>{{ purchase_type.1 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mt-3">
+      <a type="button" href="{% url 'procedures_types:list' %}" class="btn btn-outline-secondary">Back</a>
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
   </form>
 {% endblock body %}
