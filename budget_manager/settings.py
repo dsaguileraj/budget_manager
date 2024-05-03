@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'certifications',
     'departments',
     'procedures_types',
+    'employees',
+    'contracts'
 ]
 
 MIDDLEWARE = [

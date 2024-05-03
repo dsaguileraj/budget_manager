@@ -25,7 +25,7 @@ class Certifications(models.Model):
     )
     budget = models.FloatField()
     description = models.TextField()
-    period = models.IntegerField()
+    period = models.PositiveIntegerField()
 
     def __str__(self):
         return self.number
