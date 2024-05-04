@@ -14,14 +14,16 @@ class BudgetItemsListView(ListView):
         query = self.request.GET.get("q", "")
         if query:
             return BudgetItems.objects.filter(
-                models.Q(number__icontains = query) |  models.Q(cpc__icontains = query) |  models.Q(description__icontains = query) |  models.Q(activity__icontains = query)
+                models.Q(number__icontains=query) | models.Q(cpc__icontains=query) | models.Q(
+                    description__icontains=query) | models.Q(activity__icontains=query)
             ).order_by("number")
         else:
             return BudgetItems.objects.order_by("number")[:50]
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["total_budget"] = BudgetItems.objects.aggregate(total_budget = models.Sum("budget"))["total_budget"]
+        context["total_budget"] = BudgetItems.objects.aggregate(
+            total_budget=models.Sum("budget"))["total_budget"]
         return context
 
 
@@ -30,7 +32,7 @@ class BudgetItemsDetailView(DetailView):
     template_name = "budget_items_detail.html"
 
 
-def create_budget_item(request):    
+def create_budget_item(request):
     if request.method == "POST":
         number = request.POST["number"]
         cpc = request.POST["cpc"]
@@ -40,19 +42,19 @@ def create_budget_item(request):
         activity = request.POST["activity"]
         bid = request.POST.get("bid") == "on"
         budget_item = BudgetItems.objects.create(
-            number = number,
-            cpc = cpc,
-            budget = budget,
-            budget_type = budget_type,
-            description = description,
-            activity = activity,
-            bid = bid
+            number=number,
+            cpc=cpc,
+            budget=budget,
+            budget_type=budget_type,
+            description=description,
+            activity=activity,
+            bid=bid
         )
         budget_item.save()
         return redirect(reverse_lazy("budget_items:list"))
     else:
         return render(request, "budget_items_create.html")
-        
+
 
 def delete_budget_item(request, pk):
     try:
