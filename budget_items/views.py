@@ -7,7 +7,7 @@ from .models import *
 
 class BudgetItemsListView(ListView):
     model = BudgetItems
-    template_name = "budget_items_list.html"
+    template_name = "budget_items/list.html"
     paginate_by = 50
 
     def get_queryset(self):
@@ -29,7 +29,7 @@ class BudgetItemsListView(ListView):
 
 class BudgetItemsDetailView(DetailView):
     model = BudgetItems
-    template_name = "budget_items_detail.html"
+    template_name = "budget_items/detail.html"
 
 
 def create_budget_item(request):
@@ -53,7 +53,7 @@ def create_budget_item(request):
         budget_item.save()
         return redirect(reverse_lazy("budget_items:list"))
     else:
-        return render(request, "budget_items_create.html")
+        return render(request, "budget_items/create.html")
 
 
 def delete_budget_item(request, pk):
@@ -66,7 +66,7 @@ def delete_budget_item(request, pk):
     if message == "Record deleted successfully":
         return redirect(reverse_lazy("budget_items:list"))
     else:
-        return render(request, "budget_items_list.html", {"message": message})
+        return render(request, "budget_items/list.html", {"message": message})
 
 
 def update_budget_item(request, pk):
@@ -82,4 +82,4 @@ def update_budget_item(request, pk):
         budget_item.save()
         return redirect(reverse_lazy("budget_items:list"))
     else:
-        return render(request, "budget_items_update.html", {"budget_item": budget_item})
+        return render(request, "budget_items/update.html", {"budget_item": budget_item})

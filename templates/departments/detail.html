@@ -1,4 +1,4 @@
-{% extends 'departments_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   Departments - Detail
@@ -22,7 +22,7 @@
         </td>
         <td>
           <div class="list-group">
-            {% for certification  in object.certifications_set.all %}
+            {% for certification in object.certifications_set.all %}
               <a href="{% url 'certifications:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">Certification No. {{ certification.number }}</h5>

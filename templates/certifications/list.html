@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Certifications - List
+{% endblock %}
+
+{% block form %}
+  <form action="{% url 'certifications:list' %}" class="d-flex" role="search">
+    <input name="q" class="form-control me-2" type="search" placeholder="Search Certification" aria-label="Search Certification" />
+    <button class="btn btn-secondary" type="submit">Search</button>
+  </form>
+{% endblock %}
+
+{% block body %}
+  {% if object_list %}
+    {% csrf_token %}
+    <h1>Certifications</h1>
+    <div class="table-responsive-xxl border">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Number</th>
+            <th>Budget Item</th>
+            <th>Description</th>
+            <th>Activity</th>
+            <th>Budget</th>
+            <th>‎</th>
+            <th>‎</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>{{ object.number }}</td>
+              <td>
+                <a href="{% url 'budget_items:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item }}</a>
+              </td>
+              <td>{{ object.description }}</td>
+              <td>{{ object.budget_item.activity }}</td>
+              <td>USD {{ object.budget }}</td>
+              <td>
+                <a href="{% url 'certifications:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
+              </td>
+              <td>
+                <a href="{% url 'certifications:delete' object.pk %}"><button class="btn btn-outline-danger w-100">Delete</button></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="5" class="text-end"></th>
+            <th colspan="2">
+              <a href="{% url 'certifications:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-warning" role="alert">Record not found</div>
+    <a href="{% url 'certifications:create' %}"><button class="btn btn-outline-primary">Create</button></a>
+  {% endif %}
+{% endblock %}

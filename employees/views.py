@@ -7,7 +7,7 @@ from .models import Employees
 
 class EmployeesListView(ListView):
     model = Employees
-    template_name = "employees_list.html"
+    template_name = "employees/list.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q", "")
@@ -22,7 +22,7 @@ class EmployeesListView(ListView):
 
 class EmployeesDetailView(DetailView):
     model = Employees
-    template_name = "employees_detail.html"
+    template_name = "employees/detail.html"
 
 
 def create_employee(request):
@@ -42,7 +42,7 @@ def create_employee(request):
         employee.save()
         return redirect(reverse_lazy(""))
     else:
-        return render(request, "employees_create.html")
+        return render(request, "employees/create.html")
 
 
 def delete_employee(request, pk):
@@ -55,7 +55,7 @@ def delete_employee(request, pk):
     if message == "Record deleted successfully":
         return redirect(reverse_lazy(""))
     else:
-        return render(request, "employees_list.html", {"message": message})
+        return render(request, "employees/list.html", {"message": message})
 
 
 def update_employee(request, pk):
@@ -69,4 +69,4 @@ def update_employee(request, pk):
         employee.save()
         return redirect(reverse_lazy(""))
     else:
-        return render(request, "employees_update.html")
+        return render(request, "employees/update.html", {"employee": employee})

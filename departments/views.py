@@ -7,7 +7,7 @@ from .models import Departments
 
 class DepartmentsListView(ListView):
     model = Departments
-    template_name = "departments_list.html"
+    template_name = "departments/list.html"
     paginate_by = 50
 
     def get_queryset(self):
@@ -23,7 +23,7 @@ class DepartmentsListView(ListView):
 
 class DepartmentsDetailView(DetailView):
     model = Departments
-    template_name = "departments_detail.html"
+    template_name = "departments/detail.html"
 
 
 def create_department(request):
@@ -37,7 +37,7 @@ def create_department(request):
         department.save()
         return redirect(reverse_lazy("departments:list"))
     else:
-        return render(request, "departments_create.html")
+        return render(request, "departments/create.html")
 
 
 def delete_department(request, pk):
@@ -50,7 +50,7 @@ def delete_department(request, pk):
     if message == "Record deleted successfully":
         return redirect(reverse_lazy("departments:list"))
     else:
-        return render(request, "departments_list.html", {"message": message})
+        return render(request, "departments/list.html", {"message": message})
 
 
 def update_department(request, pk):
@@ -61,4 +61,4 @@ def update_department(request, pk):
         department.save()
         return redirect(reverse_lazy("departments:list"))
     else:
-        return render(request, "departments_update.html", {"department": department})
+        return render(request, "departments/update.html", {"department": department})

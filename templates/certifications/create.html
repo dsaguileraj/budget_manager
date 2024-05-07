@@ -1,4 +1,4 @@
-{% extends 'certifications_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   Certifications - Create
@@ -7,27 +7,25 @@
 {% block body %}
   <h1>Create Certification</h1>
   {% if message %}
-      <div class="alert alert-warning" role="alert">
-        {{ message }}
-      </div>
-    {% endif %}
+    <div class="alert alert-warning" role="alert">{{ message }}</div>
+  {% endif %}
   <form method="POST" class="row">
     {% csrf_token %}
     <div class="col-4">
       <label for="procedure" class="m-1 mt-2">Procedure:</label>
-        <select class="form-select" id="procedure" name="procedure">
-          {% for procedure in procedures %}
-            <option value="{{ procedure.id }}">{{ procedure.name }}</option>
-          {% endfor %}
-        </select>
+      <select class="form-select" id="procedure" name="procedure">
+        {% for procedure in procedures %}
+          <option value="{{ procedure.id }}">{{ procedure.name }}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="col-4">
       <label for="department" class="m-1 mt-2">Department:</label>
-        <select class="form-select" id="department" name="department">
-          {% for department in departments %}
-            <option value="{{ department.id }}">{{ department.name }}</option>
-          {% endfor %}
-        </select>
+      <select class="form-select" id="department" name="department">
+        {% for department in departments %}
+          <option value="{{ department.id }}">{{ department.name }}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="col-4">
       <label for="period" class="m-1 mt-2">Fourth-month Period:</label>
@@ -35,19 +33,19 @@
     </div>
     <div class="col-6">
       <label for="budget_item" class="m-1 mt-2">Budget Item:</label>
-        <select class="form-select" id="budget_item" name="budget_item">
-          {% for budget_item in budget_items %}
-            <option value="{{ budget_item.id }}">{{ budget_item.number }} - {{ budget_item.activity }}</option>
-          {% endfor %}
-        </select>
-    </div>    
+      <select class="form-select" id="budget_item" name="budget_item">
+        {% for budget_item in budget_items %}
+          <option value="{{ budget_item.id }}">{{ budget_item.number }} - {{ budget_item.activity }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <div class="col-6">
       <label for="budget" class="m-1 mt-2">Budget (USD):</label>
       <input type="number" class="form-control" id="budget" name="budget" min="0.01" required />
     </div>
     <div class="col-12">
       <label for="description" class="m-1 mt-2">Description:</label>
-        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+      <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
     </div>
     <div class="mt-2">
       <a href="{% url 'certifications:list' %}" class="btn btn-outline-secondary">Back</a>

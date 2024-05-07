@@ -1,7 +1,14 @@
-{% extends 'budget_items_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   Budget Items - List
+{% endblock %}
+
+{% block form %}
+  <form action="{% url 'budget_items:list' %}" class="d-flex" role="search">
+    <input name="q" class="form-control me-2" type="search" placeholder="Search Budget Item" aria-label="Search Budget Item" />
+    <button class="btn btn-secondary" type="submit">Search</button>
+  </form>
 {% endblock %}
 
 {% block body %}
@@ -9,9 +16,7 @@
     {% csrf_token %}
     <h1>Budget Items</h1>
     {% if message %}
-      <div class="alert alert-warning" role="alert">
-        {{ message }}
-      </div>
+      <div class="alert alert-warning" role="alert">{{ message }}</div>
     {% endif %}
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
@@ -35,10 +40,10 @@
               <td>{{ object.activity }}</td>
               <td>USD {{ object.budget }}</td>
               <td>
-                <a href = "{% url 'budget_items:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
+                <a href="{% url 'budget_items:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
               </td>
               <td>
-                <a href = "{% url 'budget_items:delete' object.pk %}"><button class="btn btn-outline-danger w-100">Delete</button></a>
+                <a href="{% url 'budget_items:delete' object.pk %}"><button class="btn btn-outline-danger w-100">Delete</button></a>
               </td>
             </tr>
           {% endfor %}
@@ -47,16 +52,16 @@
           <tr>
             <th colspan="4" class="text-end">Total</th>
             <th>USD {{ total_budget }}</th>
-            <th colspan="2"><a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a></th>
+            <th colspan="2">
+              <a href="{% url 'budget_items:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a>
+            </th>
           </tr>
         </tfoot>
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning mt-3" role="alert">
-      Record not found
-    </div>
+    <div class="alert alert-warning mt-3" role="alert">Record not found</div>
     <a href="{% url 'budget_items:list' %}" class="btn btn-outline-primary">Refresh</a>
-    <a href = "{% url 'budget_items:create' %}"><button class="btn btn-outline-success">Create</button></a>    
+    <a href="{% url 'budget_items:create' %}"><button class="btn btn-outline-success">Create</button></a>
   {% endif %}
 {% endblock %}

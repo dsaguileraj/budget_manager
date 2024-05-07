@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Contracts - List
+{% endblock %}
+
+{% block form %}
+  <form action="{% url 'certifications:list' %}" class="d-flex" role="search">
+    <input name="q" class="form-control me-2" type="search" placeholder="Search Contract" aria-label="Search Contract" />
+    <button class="btn btn-secondary" type="submit">Search</button>
+  </form>
+{% endblock %}
+
+{% block body %}
+  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa dolor itaque tenetur dolorum, distinctio esse? Animi assumenda ut veniam deleniti ea. Labore dicta fugiat ad placeat ullam. Unde, cumque voluptates?
+{% endblock %}

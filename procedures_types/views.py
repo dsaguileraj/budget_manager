@@ -1,20 +1,21 @@
 from django.db import models
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView
 from .models import *
 
 
 class ProceduresTypesListView(ListView):
     model = ProceduresTypes
-    template_name = "procedures_types_list.html"
+    template_name = "procedures_types/list.html"
     paginate_by = 50
 
     def get_queryset(self):
         query = self.request.GET.get("q", "")
         if query:
             return ProceduresTypes.objects.filter(
-                models.Q(name__icontains = query) |  models.Q(regime__icontains = query)  |  models.Q(product_type__icontains = query) |  models.Q(purchase_type__icontains = query)
+                models.Q(name__icontains=query) | models.Q(regime__icontains=query) | models.Q(
+                    product_type__icontains=query) | models.Q(purchase_type__icontains=query)
             ).order_by("name")
         else:
             return ProceduresTypes.objects.order_by("name")[:50]
@@ -22,7 +23,7 @@ class ProceduresTypesListView(ListView):
 
 class ProceduresTypesDetailView(DetailView):
     model = ProceduresTypes
-    template_name = "procedures_types_detail.html"
+    template_name = "procedures_types/detail.html"
 
 
 def create_procedure_type(request):
@@ -37,15 +38,15 @@ def create_procedure_type(request):
         product_type = request.POST["product_type"]
         purchase_type = request.POST["purchase_type"]
         procedure_type = ProceduresTypes.objects.create(
-            name = name,
-            regime = regime,
-            product_type = product_type,
-            purchase_type = purchase_type
+            name=name,
+            regime=regime,
+            product_type=product_type,
+            purchase_type=purchase_type
         )
         procedure_type.save()
         return redirect(reverse_lazy("procedures_types:list"))
     else:
-        return render(request, "procedures_types_create.html", context)
+        return render(request, "procedures_types/create.html", context)
 
 
 def delete_procedure_type(request, pk):
@@ -58,7 +59,7 @@ def delete_procedure_type(request, pk):
     if message == "Record deleted successfully":
         return redirect(reverse_lazy("procedures_types:list"))
     else:
-        return render(request, "procedures_types_list.html", {"message": message})
+        return render(request, "procedures_types/list.html", {"message": message})
 
 
 def update_procedure_type(request, pk):
@@ -73,8 +74,8 @@ def update_procedure_type(request, pk):
         procedure_type.name = request.POST["name"]
         procedure_type.regime = request.POST["regime"]
         procedure_type.product_type = request.POST["product_type"]
-        procedure_type.purchase_type = request.POST["purchase_type"]        
+        procedure_type.purchase_type = request.POST["purchase_type"]
         procedure_type.save()
         return redirect(reverse_lazy("procedures_types:list"))
     else:
-        return render(request, "procedures_types_update.html", context)
+        return render(request, "procedures_types/update.html", context)

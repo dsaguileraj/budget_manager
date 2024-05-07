@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Employees - Detail
+{% endblock %}
+
+{% block body %}
+  <table class="table border">
+    <thead class="table-light">
+      <h1>Employee - {{ object.name }} {{ object.surname }}</h1>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 10%">
+          <b>Director</b>
+        </td>
+        <td>{{ object.director }}</td>
+      </tr>
+      <tr>
+        <td style="width: 10%">
+          <b>Contracts</b>
+        </td>
+        <td>
+          <div class="list-group">
+            {% for contract in object.contracts_set.all %}
+              <a href="{% url 'contracts:detail' contract.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Contract No. {{ contract.id }}</h5>
+                  <small>{{ contract.date }} - {{ contract.duration }}d</small>
+                </div>
+                <p class="mb-1">{{ contract.description }}</p>
+                <small>USD {{ contract.budget }}</small>
+              </a>
+            {% endfor %}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'employees:list' %}" class="btn btn-outline-primary">Back</a>
+  <a href="{% url 'employees:update' object.pk %}" class="btn btn-outline-success">Update</a>
+  <a href="{% url 'employees:delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
+{% endblock %}

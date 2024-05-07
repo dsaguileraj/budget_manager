@@ -7,7 +7,7 @@ from .models import Contracts, Certifications, Employees
 
 class ContractsListView(ListView):
     model = Contracts
-    template_name = "contracts_list.html"
+    template_name = "contracts/list.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q", "")
@@ -22,7 +22,7 @@ class ContractsListView(ListView):
 
 class ContractsDetailView(DetailView):
     model = Contracts
-    template_name = "contracts_detail.html"
+    template_name = "contracts/detail.html"
 
 
 def create_contract(request):
@@ -52,10 +52,10 @@ def create_contract(request):
         contract.save()
         return redirect(reverse_lazy("contracts:list"))
     else:
-        return render(request, "contracts_create.html", context)
+        return render(request, "contracts/create.html", context)
 
 
-def delete_budget_item(request, pk):
+def delete_contract(request, pk):
     try:
         record = Contracts.objects.get(pk=pk)
         record.delete()
@@ -65,15 +65,16 @@ def delete_budget_item(request, pk):
     if message == "Record deleted successfully":
         return redirect(reverse_lazy("contracts:list"))
     else:
-        return render(request, "contracts_list.html", {"message": message})
+        return render(request, "contracts/list.html", {"message": message})
 
 
-def update_contract(request, pk):
+def update_contract(request, pk):    
+    contract = Contracts.objects.get(pk=pk)
     context = {
         "employees": Employees.objects.all(),
-        "certifications": Certifications.objects.all()
+        "certifications": Certifications.objects.all(),
+        "contract": contract
     }
-    contract = Contracts.objects.get(pk=pk)
     if request.method == "POST":
         admin_id = request.POST["admin"]
         certification_id = request.POST["certification"]
@@ -88,4 +89,4 @@ def update_contract(request, pk):
         contract.save()
         return redirect(reverse_lazy("contracts:list"))
     else:
-        return render(request, "contracts_update.html", context)
+        return render(request, "contracts/update.html", context)

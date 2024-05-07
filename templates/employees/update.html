@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Employees - Update
+{% endblock %}
+
+{% block body %}
+  <h1>Update Employee - {{ employee.name }} {{ employee.surname }}</h1>
+  <form method="POST" class="row">
+    {% csrf_token %}
+    <div class="col-4">
+      <label for="ci" class="m-1 mt-2">CI</label>
+      <input type="text" class="form-control" id="ci" name="ci" value="{{ employee.ci }}" required />
+    </div>
+    <div class="col-4">
+      <label for="name" class="m-1 mt-2">Name</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{ employee.name }}" required />
+    </div>
+    <div class="col-4">
+      <label for="surname" class="m-1 mt-2">Surname</label>
+      <input type="text" class="form-control" id="surname" name="surname" value="{{ employee.surname }}" required />
+    </div>
+    <div class="col-6">
+      <label for="email" class="m-1 mt-2">Email</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ employee.email }}" required />
+    </div>
+    <div class="col-6">
+      <label for="user" class="m-1 mt-2">User</label>
+      <input type="text" class="form-control" id="user" name="user" value="{{ employee.user }}" required />
+    </div>
+    <div class="mt-3">
+      <a type="button" href="{% url 'employees:list' %}" class="btn btn-outline-secondary">Back</a>
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+{% endblock %}

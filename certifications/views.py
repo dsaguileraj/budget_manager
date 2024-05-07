@@ -7,7 +7,7 @@ from .models import BudgetItems, Certifications, Departments, ProceduresTypes
 
 class CertificationsListView(ListView):
     model = Certifications
-    template_name = "certifications_list.html"
+    template_name = "certifications/list.html"
     paginate_by = 50
 
     def get_queryset(self):
@@ -23,7 +23,7 @@ class CertificationsListView(ListView):
 
 class CertificationsDetailView(DetailView):
     model = Certifications
-    template_name = "certifications_detail.html"
+    template_name = "certifications/detail.html"
 
 
 def create_certification(request):
@@ -57,9 +57,9 @@ def create_certification(request):
             return redirect(reverse_lazy("certifications:list"))
         else:
             context["message"] = "Total budget for certifications exceeds budget item limit"
-            return render(request, "certifications_create.html", context)
+            return render(request, "certifications/create.html", context)
     else:
-        return render(request, "certifications_create.html", context)
+        return render(request, "certifications/create.html", context)
 
 
 def delete_certification(request, pk):
@@ -72,7 +72,7 @@ def delete_certification(request, pk):
     if message == "Record deleted successfully":
         return redirect(reverse_lazy("certifications:list"))
     else:
-        return render(request, "certifications_list.html", {"message": message})
+        return render(request, "certifications/list.html", {"message": message})
 
 
 def update_certification(request, pk):
@@ -95,4 +95,4 @@ def update_certification(request, pk):
         certification.save()
         return redirect(reverse_lazy("certifications:list"))
     else:
-        return render(request, "certifications_update.html", context)
+        return render(request, "certifications/update.html", context)

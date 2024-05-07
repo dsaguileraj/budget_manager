@@ -1,13 +1,15 @@
-{% extends 'certifications_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
   Certifications - Detail
 {% endblock %}
 
 {% block body %}
-<table class="table border">
-  <caption><b>Last modification:</b> {{ object.date }}</caption>
-  <thead class="table-light">
+  <table class="table border">
+    <caption>
+      <b>Last modification:</b> {{ object.date }}
+    </caption>
+    <thead class="table-light">
       <tr>
         <h1>Certification No. {{ object.number }} - <a href="{% url 'departments:detail' object.department.id %}" class="text-decoration-none">{{ object.department }}</a></h1>
       </tr>
@@ -18,16 +20,14 @@
           <b>Budget Item</b>
         </td>
         <td>
-          <a href = "{% url 'budget_items:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item }}</a>
+          <a href="{% url 'budget_items:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item }}</a>
         </td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>CPC</b>
         </td>
-        <td>          
-          {{ object.budget_item.cpc }}
-        </td>
+        <td>{{ object.budget_item.cpc }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
@@ -45,17 +45,13 @@
         <td style="width: 10%">
           <b>BID</b>
         </td>
-        <td>          
-          {{ object.budget_item.bid }}
-        </td>
+        <td>{{ object.budget_item.bid }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Budget Type</b>
         </td>
-        <td>
-          {{ object.budget_item.budget_type }}
-        </td>
+        <td>{{ object.budget_item.budget_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">

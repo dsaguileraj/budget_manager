@@ -1,8 +1,8 @@
-{% extends 'departments_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
-Departments - Update
-{% endblock title %}
+  Departments - Update
+{% endblock %}
 
 {% block body %}
   <h1>Update Department - {{ department.name }}</h1>
@@ -20,5 +20,5 @@ Departments - Update
       <a type="button" href="{% url 'budget_items:list' %}" class="btn btn-outline-secondary">Back</a>
       <button type="submit" class="btn btn-outline-primary">Save</button>
     </div>
-  </form> 
-{% endblock body %}
+  </form>
+{% endblock %}
