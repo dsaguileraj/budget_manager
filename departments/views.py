@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView
-from .models import Departments
+from .models import Departments, Employees
 
 
 class DepartmentsListView(ListView):
@@ -26,7 +26,7 @@ class DepartmentsDetailView(DetailView):
     template_name = "departments/detail.html"
 
 
-def create_department(request):
+def create_department(request):    
     if request.method == "POST":
         name = request.POST["name"]
         director = request.POST["director"]
@@ -37,7 +37,7 @@ def create_department(request):
         department.save()
         return redirect(reverse_lazy("departments:list"))
     else:
-        return render(request, "departments/create.html")
+        return render(request, "departments/create.html", {"employees": Employees.objects.all()})
 
 
 def delete_department(request, pk):

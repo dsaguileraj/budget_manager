@@ -6,27 +6,37 @@
 
 {% block body %}
   <h1>Update Employee - {{ employee.name }} {{ employee.surname }}</h1>
-  <form method="POST" class="row">
+  <form method="POST" class="row g-2">
     {% csrf_token %}
-    <div class="col-4">
-      <label for="ci" class="m-1 mt-2">CI</label>
-      <input type="text" class="form-control" id="ci" name="ci" value="{{ employee.ci }}" required />
+    <div class="col-12 col-md-4">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="ci" name="ci" value="{{ employee.ci }}" required />
+        <label for="ci">CI</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="name" class="m-1 mt-2">Name</label>
-      <input type="text" class="form-control" id="name" name="name" value="{{ employee.name }}" required />
+    <div class="col-12 col-md-4">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" name="name" value="{{ employee.name }}" required />
+        <label for="name">Name</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="surname" class="m-1 mt-2">Surname</label>
-      <input type="text" class="form-control" id="surname" name="surname" value="{{ employee.surname }}" required />
+    <div class="col-12 col-md-4">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="surname" name="surname" value="{{ employee.surname }}" required />
+        <label for="surname">Surname</label>
+      </div>
     </div>
-    <div class="col-6">
-      <label for="email" class="m-1 mt-2">Email</label>
-      <input type="email" class="form-control" id="email" name="email" value="{{ employee.email }}" required />
+    <div class="col-12 col-md-4">
+      <div class="form-floating">
+        <input type="email" class="form-control" id="email" name="email" value="{{ employee.email }}" required />
+        <label for="email">Email</label>
+      </div>
     </div>
-    <div class="col-6">
-      <label for="user" class="m-1 mt-2">User</label>
-      <input type="text" class="form-control" id="user" name="user" value="{{ employee.user }}" required />
+    <div class="col-12 col-md-4">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="user" name="user" value="{{ employee.user }}" required />
+        <label for="user">User</label>
+      </div>
     </div>
     <div class="mt-3">
       <a type="button" href="{% url 'employees:list' %}" class="btn btn-outline-secondary">Back</a>

@@ -2,43 +2,51 @@
 
 {% block title %}
   Procedures Types - Update
-{% endblock title %}
+{% endblock %}
 
 {% block body %}
-  <h1>Update Procedure Type - {{ procedure_type.name }}</h1>
-  <form method="POST" class="row">
+  <h1>Update Procedure - {{ procedure_type.name }}</h1>
+  <form method="POST" class="row g-2">
     {% csrf_token %}
-    <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name" name="name" value="{{ procedure_type.name }}" required>
+    <div class="col-12 col-md">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" name="name" value="{{ procedure_type.name }}" required />
+        <label for="name">Name</label>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="regime" class="form-label">Regime</label>
-      <select class="form-select" id="regime" name="regime" required>
-        {% for regime in regime_choices %}
-          <option value="{{ regime.0 }}" {% if value == procedure_type.regime %} selected {% endif %}>{{ regime.1 }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">        
+        <select class="form-select" id="regime" name="regime" required>
+          {% for regime in regime_choices %}
+            <option value="{{ regime.0 }}" {% if value == procedure_type.regime %} selected {% endif %}>{{ regime.1 }}</option>
+          {% endfor %}
+        </select>
+        <label for="regime">Regime</label>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="product_type" class="form-label">Product Type</label>
-      <select class="form-select" id="product_type" name="product_type" required>
-        {% for product_type in product_type_choices %}
-          <option value="{{ product_type.0 }}" {% if option.value == procedure_type.product_type %} selected {% endif %}>{{ product_type.1 }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="product_type" name="product_type" required>
+          {% for product_type in product_type_choices %}
+            <option value="{{ product_type.0 }}" {% if value == procedure_type.product_type %} selected {% endif %}>{{ product_type.1 }}</option>
+          {% endfor %}
+        </select>
+        <label for="product_type">Product Type</label>
+      </div>      
     </div>
-    <div class="mb-3">
-      <label for="purchase_type" class="form-label">Purchase Type</label>
-      <select class="form-select" id="purchase_type" name="purchase_type" required>
-        {% for purchase_type in purchase_type_choices %}
-          <option value="{{ purchase_type.0 }}" {% if value == procedure_type.purchase_type %} selected {% endif %}>{{ purchase_type.1 }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="purchase_type" name="purchase_type" required>
+          {% for purchase_type in purchase_type_choices %}
+            <option value="{{ purchase_type.0 }}" {% if value == procedure_type.purchase_type %} selected {% endif %}>{{ purchase_type.1 }}</option>
+          {% endfor %}
+        </select>
+        <label for="purchase_type">Purchase Type</label>
+      </div>      
     </div>
     <div class="mt-3">
       <a type="button" href="{% url 'procedures_types:list' %}" class="btn btn-outline-secondary">Back</a>
       <button type="submit" class="btn btn-outline-primary">Save</button>
     </div>
   </form>
-{% endblock body %}
+{% endblock %}

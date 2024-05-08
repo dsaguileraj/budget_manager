@@ -6,39 +6,51 @@
 
 {% block body %}
   <h1>Update Contract - {{ contract.id }}</h1>
-  <form method="POST" class="row">
+  <form method="POST" class="row g-2">
     {% csrf_token %}
-    <div class="col-4">
-      <label for="id" class="m-1 mt-2">ID</label>
-      <input type="text" class="form-control" id="id" name="id" value="{{ contract.id }}" required />
+    <div class="col-md-4 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="id" name="id" value="{{ contract.id }}" required />
+        <label for="id">ID</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="certification" class="m-1 mt-2">Certification</label>
-      <select class="form-select" id="procedure" name="certification">
-        {% for certification in certifications %}
-          <option value="{{ certification.number }}" {% if value == certification.number %} selected {% endif %}>{{ certification.number }} - {{ certification.budget_item }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-md-4 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="contractor" name="contractor" value="{{ contract.contractor }}" required />
+        <label for="contractor">Contractor</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="admin" class="m-1 mt-2">Admin</label>
-      <select class="form-select" id="admin" name="admin">
-        {% for employee in employees %}
-          <option value="{{ employee.ci }}" {% if value == employee.ci %} selected {% endif %}>{{ employee.name }} - {{ employee.surname }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-md-4 col-6">
+      <div class="form-floating">
+        <input type="date" class="form-control" id="date" name="date" value="{{ contract.date }}" required />
+        <label for="date">Suscription</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="date" class="m-1 mt-2">Suscription</label>
-      <input type="date" class="form-control" id="date" name="date" value="{{ contract.date }}" required />
+    <div class="col-md-4 col-6">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="duration" name="duration" min="0" value="{{ contract.duration }}" required />
+        <label for="duration">Duration (Days)</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="duration" class="m-1 mt-2">Duration (Days)</label>
-      <input type="number" class="form-control" id="duration" name="duration" min="0" value="{{ contract.duration }}" required />
+    <div class="col-md-4 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="certification" name="certification">
+          {% for certification in certifications %}
+            <option value="{{ certification.number }}" {% if value == contract.certification.number %} selected {% endif %}>Cert. #{{ certification.number }} - {{ certification.budget_item }} - USD {{ certification.budget }}</option>
+          {% endfor %}
+        </select>
+        <label for="certification">Certification</label>
+      </div>
     </div>
-    <div class="col-4">
-      <label for="contractor" class="m-1 mt-2">Contractor</label>
-      <input type="text" class="form-control" id="contractor" name="contractor" value="{{ contract.contractor }}" required />
+    <div class="col-md-4 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="admin" name="admin">          
+          {% for employee in employees %}
+            <option value="{{ employee.ci }}" {% if value == contract.admin.ci %} selected {% endif %}>{{ employee.name }} {{ employee.surname }}</option>
+          {% endfor %}
+        </select>
+        <label for="admin">Admin</label>
+      </div>
     </div>
     <div class="mt-2">
       <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Back</a>

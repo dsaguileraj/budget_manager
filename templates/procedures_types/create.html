@@ -6,35 +6,46 @@
 
 {% block body %}
   <h1>Create Procedure</h1>
-  <form method="POST" class="row">
+  <form method="POST" class="row g-2">
     {% csrf_token %}
-    <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name" name="name" required />
+    <div class="col-12 col-md">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" name="name" required />
+        <label for="name">Name</label>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="regime" class="form-label">Regime</label>
-      <select class="form-select" id="regime" name="regime" required>
-        {% for regime in regime_choices %}
-          <option value="{{ regime.0 }}">{{ regime.1 }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">        
+        <select class="form-select" id="regime" name="regime" required>
+          <option selected disabled value="">---</option>
+          {% for regime in regime_choices %}
+            <option value="{{ regime.0 }}">{{ regime.1 }}</option>
+          {% endfor %}
+        </select>
+        <label for="regime">Regime</label>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="product_type" class="form-label">Product Type</label>
-      <select class="form-select" id="product_type" name="product_type" required>
-        {% for product_type in product_type_choices %}
-          <option value="{{ product_type.0 }}">{{ product_type.1 }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="product_type" name="product_type" required>
+          <option selected disabled value="">---</option>
+          {% for product_type in product_type_choices %}
+            <option value="{{ product_type.0 }}">{{ product_type.1 }}</option>
+          {% endfor %}
+        </select>
+        <label for="product_type">Product Type</label>
+      </div>      
     </div>
-    <div class="mb-3">
-      <label for="purchase_type" class="form-label">Purchase Type</label>
-      <select class="form-select" id="purchase_type" name="purchase_type" required>
-        {% for purchase_type in purchase_type_choices %}
-          <option value="{{ purchase_type.0 }}">{{ purchase_type.1 }}</option>
-        {% endfor %}
-      </select>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="purchase_type" name="purchase_type" required>
+          <option selected disabled value="">---</option>
+          {% for purchase_type in purchase_type_choices %}
+            <option value="{{ purchase_type.0 }}">{{ purchase_type.1 }}</option>
+          {% endfor %}
+        </select>
+        <label for="purchase_type">Purchase Type</label>
+      </div>      
     </div>
     <div class="mt-3">
       <a type="button" href="{% url 'procedures_types:list' %}" class="btn btn-outline-secondary">Back</a>

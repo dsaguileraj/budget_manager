@@ -2,51 +2,69 @@
 
 {% block title %}
   Certifications - Update
-{% endblock title %}
+{% endblock %}
 
 {% block body %}
-  <h1>Update Certification No. {{ object.number }}</h1>
-  <form method="POST" class="row">
+  <h1>Update Certification No. {{ certification.number }}</h1>
+  {% if message %}
+    <div class="alert alert-warning" role="alert">{{ message }}</div>
+  {% endif %}
+  <form method="POST" class="row g-2">
     {% csrf_token %}
-    <div class="col-4">
-      <label for="procedure" class="m-1 mt-2">Procedure:</label>
-        <select class="form-select" id="procedure" name="procedure">
-          {% for procedure in procedures %}
-            <option value="{{ procedure.id }}" {% if value == certification.procedure.id %} selected {% endif %}>{{ procedure.name }}</option>
-          {% endfor %}
-        </select>
-    </div>
-    <div class="col-4">
-      <label for="department" class="m-1 mt-2">Department:</label>
-        <select class="form-select" id="department" name="department">
-          {% for department in departments %}
-            <option value="{{ department.id }}" {% if value == certification.department.id %} selected {% endif %}>{{ department.name }}</option>
-          {% endfor %}
-        </select>
-    </div>
-    <div class="col-4">
-      <label for="period" class="m-1 mt-2">Fourth-month Period:</label>
-      <input type="number" class="form-control" id="period" name="period" min="1" max="3" value="{{ certification.period }}" required />
-    </div>
-    <div class="col-6">
-      <label for="budget_item" class="m-1 mt-2">Budget Item:</label>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
         <select class="form-select" id="budget_item" name="budget_item">
+          <option selected disabled value="">---</option>
           {% for budget_item in budget_items %}
             <option value="{{ budget_item.id }}" {% if value == certification.budget_item.id %} selected {% endif %}>{{ budget_item.number }} - {{ budget_item.activity }}</option>
           {% endfor %}
         </select>
-    </div>    
-    <div class="col-6">
-      <label for="budget" class="m-1 mt-2">Budget (USD):</label>
-      <input type="number" class="form-control" id="budget" name="budget" min="0.01" max="{{ certification.budget }}" value="{{ certification.budget }}" required />
+        <label for="budget_item">Budget Item</label>
+      </div>
     </div>
-    <div class="col-12">
-      <label for="description" class="m-1 mt-2">Description:</label>
-        <textarea class="form-control" id="description" name="description" rows="3" required>{{ certification.description }}</textarea>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="procedure" name="procedure">
+          <option selected disabled value="">---</option>
+          {% for procedure in procedures %}
+            <option value="{{ procedure.id }}" {% if value == certification.procedure.id %} selected {% endif %}>{{ procedure.name }}</option>
+          {% endfor %}
+        </select>
+        <label for="procedure">Procedure</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="department" name="department">
+          <option selected disabled value="">---</option>
+          {% for department in departments %}
+            <option value="{{ department.id }}" {% if value == certification.department.id %} selected {% endif %}>{{ department.name }}</option>
+          {% endfor %}
+        </select>
+        <label for="department">Department</label>
+      </div>
+    </div>
+    <div class="col-md-4 col-8">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="budget" name="budget" min="0.01" value="{{ certification.budget }}" required />
+        <label for="budget">Budget (USD)</label>
+      </div>
+    </div>
+    <div class="col-md-2 col-4">
+      <div class="input-group h-100">
+        <span class="input-group-text">Period</span>
+        <input type="number" class="form-control" id="period" name="period" min="1" max="3" value="{{ certification.period }}" required />
+      </div>  
+    </div>
+    <div class="col-md-12 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" id="description" name="description" rows="3" required>{{ certification.description }}"</textarea>
+        <label for="description">Description</label>
+      </div>
     </div>
     <div class="mt-2">
       <a href="{% url 'certifications:list' %}" class="btn btn-outline-secondary">Back</a>
       <button type="submit" class="btn btn-outline-primary">Save</button>
     </div>
   </form>
-{% endblock body %}
+{% endblock %}
