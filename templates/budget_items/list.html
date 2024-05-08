@@ -40,10 +40,10 @@
               <td>{{ object.activity }}</td>
               <td>USD {{ object.budget }}</td>
               <td>
-                <a href="{% url 'budget_items:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
+                <a href="{% url 'budget_items:detail' object.pk %}" class="btn btn-outline-success w-100">View</a>
               </td>
               <td>
-                <a href="{% url 'budget_items:delete' object.pk %}"><button class="btn btn-outline-danger w-100">Delete</button></a>
+                <a href="{% url 'budget_items:delete' object.pk %}" class="btn btn-outline-danger w-100">Delete</a>
               </td>
             </tr>
           {% endfor %}
@@ -53,7 +53,7 @@
             <th colspan="4" class="text-end">Total</th>
             <th>USD {{ total_budget }}</th>
             <th colspan="2">
-              <a href="{% url 'budget_items:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a>
+              <a href="{% url 'budget_items:create' %}" class="btn btn-outline-primary w-100">Create</a>
             </th>
           </tr>
         </tfoot>

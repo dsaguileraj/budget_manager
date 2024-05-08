@@ -9,7 +9,6 @@ class Contracts(models.Model):
         Certifications,
         on_delete=models.DO_NOTHING
     )
-    advance = models.BooleanField(default=False)
     admin = models.ForeignKey(
         Employees,
         on_delete=models.DO_NOTHING

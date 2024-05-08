@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Contracts - Update
+{% endblock %}
+
+{% block body %}
+  <h1>Update Contract - {{ contract.id }}</h1>
+  <form method="POST" class="row">
+    {% csrf_token %}
+    <div class="col-4">
+      <label for="id" class="m-1 mt-2">ID</label>
+      <input type="text" class="form-control" id="id" name="id" value="{{ contract.id }}" required />
+    </div>
+    <div class="col-4">
+      <label for="certification" class="m-1 mt-2">Certification</label>
+      <select class="form-select" id="procedure" name="certification">
+        {% for certification in certifications %}
+          <option value="{{ certification.number }}" {% if value == certification.number %} selected {% endif %}>{{ certification.number }} - {{ certification.budget_item }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-4">
+      <label for="admin" class="m-1 mt-2">Admin</label>
+      <select class="form-select" id="admin" name="admin">
+        {% for employee in employees %}
+          <option value="{{ employee.ci }}" {% if value == employee.ci %} selected {% endif %}>{{ employee.name }} - {{ employee.surname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-4">
+      <label for="date" class="m-1 mt-2">Suscription</label>
+      <input type="date" class="form-control" id="date" name="date" value="{{ contract.date }}" required />
+    </div>
+    <div class="col-4">
+      <label for="duration" class="m-1 mt-2">Duration (Days)</label>
+      <input type="number" class="form-control" id="duration" name="duration" min="0" value="{{ contract.duration }}" required />
+    </div>
+    <div class="col-4">
+      <label for="contractor" class="m-1 mt-2">Contractor</label>
+      <input type="text" class="form-control" id="contractor" name="contractor" value="{{ contract.contractor }}" required />
+    </div>
+    <div class="mt-2">
+      <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Back</a>
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+{% endblock %}
