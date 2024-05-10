@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Contracts - Update
+  Contratos
 {% endblock %}
 
 {% block body %}
-  <h1>Update Contract - {{ contract.id }}</h1>
+  <h1 class="mb-4">Contrato No. {{ contract.id }}</h1>
   <form method="POST" class="row g-2">
     {% csrf_token %}
     <div class="col-md-4 col-6">
@@ -17,19 +17,19 @@
     <div class="col-md-4 col-6">
       <div class="form-floating">
         <input type="text" class="form-control" id="contractor" name="contractor" value="{{ contract.contractor }}" required />
-        <label for="contractor">Contractor</label>
+        <label for="contractor">Contratista</label>
       </div>
     </div>
     <div class="col-md-4 col-6">
       <div class="form-floating">
         <input type="date" class="form-control" id="date" name="date" value="{{ contract.date }}" required />
-        <label for="date">Suscription</label>
+        <label for="date">Fecha de Suscripción</label>
       </div>
     </div>
     <div class="col-md-4 col-6">
       <div class="form-floating">
         <input type="number" class="form-control" id="duration" name="duration" min="0" value="{{ contract.duration }}" required />
-        <label for="duration">Duration (Days)</label>
+        <label for="duration">Plazo de Ejecución</label>
       </div>
     </div>
     <div class="col-md-4 col-12">
@@ -39,7 +39,7 @@
             <option value="{{ certification.number }}" {% if value == contract.certification.number %} selected {% endif %}>Cert. #{{ certification.number }} - {{ certification.budget_item }} - USD {{ certification.budget }}</option>
           {% endfor %}
         </select>
-        <label for="certification">Certification</label>
+        <label for="certification">Certificación</label>
       </div>
     </div>
     <div class="col-md-4 col-12">
@@ -49,12 +49,12 @@
             <option value="{{ employee.ci }}" {% if value == contract.admin.ci %} selected {% endif %}>{{ employee.name }} {{ employee.surname }}</option>
           {% endfor %}
         </select>
-        <label for="admin">Admin</label>
+        <label for="admin">Administrador</label>
       </div>
     </div>
     <div class="mt-2">
-      <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Back</a>
-      <button type="submit" class="btn btn-outline-primary">Save</button>
+      <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-outline-primary">Guardar</button>
     </div>
   </form>
 {% endblock %}

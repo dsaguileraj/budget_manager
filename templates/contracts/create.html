@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Contracts - Create
+  Contratos
 {% endblock %}
 
 {% block body %}
-  <h1>Create Contract</h1>
+  <h1 class="mb-4">Crear Contrato</h1>
   <form method="POST" class="row g-2">
     {% csrf_token %}
     <div class="col-md-4 col-6">
@@ -17,46 +17,46 @@
     <div class="col-md-4 col-6">
       <div class="form-floating">
         <input type="text" class="form-control" id="contractor" name="contractor" required />
-        <label for="contractor">Contractor</label>
+        <label for="contractor">Contratista</label>
       </div>
     </div>
     <div class="col-md-4 col-6">
       <div class="form-floating">
         <input type="date" class="form-control" id="date" name="date" required />
-        <label for="date">Suscription</label>
+        <label for="date">Fecha de Suscripción</label>
       </div>
     </div>
     <div class="col-md-4 col-6">
       <div class="form-floating">
         <input type="number" class="form-control" id="duration" name="duration" min="0" required />
-        <label for="duration">Duration (Days)</label>
+        <label for="duration">Plazo de Ejecución</label>
       </div>
     </div>
     <div class="col-md-4 col-12">
       <div class="form-floating">
         <select class="form-select" id="procedure" name="certification">
-          <option selected disabled value="">---</option>
+          <option selected disabled>---</option>
           {% for certification in certifications %}
             <option value="{{ certification.number }}">Cert. #{{ certification.number }} - {{ certification.budget_item }} - USD {{ certification.budget }}</option>
           {% endfor %}
         </select>
-        <label for="certification">Certification</label>
+        <label for="certification">Certificación</label>
       </div>
     </div>
     <div class="col-md-4 col-12">
       <div class="form-floating">
         <select class="form-select" id="admin" name="admin">
-          <option selected disabled value="">---</option>
+          <option selected disabled>---</option>
           {% for employee in employees %}
             <option value="{{ employee.id }}">{{ employee.name }} {{ employee.surname }}</option>
           {% endfor %}
         </select>
-        <label for="admin">Admin</label>
+        <label for="admin">Administrador</label>
       </div>
     </div>
     <div class="mt-2">
-      <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Back</a>
-      <button type="submit" class="btn btn-outline-primary">Save</button>
+      <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-outline-primary">Guardar</button>
     </div>
   </form>
 {% endblock %}

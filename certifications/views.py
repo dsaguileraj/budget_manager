@@ -18,7 +18,7 @@ class CertificationsListView(ListView):
                     description__icontains=query)
             ).order_by("number")
         else:
-            return Certifications.objects.order_by("number")[:50]
+            return Certifications.objects.order_by("number")
 
 
 class CertificationsDetailView(DetailView):
@@ -64,15 +64,15 @@ def create_certification(request):
 
 def delete_certification(request, pk):
     try:
-        record = Certifications.objects.get(pk=pk)
-        record.delete()
-        message = "Record deleted successfully"
+        certification = Certifications.objects.get(pk=pk)
+        certification.delete()
+        deleted = True
     except Certifications.DoesNotExist:
-        message = "Record not found"
-    if message == "Record deleted successfully":
+        deleted = False
+    if deleted:
         return redirect(reverse_lazy("certifications:list"))
     else:
-        return render(request, "certifications/list.html", {"message": message})
+        return render(request, "certifications/list.html")
 
 
 def update_certification(request, pk):

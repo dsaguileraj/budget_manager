@@ -1,31 +1,28 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Procedures Types - List
+  Procedimientos
 {% endblock %}
 
 {% block form %}
   <form action="{% url 'procedures_types:list' %}" class="d-flex" role="search">
-    <input name="q" class="form-control me-2" type="search" placeholder="Search Procedure" aria-label="Search Procedure" />
-    <button class="btn btn-secondary" type="submit">Search</button>
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Procedimiento" />
+    <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
 {% endblock %}
 
 {% block body %}
   {% if object_list %}
     {% csrf_token %}
-    <h1>Procedures Types</h1>
-    {% if message %}
-      <div class="alert alert-warning" role="alert">{{ message }}</div>
-    {% endif %}
+    <h1>Tipos de Procedimientos</h1>
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
           <tr>
-            <th>Name</th>
-            <th>Regime</th>
-            <th>Purchase Type</th>
-            <th>No. Certifications</th>
+            <th>Nombre</th>
+            <th>Régimen</th>
+            <th>Tipo de Compra</th>
+            <th>Certificaciones</th>
             <th>‎</th>
             <th>‎</th>
           </tr>
@@ -38,10 +35,10 @@
               <td>{{ object.purchase_type }}</td>
               <td>{{ object.certifications_set.count }}</td>
               <td>
-                <a href="{% url 'procedures_types:detail' object.pk %}"><button class="btn btn-outline-success w-100">View</button></a>
+                <a href="{% url 'procedures_types:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
               </td>
               <td>
-                <a href="{% url 'procedures_types:delete' object.pk %}"><button class="btn btn-outline-danger w-100">Delete</button></a>
+                <a href="{% url 'procedures_types:delete' object.pk %}" class="btn btn-outline-danger w-100">Eliminar</a>
               </td>
             </tr>
           {% endfor %}
@@ -50,15 +47,15 @@
           <tr>
             <th colspan="4" class="text-end"></th>
             <th colspan="2">
-              <a href="{% url 'procedures_types:create' %}"><button class="btn btn-outline-primary w-100">Create</button></a>
+              <a href="{% url 'procedures_types:create' %}" class="btn btn-outline-primary w-100">Crear</a>
             </th>
           </tr>
         </tfoot>
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning" role="alert">Record not found</div>
-    <a href="{% url 'procedures_types:list' %}"><button class="btn btn-outline-primary">Refresh</button></a>
-    <a href="{% url 'procedures_types:create' %}"><button class="btn btn-outline-success">Create</button></a>
+  <div class="alert alert-warning mt-3" role="alert">
+    No se han tipos de procedimientos todavía, intente creando <a href="{% url 'procedures_types:create' %}">aquí</a>
+  </div>
   {% endif %}
 {% endblock %}

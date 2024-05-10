@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Departments - Detail
+  Departamentos
 {% endblock %}
 
 {% block body %}
   <table class="table border">
     <thead class="table-light">
-      <h1>Department - {{ object.name }}</h1>
+      <h1>{{ object.name }}</h1>
     </thead>
     <tbody>
       <tr>
@@ -18,26 +18,30 @@
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Certifications</b>
+          <b>Certificaciones</b>
         </td>
         <td>
           <div class="list-group">
-            {% for certification in object.certifications_set.all %}
-              <a href="{% url 'certifications:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Certification No. {{ certification.number }}</h5>
-                  <small>{{ certification.date }}</small>
-                </div>
-                <p class="mb-1">{{ certification.description }}</p>
-                <small>USD {{ certification.budget }}</small>
-              </a>
-            {% endfor %}
+            {% if object.certifications_set.all %}
+              {% for certification in object.certifications_set.all %}
+                <a href="{% url 'certifications:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Certificación No. {{ certification.number }}</h5>
+                    <small>{{ certification.date }}</small>
+                  </div>
+                  <p class="mb-1">{{ certification.description }}</p>
+                  <small>USD {{ certification.budget }}</small>
+                </a>
+              {% endfor %}
+            {% else %}
+              -
+            {% endif %}
           </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'departments:list' %}" class="btn btn-outline-primary">Back</a>
-  <a href="{% url 'departments:update' object.pk %}" class="btn btn-outline-success">Update</a>
-  <a href="{% url 'departments:delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
+  <a href="{% url 'departments:list' %}" class="btn btn-outline-primary">Volver</a>
+  <a href="{% url 'departments:update' object.pk %}" class="btn btn-outline-success">Editar</a>
+  <a href="{% url 'departments:delete' object.pk %}" class="btn btn-outline-danger">Eliminar</a>
 {% endblock %}

@@ -1,70 +1,72 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Certifications - Create
+  Certificaciones
 {% endblock %}
 
 {% block body %}
-  <h1>Create Certification</h1>
+  <h1 class="mb-4">Crear Certificaciónn</h1>
   {% if message %}
-    <div class="alert alert-warning" role="alert">{{ message }}</div>
+    <div class="alert alert-warning" role="alert">
+      {{ message }}
+    </div>
   {% endif %}
   <form method="POST" class="row g-2">
     {% csrf_token %}
     <div class="col-md-6 col-12">
       <div class="form-floating">
         <select class="form-select" id="budget_item" name="budget_item">
-          <option selected disabled value="">---</option>
+          <option selected disabled>---</option>
           {% for budget_item in budget_items %}
             <option value="{{ budget_item.id }}">{{ budget_item.number }} - {{ budget_item.activity }}</option>
           {% endfor %}
         </select>
-        <label for="budget_item">Budget Item</label>
+        <label for="budget_item">Partida Presupuestaria</label>
       </div>
     </div>
     <div class="col-md-6 col-12">
       <div class="form-floating">
         <select class="form-select" id="procedure" name="procedure">
-          <option selected disabled value="">---</option>
+          <option selected disabled>---</option>
           {% for procedure in procedures %}
             <option value="{{ procedure.id }}">{{ procedure.name }}</option>
           {% endfor %}
         </select>
-        <label for="procedure">Procedure</label>
+        <label for="procedure">Procedimiento</label>
       </div>
     </div>
     <div class="col-md-6 col-12">
       <div class="form-floating">
         <select class="form-select" id="department" name="department">
-          <option selected disabled value="">---</option>
+          <option selected disabled>---</option>
           {% for department in departments %}
             <option value="{{ department.id }}">{{ department.name }}</option>
           {% endfor %}
         </select>
-        <label for="department">Department</label>
+        <label for="department">Departamento</label>
       </div>
     </div>
     <div class="col-md-4 col-8">
       <div class="form-floating">
         <input type="number" class="form-control" id="budget" name="budget" min="0.01" required />
-        <label for="budget">Budget (USD)</label>
+        <label for="budget">Presupuesto (USD)</label>
       </div>
     </div>
     <div class="col-md-2 col-4">
       <div class="input-group h-100">
-        <span class="input-group-text">Period</span>
+        <span class="input-group-text">Periodo</span>
         <input type="number" class="form-control" id="period" name="period" min="1" max="3" required />
       </div>
     </div>
     <div class="col-md-12 col-12">
       <div class="form-floating">
         <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-        <label for="description">Description</label>
+        <label for="description">Descripción</label>
       </div>
     </div>
     <div class="mt-2">
-      <a href="{% url 'certifications:list' %}" class="btn btn-outline-secondary">Back</a>
-      <button type="submit" class="btn btn-outline-primary">Save</button>
+      <a href="{% url 'certifications:list' %}" class="btn btn-outline-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-outline-primary">Guardar</button>
     </div>
   </form>
 {% endblock %}

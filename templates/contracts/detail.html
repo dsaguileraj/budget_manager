@@ -1,36 +1,36 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Contracts - Detail
+  Contratos
 {% endblock %}
 
 {% block body %}
   <table class="table border">
     <thead class="table-light">
-      <h1>Contract - {{ object.id }}</h1>
+      <h1>Contrato No. {{ object.id }}</h1>
     </thead>
     <tbody>
       <tr>
         <td style="width: 10%">
-          <b>Admin</b>
+          <b>Administrador de Contrato</b>
         </td>
         <td>{{ object.admin.name }} {{ object.admin.surname }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Contractor</b>
+          <b>Contratista</b>
         </td>
         <td>{{ object.contractor }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Certification</b>
+          <b>Certificación</b>
         </td>
         <td>
           <div class="list-group">
             <a href="{% url 'certifications:detail' object.certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Certification No. {{ object.certification.number }}</h5>
+                <h5 class="mb-1">Certificación No. {{ object.certification.number }}</h5>
                 <small>{{ object.certification.date }}</small>
               </div>
               <p class="mb-1">{{ object.certification.description }}</p>
@@ -41,19 +41,19 @@
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Suscription</b>
+          <b>Fecha de Suscripción</b>
         </td>
         <td>{{ object.date }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Duration</b>
+          <b>Plazo de Ejecución</b>
         </td>
         <td>{{ object.duration }}d</td>
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'contracts:list' %}" class="btn btn-outline-primary">Back</a>
-  <a href="{% url 'contracts:update' object.pk %}" class="btn btn-outline-success">Update</a>
-  <a href="{% url 'contracts:delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
+  <a href="{% url 'contracts:list' %}" class="btn btn-outline-primary">Volver</a>
+  <a href="{% url 'contracts:update' object.pk %}" class="btn btn-outline-success">Editar</a>
+  <a href="{% url 'contracts:delete' object.pk %}" class="btn btn-outline-danger">Eliminar</a>
 {% endblock %}

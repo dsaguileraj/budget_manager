@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Employees - Create
+  Empleados
 {% endblock %}
 
 {% block body %}
-  <h1>Create Employee</h1>
+  <h1>Crear Empleado</h1>
   <form method="POST" class="row g-2">
     {% csrf_token %}
     <div class="col-12 col-md-4">
@@ -17,13 +17,13 @@
     <div class="col-12 col-md-4">
       <div class="form-floating">
         <input type="text" class="form-control" id="name" name="name" required />
-        <label for="name">Name</label>
+        <label for="name">Nombres</label>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="form-floating">
         <input type="text" class="form-control" id="surname" name="surname" required />
-        <label for="surname">Surname</label>
+        <label for="surname">Apellidos</label>
       </div>
     </div>
     <div class="col-12 col-md-4">
@@ -35,12 +35,12 @@
     <div class="col-12 col-md-4">
       <div class="form-floating">
         <input type="text" class="form-control" id="user" name="user" required />
-        <label for="user">User</label>
+        <label for="user">Usuario</label>
       </div>
     </div>
     <div class="mt-3">
-      <a type="button" href="{% url 'employees:list' %}" class="btn btn-outline-secondary">Back</a>
-      <button type="submit" class="btn btn-outline-primary">Save</button>
+      <a type="button" href="{% url 'employees:list' %}" class="btn btn-outline-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-outline-primary">Guardar</button>
     </div>
   </form>
 {% endblock %}

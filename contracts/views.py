@@ -17,7 +17,7 @@ class ContractsListView(ListView):
                     admin__icontains=query) | models.Q(contractor__icontains=query)
             ).order_by("id")
         else:
-            return Contracts.objects.order_by("id")[:50]
+            return Contracts.objects.order_by("id")
 
 
 class ContractsDetailView(DetailView):
@@ -57,18 +57,18 @@ def create_contract(request):
 
 def delete_contract(request, pk):
     try:
-        record = Contracts.objects.get(pk=pk)
-        record.delete()
-        message = "Record deleted successfully"
+        contract = Contracts.objects.get(pk=pk)
+        contract.delete()
+        deleted = True
     except Contracts.DoesNotExist:
-        message = "Record not found"
-    if message == "Record deleted successfully":
+        deleted = False
+    if deleted:
         return redirect(reverse_lazy("contracts:list"))
     else:
-        return render(request, "contracts/list.html", {"message": message})
+        return render(request, "contracts/list.html")
 
 
-def update_contract(request, pk):    
+def update_contract(request, pk):
     contract = Contracts.objects.get(pk=pk)
     context = {
         "employees": Employees.objects.all(),

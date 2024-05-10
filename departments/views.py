@@ -18,7 +18,7 @@ class DepartmentsListView(ListView):
                     director__icontains=query)
             ).order_by("name")
         else:
-            return Departments.objects.order_by("name")[:50]
+            return Departments.objects.order_by("name")
 
 
 class DepartmentsDetailView(DetailView):
@@ -42,15 +42,15 @@ def create_department(request):
 
 def delete_department(request, pk):
     try:
-        record = Departments.objects.get(pk=pk)
-        record.delete()
-        message = "Record deleted successfully"
+        department = Departments.objects.get(pk=pk)
+        department.delete()
+        deleted = True
     except Departments.DoesNotExist:
-        message = "Record not found"
-    if message == "Record deleted successfully":
+        deleted = False
+    if deleted:
         return redirect(reverse_lazy("departments:list"))
     else:
-        return render(request, "departments/list.html", {"message": message})
+        return render(request, "departments/list.html")
 
 
 def update_department(request, pk):

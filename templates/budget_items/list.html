@@ -1,32 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Budget Items - List
+  Partidas Presupuestarias
 {% endblock %}
 
 {% block form %}
   <form action="{% url 'budget_items:list' %}" class="d-flex" role="search">
-    <input name="q" class="form-control me-2" type="search" placeholder="Search Budget Item" aria-label="Search Budget Item" />
-    <button class="btn btn-secondary" type="submit">Search</button>
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Partida" />
+    <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
 {% endblock %}
 
 {% block body %}
   {% if object_list %}
     {% csrf_token %}
-    <h1>Budget Items</h1>
-    {% if message %}
-      <div class="alert alert-warning" role="alert">{{ message }}</div>
-    {% endif %}
+    <h1>Partidas Presupuestarias</h1>
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
           <tr>
-            <th>Number</th>
+            <th>Número</th>
             <th>CPC</th>
-            <th>Description</th>
-            <th>Activity</th>
-            <th>Budget</th>
+            <th>Descripción</th>
+            <th>Actividad</th>
+            <th>Presupuesto</th>
             <th>‎</th>
             <th>‎</th>
           </tr>
@@ -40,10 +37,10 @@
               <td>{{ object.activity }}</td>
               <td>USD {{ object.budget }}</td>
               <td>
-                <a href="{% url 'budget_items:detail' object.pk %}" class="btn btn-outline-success w-100">View</a>
+                <a href="{% url 'budget_items:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
               </td>
               <td>
-                <a href="{% url 'budget_items:delete' object.pk %}" class="btn btn-outline-danger w-100">Delete</a>
+                <a href="{% url 'budget_items:delete' object.pk %}" class="btn btn-outline-danger w-100">Eliminar</a>
               </td>
             </tr>
           {% endfor %}
@@ -53,15 +50,15 @@
             <th colspan="4" class="text-end">Total</th>
             <th>USD {{ total_budget }}</th>
             <th colspan="2">
-              <a href="{% url 'budget_items:create' %}" class="btn btn-outline-primary w-100">Create</a>
+              <a href="{% url 'budget_items:create' %}" class="btn btn-outline-primary w-100">Crear</a>
             </th>
           </tr>
         </tfoot>
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning mt-3" role="alert">Record not found</div>
-    <a href="{% url 'budget_items:list' %}" class="btn btn-outline-primary">Refresh</a>
-    <a href="{% url 'budget_items:create' %}"><button class="btn btn-outline-success">Create</button></a>
+    <div class="alert alert-warning mt-3" role="alert">
+      No se han registrado partidas presupuestarias todavía, intente creando <a href="{% url 'budget_items:create' %}">aquí</a>
+    </div>
   {% endif %}
 {% endblock %}

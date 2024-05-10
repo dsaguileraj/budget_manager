@@ -18,7 +18,7 @@ class BudgetItemsListView(ListView):
                     description__icontains=query) | models.Q(activity__icontains=query)
             ).order_by("number")
         else:
-            return BudgetItems.objects.order_by("number")[:50]
+            return BudgetItems.objects.order_by("number")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,15 +58,15 @@ def create_budget_item(request):
 
 def delete_budget_item(request, pk):
     try:
-        record = BudgetItems.objects.get(pk=pk)
-        record.delete()
-        message = "Record deleted successfully"
+        budget_item = BudgetItems.objects.get(pk=pk)
+        budget_item.delete()
+        deleted = True
     except BudgetItems.DoesNotExist:
-        message = "Record not found"
-    if message == "Record deleted successfully":
+        deleted = False
+    if deleted:
         return redirect(reverse_lazy("budget_items:list"))
     else:
-        return render(request, "budget_items/list.html", {"message": message})
+        return render(request, "budget_items/list.html")
 
 
 def update_budget_item(request, pk):

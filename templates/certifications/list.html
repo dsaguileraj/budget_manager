@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Certifications - List
+  Certificaciones
 {% endblock %}
 
 {% block form %}
   <form action="{% url 'certifications:list' %}" class="d-flex" role="search">
-    <input name="q" class="form-control me-2" type="search" placeholder="Search Certification" aria-label="Search Certification" />
-    <button class="btn btn-secondary" type="submit">Search</button>
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Certificación" />
+    <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
 {% endblock %}
 
 {% block body %}
   {% if object_list %}
     {% csrf_token %}
-    <h1>Certifications</h1>
+    <h1>Certificaciones</h1>
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
           <tr>
-            <th>Number</th>
-            <th>Budget Item</th>
-            <th>Description</th>
-            <th>Activity</th>
-            <th>Budget</th>
+            <th>Número</th>
+            <th>Partida Presupuestaria</th>
+            <th>Descripción</th>
+            <th>Actividad</th>
+            <th>Presupuesto</th>
             <th>‎</th>
             <th>‎</th>
           </tr>
@@ -58,8 +58,8 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning" role="alert">Record not found</div>
-    <a href="{% url 'certifications:list' %}" class="btn btn-outline-primary">Refresh</a>
-    <a href="{% url 'certifications:create' %}" class="btn btn-outline-success">Create</a>
+    <div class="alert alert-warning" role="alert">
+      No se han registrado certificaciones todavía, intente creando <a href="{% url 'certifications:create' %}">aquí</a>
+    </div>    
   {% endif %}
 {% endblock %}

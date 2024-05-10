@@ -1,55 +1,59 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Procedures Types - Detail
+  Procedimientos
 {% endblock %}
 
 {% block body %}
   <table class="table border">
     <thead class="table-light">
-      <h1>Detail - {{ object.name }}</h1>
+      <h1>{{ object.name }}</h1>
     </thead>
     <tbody>
       <tr>
         <td style="width: 10%">
-          <b>Regime</b>
+          <b>Régimen</b>
         </td>
         <td>{{ object.regime }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Product Type</b>
+          <b>Tipo de Producto</b>
         </td>
         <td>{{ object.product_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Purchase Type</b>
+          <b>Tipo de Compra</b>
         </td>
         <td>{{ object.purchase_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Certifications</b>
+          <b>Certificaciones</b>
         </td>
         <td>
           <div class="list-group">
-            {% for certification in object.certifications_set.all %}
-              <a href="{% url 'certifications:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">Certification No. {{ certification.number }} - {{ certification.department }}</h5>
-                  <small>{{ certification.date }}</small>
-                </div>
-                <p class="mb-1">{{ certification.description }}</p>
-                <small>USD {{ certification.budget }}</small>
-              </a>
-            {% endfor %}
+            {% if object.certifications_set.all %}
+              {% for certification in object.certifications_set.all %}
+                <a href="{% url 'certifications:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Certificación No. {{ certification.number }} - {{ certification.department }}</h5>
+                    <small>{{ certification.date }}</small>
+                  </div>
+                  <p class="mb-1">{{ certification.description }}</p>
+                  <small>USD {{ certification.budget }}</small>
+                </a>
+              {% endfor %}
+            {% else %}
+              -
+            {% endif %}
           </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'procedures_types:list' %}"><button class="btn btn-outline-primary">Back</button></a>
-  <a href="{% url 'procedures_types:update' object.pk %}"><button class="btn btn-outline-success">Update</button></a>
-  <a href="{% url 'procedures_types:delete' object.pk %}"><button class="btn btn-outline-danger">Delete</button></a>
+  <a href="{% url 'procedures_types:list' %}"><button class="btn btn-outline-primary">Volver</button></a>
+  <a href="{% url 'procedures_types:update' object.pk %}"><button class="btn btn-outline-success">Editar</button></a>
+  <a href="{% url 'procedures_types:delete' object.pk %}"><button class="btn btn-outline-danger">Eliminar</button></a>
 {% endblock %}

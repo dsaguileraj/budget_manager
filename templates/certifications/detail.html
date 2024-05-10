@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Certifications - Detail
+  Certificaciones
 {% endblock %}
 
 {% block body %}
   <table class="table border">
     <caption>
-      <b>Last modification:</b> {{ object.date }}
+      <b>Última Modificación:</b> {{ object.date }}
     </caption>
     <thead class="table-light">
       <tr>
-        <h1>Certification No. {{ object.number }} - <a href="{% url 'departments:detail' object.department.id %}" class="text-decoration-none">{{ object.department }}</a></h1>
+        <h1>Certificación No. {{ object.number }} - <a href="{% url 'departments:detail' object.department.id %}" class="text-decoration-none">{{ object.department }}</a></h1>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td style="width: 10%">
-          <b>Budget Item</b>
+          <b>Partida Presupuestaria</b>
         </td>
         <td>
           <a href="{% url 'budget_items:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item }}</a>
@@ -31,13 +31,13 @@
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Purchase Type</b>
+          <b>Tipo de Compra</b>
         </td>
         <td>{{ object.procedure.purchase_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Regime</b>
+          <b>Régimen</b>
         </td>
         <td>{{ object.procedure.regime }}</td>
       </tr>
@@ -49,49 +49,49 @@
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Budget Type</b>
+          <b>Tipo de Presupuesto</b>
         </td>
         <td>{{ object.budget_item.budget_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Product Type</b>
+          <b>Tipo de Producto</b>
         </td>
         <td>{{ object.procedure.product_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Procedure</b>
+          <b>Procedimiento</b>
         </td>
         <td>{{ object.procedure }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Description</b>
+          <b>Descripción</b>
         </td>
         <td>{{ object.description }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Activity</b>
+          <b>Actividad</b>
         </td>
         <td>{{ object.budget_item.activity }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Budget</b>
+          <b>Presupuesto</b>
         </td>
         <td>USD {{ object.budget }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
-          <b>Period</b>
+          <b>Periodo</b>
         </td>
         <td>C{{ object.period }}</td>
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'certifications:list' %}" class="btn btn-outline-primary">Back</a>
-  <a href="{% url 'certifications:update' object.pk %}" class="btn btn-outline-success">Update</a>
-  <a href="{% url 'certifications:delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
+  <a href="{% url 'certifications:list' %}" class="btn btn-outline-primary">Volver</a>
+  <a href="{% url 'certifications:update' object.pk %}" class="btn btn-outline-success">Editar</a>
+  <a href="{% url 'certifications:delete' object.pk %}" class="btn btn-outline-danger">Eliminar</a>
 {% endblock %}

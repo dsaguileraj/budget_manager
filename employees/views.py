@@ -17,7 +17,7 @@ class EmployeesListView(ListView):
                     surname__icontains=query) | models.Q(email__icontains=query) | models.Q(user__icontains=query)
             ).order_by("number")
         else:
-            return Employees.objects.order_by("ci")[:50]
+            return Employees.objects.order_by("ci")
 
 
 class EmployeesDetailView(DetailView):
@@ -47,15 +47,15 @@ def create_employee(request):
 
 def delete_employee(request, pk):
     try:
-        record = Employees.objects.get(pk=pk)
-        record.delete()
-        message = "Record deleted successfully"
+        employee = Employees.objects.get(pk=pk)
+        employee.delete()
+        deleted = True
     except Employees.DoesNotExist:
-        message = "Record not found"
-    if message == "Record deleted successfully":
-        return redirect(reverse_lazy(""))
+        deleted = False
+    if deleted:
+        return redirect(reverse_lazy("employees:list"))
     else:
-        return render(request, "employees/list.html", {"message": message})
+        return render(request, "employees/list.html")
 
 
 def update_employee(request, pk):

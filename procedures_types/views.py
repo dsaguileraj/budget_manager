@@ -18,7 +18,7 @@ class ProceduresTypesListView(ListView):
                     product_type__icontains=query) | models.Q(purchase_type__icontains=query)
             ).order_by("name")
         else:
-            return ProceduresTypes.objects.order_by("name")[:50]
+            return ProceduresTypes.objects.order_by("name")
 
 
 class ProceduresTypesDetailView(DetailView):
@@ -51,15 +51,15 @@ def create_procedure_type(request):
 
 def delete_procedure_type(request, pk):
     try:
-        record = ProceduresTypes.objects.get(pk=pk)
-        record.delete()
-        message = "Record deleted successfully"
+        procedure = ProceduresTypes.objects.get(pk=pk)
+        procedure.delete()
+        deleted = True
     except ProceduresTypes.DoesNotExist:
-        message = "Record not found"
-    if message == "Record deleted successfully":
+        deleted = False
+    if deleted:
         return redirect(reverse_lazy("procedures_types:list"))
     else:
-        return render(request, "procedures_types/list.html", {"message": message})
+        return render(request, "procedures_types/list.html")
 
 
 def update_procedure_type(request, pk):

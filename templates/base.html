@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,24 +18,24 @@
         <img src="https://pasaje.gob.ec/wp-content/uploads/2023/05/cropped-icono8_izqMP_black.png" alt="">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">            
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'budget_items:list' %}">Budget Items</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'certifications:list' %}">Certificaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'certifications:list' %}">Certifications</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'contracts:list' %}">Contratos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'contracts:list' %}">Contracts</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'departments:list' %}">Departamentos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'departments:list' %}">Departments</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'employees:list' %}">Empleados</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'employees:list' %}">Employees</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'budget_items:list' %}">Partidas Presupuestarias</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'procedures_types:list' %}">Procedures Types</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'procedures_types:list' %}">Procedimientos</a>
             </li>
           </ul>
           {% block form %}
