@@ -13,41 +13,73 @@
     </title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-      <div class="container-fluid">
-        <img src="https://pasaje.gob.ec/wp-content/uploads/2023/05/cropped-icono8_izqMP_black.png" alt="">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">            
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'certifications:list' %}">Certificaciones</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'contracts:list' %}">Contratos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'departments:list' %}">Departamentos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'employees:list' %}">Empleados</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'budget_items:list' %}">Partidas Presupuestarias</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'procedures_types:list' %}">Procedimientos</a>
-            </li>
-          </ul>
-          {% block form %}
+    {% if user.is_authenticated %}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+          <a href="https://pasaje.gob.ec/"><img src="https://pasaje.gob.ec/wp-content/uploads/2023/05/cropped-icono8_izqMP_black.png" alt="" /></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="me-5">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'certifications:list' %}">Certificaciones</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'contracts:list' %}">Contratos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'departments:list' %}">Departamentos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'employees:list' %}">Empleados</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'budget_items:list' %}">Partidas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'procedures_types:list' %}">Procedimientos</a>
+                </li>
+              </ul>
+            </div>
+            <div class="d-inline-flex w-100">
+              {% block form %}
 
-          {% endblock %}
+              {% endblock %}
+              <form action="{% url 'authentication:logout' %}" method="post">
+                <button type="submit" class="btn btn-danger d-inline-flex ms-1" style="min-width: 125px;">Cerrar Sesión</button>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
-    </nav>
-    <div class="container mt-4 mb-4">
-      {% block body %}
+      </nav>
+      <div class="container mt-4 mb-4">
+        {% block body %}
 
-      {% endblock %}
-    </div>
+        {% endblock %}
+      </div>
+    {% else %}
+      <div class="container" style="max-width: 400px; text-align: center;">
+        <a href="https://pasaje.gob.ec/"><img src="https://pasaje.gob.ec/wp-content/uploads/2023/08/escudo.png" alt="" class="w-50 mt-5" /></a>
+        {% if message %}
+          <div class="alert alert-warning" role="alert">{{ message }}</div>
+        {% endif %}
+        <form action="{% url 'authentication:login' %}" method="POST" class="row g-2">
+          {% csrf_token %}
+          <div class="col-12">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="username" name="username" required />
+              <label for="name">Usuario</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="password" name="password" required />
+              <label for="name">Contraseña</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+      </div>
+    {% endif %}
   </body>
 </html>

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block form %}
-  <form action="{% url 'budget_items:list' %}" class="d-flex" role="search">
+  <form action="{% url 'budget_items:list' %}" class="d-inline-flex w-100" role="search">
     <input name="q" class="form-control me-2" type="search" placeholder="Buscar Partida" />
     <button class="btn btn-primary" type="submit">Buscar</button>
   </form>

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block form %}
-  <form action="{% url 'employees:list' %}" class="d-flex" role="search">
+  <form action="{% url 'employees:list' %}" class="d-inline-flex w-100" role="search">
     <input name="q" class="form-control me-2" type="search" placeholder="Buscar Empleado" />
     <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
