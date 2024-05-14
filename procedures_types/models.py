@@ -1,23 +1,23 @@
 from django.db import models
 
 PURCHASE_TYPE_CHOICES = (
-    ("Good", "Good"),
-    ("Service", "Service"),
-    ("Work", "Work"),
-    ("Consultancy", "Consultancy"),
-    ("Goods & Services", "Goods & Services"),
+    ("Bien", "Bien"),
+    ("Servicio", "Servicio"),
+    ("Obra", "Obra"),
+    ("Consultoría", "Consultoría"),
+    ("Bienes y Servicios", "Bienes y Servicios"),
 )
 
 REGIME_CHOICES = (
-    ("Common", "Common"),
-    ("Special", "Special"),
-    ("Not Applicable", "Not Applicable")
+    ("Común", "Común"),
+    ("Especial", "Especial"),
+    ("No Aplica", "No Aplica")
 )
 
 PRODUCT_TYPE_CHOICES = (
-    ("Normalized", "Normalized"),
-    ("Not Normalized", "Not Normalized"),
-    ("Not Applicable", "Not Applicable")
+    ("Normalizado", "Normalizado"),
+    ("No Normalizado", "No Normalizado"),
+    ("No Aplica", "No Aplica")
 )
 
 
@@ -29,7 +29,7 @@ class ProceduresTypes(models.Model):
         max_length = 50
     )
     regime = models.CharField(
-        max_length = 14,
+        max_length = 9,
         choices = REGIME_CHOICES
     )
     product_type = models.CharField(
@@ -37,7 +37,7 @@ class ProceduresTypes(models.Model):
         choices = PRODUCT_TYPE_CHOICES
     )
     purchase_type = models.CharField(
-        max_length = 16,
+        max_length = 18,
         choices = PURCHASE_TYPE_CHOICES
     )
 

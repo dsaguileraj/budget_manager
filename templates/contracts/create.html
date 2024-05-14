@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block body %}
-  <h1 class="mb-4">Crear Contrato</h1>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'contracts:list' %}">Contratos</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Crear</li>
+  </ol>
   <form method="POST" class="row g-2">
     {% csrf_token %}
     <div class="col-md-4 col-6">
@@ -54,9 +59,9 @@
         <label for="admin">Administrador</label>
       </div>
     </div>
-    <div class="mt-2">
-      <a href="{% url 'contracts:list' %}" class="btn btn-outline-secondary">Cancelar</a>
-      <button type="submit" class="btn btn-outline-primary">Guardar</button>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'contracts:list' %}" class="btn m-1 btn-outline-danger">Cancelar</a>
+      <button type="submit" class="btn m-1 btn-outline-success">Guardar</button>
     </div>
   </form>
 {% endblock %}

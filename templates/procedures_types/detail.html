@@ -7,7 +7,12 @@
 {% block body %}
   <table class="table border">
     <thead class="table-light">
-      <h1>{{ object.name }}</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item h2" aria-current="page">
+          <a class="text-decoration-none" href="{% url 'procedures_types:list' %}">Procedimientos</a>
+        </li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ object.name }}</li>
+      </ol>
     </thead>
     <tbody>
       <tr>
@@ -53,7 +58,9 @@
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'procedures_types:list' %}"><button class="btn btn-outline-primary">Volver</button></a>
-  <a href="{% url 'procedures_types:update' object.pk %}"><button class="btn btn-outline-success">Editar</button></a>
-  <a href="{% url 'procedures_types:delete' object.pk %}"><button class="btn btn-outline-danger">Eliminar</button></a>
+  <div class="d-flex justify-content-center">
+    <a href="{% url 'procedures_types:list' %}" class="btn m-1 btn-outline-secondary">Volver</button></a>
+    <a href="{% url 'procedures_types:update' object.pk %}" class="btn m-1 btn-outline-primary">Editar</button></a>
+    <a href="{% url 'procedures_types:delete' object.pk %}" class="btn m-1 btn-outline-danger">Eliminar</button></a>
+  </div>
 {% endblock %}

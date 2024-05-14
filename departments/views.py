@@ -26,7 +26,7 @@ class DepartmentsDetailView(DetailView):
     template_name = "departments/detail.html"
 
 
-def create_department(request):    
+def create_department(request):
     if request.method == "POST":
         name = request.POST["name"]
         director = request.POST["director"]

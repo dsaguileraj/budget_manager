@@ -5,8 +5,13 @@
 {% endblock %}
 
 {% block body %}
-  <h1 class="mb-4">Crear Partida Presupuestaria</h1>
-  <form method="POST" class="row g-2">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'budget_items:list' %}">Partidas Presupuestarias</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Crear</li>
+  </ol>
+  <form method="POST" class="row g-2 mt-2">
     {% csrf_token %}
     <div class="col-md-3 col-6">
       <div class="form-floating">
@@ -52,9 +57,10 @@
       <label for="bid">BID</label>
       <input type="checkbox" id="bid" name="bid" />
     </div>
-    <div>
-      <a href="{% url 'budget_items:list' %}" class="btn btn-outline-secondary">Cancelar</a>
-      <button type="submit" class="btn btn-outline-primary">Guardar</button>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'budget_items:list' %}" class="m-1 btn btn-outline-danger">Cancelar</a>
+      <button type="submit" class="m-1 btn btn-outline-success">Guardar</button>
+      <a href="{% url 'budget_items:create_excel' %}" class="m-1 btn btn-outline-primary">Cargar Plantilla</a>
     </div>
   </form>
 {% endblock %}

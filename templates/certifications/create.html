@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block body %}
-  <h1 class="mb-4">Crear Certificaciónn</h1>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'certifications:list' %}">Certificaciones</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Crear</li>
+  </ol>
   {% if message %}
     <div class="alert alert-warning" role="alert">
       {{ message }}
@@ -64,9 +69,9 @@
         <label for="description">Descripción</label>
       </div>
     </div>
-    <div class="mt-2">
-      <a href="{% url 'certifications:list' %}" class="btn btn-outline-secondary">Cancelar</a>
-      <button type="submit" class="btn btn-outline-primary">Guardar</button>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'certifications:list' %}" class="m-1 btn btn-outline-danger">Cancelar</a>
+      <button type="submit" class="m-1 btn btn-outline-success">Guardar</button>
     </div>
   </form>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import ProceduresTypesListView, ProceduresTypesDetailView, create_procedure_type, delete_procedure_type, update_procedure_type
 
 app_name = "procedures_types"
 

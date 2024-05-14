@@ -7,14 +7,16 @@
 {% block form %}
   <form action="{% url 'employees:list' %}" class="d-inline-flex w-100" role="search">
     <input name="q" class="form-control me-2" type="search" placeholder="Buscar Empleado" />
-    <button class="btn btn-primary" type="submit">Buscar</button>
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
   </form>
 {% endblock %}
 
 {% block body %}
   {% if object_list %}
     {% csrf_token %}
-    <h1>Empleados</h1>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item h2" aria-current="page">Empleados</li>
+    </ol>
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
@@ -23,8 +25,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Contratos</th>
-            <th>‎</th>
-            <th>‎</th>
+            <th colspan="2"></th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +54,23 @@
         </tfoot>
       </table>
     </div>
+    {% if is_paginated %}
+      <div class="pagination d-flex justify-content-center m-4">
+        <span class="step-links m-4">
+          {% if page_obj.has_previous %}
+            <a class="m-1" href="?page=1">&laquo; first</a>
+            <a class="m-1" href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current m-3">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+          {% if page_obj.has_next %}
+            <a class="m-1" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="m-1" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
   {% else %}
     <div class="alert alert-warning mt-3" role="alert">
       No se han registrado empleados todavía, intente creando <a href="{% url 'employees:create' %}">aquí</a>

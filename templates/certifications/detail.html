@@ -11,7 +11,12 @@
     </caption>
     <thead class="table-light">
       <tr>
-        <h1>Certificación No. {{ object.number }} - <a href="{% url 'departments:detail' object.department.id %}" class="text-decoration-none">{{ object.department }}</a></h1>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h2" aria-current="page">
+            <a class="text-decoration-none" href="{% url 'certifications:list' %}">Certificaciones</a>
+          </li>
+          <li class="breadcrumb-item h2 active" aria-current="page">{{ object.number }}</li>
+        </ol>
       </tr>
     </thead>
     <tbody>
@@ -91,7 +96,9 @@
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'certifications:list' %}" class="btn btn-outline-primary">Volver</a>
-  <a href="{% url 'certifications:update' object.pk %}" class="btn btn-outline-success">Editar</a>
-  <a href="{% url 'certifications:delete' object.pk %}" class="btn btn-outline-danger">Eliminar</a>
+  <div class="d-flex justify-content-center">
+    <a href="{% url 'certifications:list' %}" class="btn m-1 btn-outline-secondary">Volver</a>
+    <a href="{% url 'certifications:update' object.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
+    <a href="{% url 'certifications:delete' object.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
+  </div>
 {% endblock %}

@@ -16,3 +16,6 @@ class Contracts(models.Model):
     contractor = models.CharField(max_length=100)
     date = models.DateField()
     duration = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.id

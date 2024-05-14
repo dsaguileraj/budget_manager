@@ -7,7 +7,12 @@
 {% block body %}
   <table class="table border">
     <thead class="table-light">
-      <h1>{{ object.name }} {{ object.surname }}</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item h2" aria-current="page">
+          <a class="text-decoration-none" href="{% url 'employees:list' %}">Empleados</a>
+        </li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ object.name }} {{ object.surname }}</li>
+      </ol>
     </thead>
     <tbody>
       <tr>
@@ -53,7 +58,9 @@
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'employees:list' %}" class="btn btn-outline-primary">Volver</a>
-  <a href="{% url 'employees:update' object.pk %}" class="btn btn-outline-success">Editar</a>
-  <a href="{% url 'employees:delete' object.pk %}" class="btn btn-outline-danger">Eliminar</a>
+  <div class="d-flex justify-content-center">
+    <a href="{% url 'employees:list' %}" class="btn m-1 btn-outline-secondary">Volver</a>
+    <a href="{% url 'employees:update' object.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
+    <a href="{% url 'employees:delete' object.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
+  </div>
 {% endblock %}

@@ -41,12 +41,12 @@
                 </li>
               </ul>
             </div>
-            <div class="d-inline-flex w-100">
+            <div class="d-inline-flex justify-content-end w-100">
               {% block form %}
 
               {% endblock %}
               <form action="{% url 'authentication:logout' %}" method="post">
-                <button type="submit" class="btn btn-danger d-inline-flex ms-1" style="min-width: 125px;">Cerrar Sesión</button>
+                <button type="submit" class="btn btn-outline-danger d-inline-flex ms-1" style="min-width: 125px;">Cerrar Sesión</button>
               </form>
             </div>
           </div>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import CertificationsListView, CertificationsDetailView, create_certification, delete_certification, update_certification
 
 app_name = "certifications"
 

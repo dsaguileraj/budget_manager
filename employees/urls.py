@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import EmployeesListView, EmployeesDetailView, create_employee, delete_employee, update_employee
 
 app_name = "employees"
 

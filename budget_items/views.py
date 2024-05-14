@@ -2,7 +2,8 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.shortcuts import redirect, render
 from django.db import models
-from .models import *
+from .models import BudgetItems
+import pandas
 
 
 class BudgetItemsListView(ListView):
@@ -83,3 +84,21 @@ def update_budget_item(request, pk):
         return redirect(reverse_lazy("budget_items:list"))
     else:
         return render(request, "budget_items/update.html", {"budget_item": budget_item})
+
+
+def upload_file(request):
+    if request.method == "POST":
+        file = request.FILES["file"]
+        data = pandas.read_excel(file, engine="openpyxl")
+        for index, row in data.iterrows():
+            BudgetItems.objects.create(
+                number=row["Número"],
+                cpc=row["CPC"],
+                budget=row["Presupuesto"],
+                budget_type=row["Tipo de Presupuesto"],
+                description=row["Descripción"],
+                activity=row["Actividad"],
+                bid=row["BID"]
+            )
+        return redirect(reverse_lazy("budget_items:list"))
+    return render(request, "budget_items/create_excel.html")

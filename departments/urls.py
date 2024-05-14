@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import DepartmentsListView, DepartmentsDetailView, create_department, delete_department, update_department
 
 app_name = "departments"
 

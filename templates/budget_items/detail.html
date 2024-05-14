@@ -11,48 +11,53 @@
     </caption>
     <thead class="table-light">
       <tr>
-        <h1>Partida No. {{ object.number }}</h1>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h2" aria-current="page">
+            <a class="text-decoration-none" href="{% url 'budget_items:list' %}">Partidas Presupuestarias</a>
+          </li>
+          <li class="breadcrumb-item h2 active" aria-current="page">{{ object.number }}</li>
+        </ol>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>Descripción</b>
         </td>
         <td>{{ object.description }}</td>
       </tr>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>Actividad</b>
         </td>
         <td>{{ object.activity }}</td>
       </tr>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>CPC</b>
         </td>
         <td>{{ object.cpc }}</td>
       </tr>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>Presupuesto</b>
         </td>
         <td>USD {{ object.budget }}</td>
       </tr>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>Tipo de Presupuesto</b>
         </td>
         <td>{{ object.budget_type }}</td>
       </tr>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>BID</b>
         </td>
         <td>{{ object.bid }}</td>
       </tr>
       <tr>
-        <td style="width: 10%">
+        <td style="width: 15%">
           <b>Certificaciones</b>
         </td>
         <td>
@@ -76,7 +81,9 @@
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'budget_items:list' %}" class="btn btn-outline-primary">Volver</a>
-  <a href="{% url 'budget_items:update' object.pk %}" class="btn btn-outline-success">Editar</a>
-  <a href="{% url 'budget_items:delete' object.pk %}" class="btn btn-outline-danger">Eliminar</a>
+  <div class="d-flex justify-content-center">
+    <a href="{% url 'budget_items:list' %}" class="m-1 btn btn-outline-secondary">Volver</a>
+    <a href="{% url 'budget_items:update' object.pk %}" class="m-1 btn btn-outline-primary">Editar</a>
+    <a href="{% url 'budget_items:delete' object.pk %}" class="m-1 btn btn-outline-danger">Eliminar</a>
+  </div>
 {% endblock %}
