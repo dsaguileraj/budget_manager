@@ -38,13 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication',
-    'budget_items',
-    'certifications',
-    'departments',
-    'procedures_types',
-    'employees',
-    'contracts'
+    'apps.authentication',
+    'apps.budget_items',
+    'apps.certifications',
+    'apps.contracts',
+    'apps.departments',
+    'apps.procedures_types',
+    'apps.employees',
 ]
 
 MIDDLEWARE = [
