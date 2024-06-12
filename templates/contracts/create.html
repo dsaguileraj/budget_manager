@@ -53,7 +53,7 @@
         <select class="form-select" id="admin" name="admin">
           <option selected disabled>---</option>
           {% for employee in employees %}
-            <option value="{{ employee.id }}">{{ employee.name }} {{ employee.surname }}</option>
+            <option value="{{ employee.pk }}">{{ employee.name }} {{ employee.surname }}</option>
           {% endfor %}
         </select>
         <label for="admin">Administrador</label>

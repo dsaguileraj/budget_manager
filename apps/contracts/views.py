@@ -13,8 +13,9 @@ class ContractsListView(ListView):
         query = self.request.GET.get("q", "")
         if query:
             return Contracts.objects.filter(
-                models.Q(id__icontains=query) | models.Q(certification__icontains=query) | models.Q(
-                    admin__icontains=query) | models.Q(contractor__icontains=query)
+                models.Q(id__icontains=query) | models.Q(certification__description__icontains=query) | models.Q(certification__budget__icontains=query) | models.Q(
+                    admin__name__icontains=query) | models.Q(admin__surname__icontains=query) | models.Q(contractor__icontains=query)
+
             ).order_by("id")
         else:
             return Contracts.objects.order_by("id")
@@ -33,7 +34,6 @@ def create_contract(request):
     if request.method == "POST":
         id = request.POST["id"]
         certification_id = request.POST["certification"]
-        advance = request.POST.get("advance") == "on"
         admin_id = request.POST["admin"]
         contractor = request.POST["contractor"]
         date = request.POST["date"]
@@ -43,7 +43,6 @@ def create_contract(request):
         contract = Contracts.objects.create(
             id=id,
             certification=certification,
-            advance=advance,
             admin=admin,
             contractor=contractor,
             date=date,

@@ -20,7 +20,7 @@ class BudgetItems(models.Model):
     date = models.DateTimeField(
         auto_now_add=True
     )
-    budget = models.FloatField()
+    budget = models.DecimalField(max_digits=20, decimal_places=2)
     budget_type = models.CharField(
         max_length=21,
         choices=BUDGET_TYPE_CHOICES

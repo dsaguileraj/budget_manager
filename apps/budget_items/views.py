@@ -16,7 +16,7 @@ class BudgetItemsListView(ListView):
         if query:
             return BudgetItems.objects.filter(
                 models.Q(number__icontains=query) | models.Q(cpc__icontains=query) | models.Q(
-                    description__icontains=query) | models.Q(activity__icontains=query)
+                    description__icontains=query) | models.Q(activity__icontains=query) | models.Q(budget__icontains=query)
             ).order_by("number")
         else:
             return BudgetItems.objects.order_by("number")

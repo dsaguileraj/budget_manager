@@ -40,7 +40,7 @@ def create_employee(request):
             user=user
         )
         employee.save()
-        return redirect(reverse_lazy(""))
+        return redirect(reverse_lazy("employees:list"))
     else:
         return render(request, "employees/create.html")
 
@@ -67,6 +67,6 @@ def update_employee(request, pk):
         employee.email = request.POST["email"]
         employee.user = request.POST["user"]
         employee.save()
-        return redirect(reverse_lazy(""))
+        return redirect(reverse_lazy("employees:list"))
     else:
         return render(request, "employees/update.html", {"employee": employee})

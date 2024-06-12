@@ -14,8 +14,8 @@ class CertificationsListView(ListView):
         query = self.request.GET.get("q", "")
         if query:
             return Certifications.objects.filter(
-                models.Q(number__icontains=query) | models.Q(
-                    description__icontains=query)
+                models.Q(number__icontains=query) | models.Q(budget_item__number__icontains=query) | models.Q(
+                    description__icontains=query) | models.Q(budget_item__activity__icontains=query) | models.Q(budget__icontains=query)
             ).order_by("number")
         else:
             return Certifications.objects.order_by("number")

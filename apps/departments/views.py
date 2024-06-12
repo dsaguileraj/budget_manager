@@ -14,8 +14,8 @@ class DepartmentsListView(ListView):
         query = self.request.GET.get("q", "")
         if query:
             return Departments.objects.filter(
-                models.Q(name__icontains=query) | models.Q(
-                    director__icontains=query)
+                models.Q(name__icontains=query) | models.Q(director__name__icontains=query) | models.Q(
+                    director__surname__icontains=query) | models.Q(director__ci__icontains=query)
             ).order_by("name")
         else:
             return Departments.objects.order_by("name")
@@ -29,7 +29,7 @@ class DepartmentsDetailView(DetailView):
 def create_department(request):
     if request.method == "POST":
         name = request.POST["name"]
-        director = request.POST["director"]
+        director = Employees.objects.get(pk=request.POST["director"])
         department = Departments.objects.create(
             name=name,
             director=director
