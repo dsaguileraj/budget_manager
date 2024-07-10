@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'core',
+    'apps.budget_item',
+    'apps.certification',
+    'apps.contract',
+    'apps.core',
+    'apps.department',
+    'apps.employee',
+    'apps.procedure',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +86,12 @@ WSGI_APPLICATION = 'budget_manager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'budget_manager_db',
+        'USER': 'postgres',
+        'PASSWORD': '001l101o001l',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
