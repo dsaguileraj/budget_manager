@@ -10,11 +10,11 @@ class BudgetItem(models.Model):
     cpc = models.CharField(
         max_length=15
     )
-    
+
     # Object of Contract
     description = models.TextField()
     activity = models.TextField()
-    
+
     # Contability
     purchase_type = models.CharField(
         max_length=1,
@@ -31,7 +31,7 @@ class BudgetItem(models.Model):
             MinValueValidator(0.00001)
         ]
     )
-    
+
     # Period
     c1 = models.BooleanField(
         default=False
@@ -42,7 +42,7 @@ class BudgetItem(models.Model):
     c3 = models.BooleanField(
         default=False
     )
-    
+
     # Log
     create_at = models.DateTimeField(
         auto_now_add=True,

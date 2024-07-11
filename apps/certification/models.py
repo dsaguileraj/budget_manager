@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from apps.budget_item.models import BudgetItem
 from apps.department.models import Department
+from apps.procedure.models import Procedure
+
 
 class Certification(models.Model):
     number = models.CharField(
@@ -16,7 +18,7 @@ class Certification(models.Model):
         on_delete=models.CASCADE
     )
     procedure = models.ForeignKey(
-        'core.Procedure',
+        Procedure,
         on_delete=models.CASCADE
     )
     description = models.TextField()
@@ -27,7 +29,7 @@ class Certification(models.Model):
             MinValueValidator(0.00001)
         ]
     )
-    
+
     # Log
     create_at = models.DateTimeField(
         auto_now_add=True,
@@ -37,7 +39,7 @@ class Certification(models.Model):
         auto_now=True,
         editable=False
     )
-    
+
     # Docs
     certification = models.FileField(
         upload_to='certifications/'
@@ -46,10 +48,10 @@ class Certification(models.Model):
         upload_to='resolutions/',
         blank=True
     )
-    
+
     def __str__(self):
         return f'{self.number} - {self.budget_item.number}'
-    
+
     class Meta:
         ordering = ['number', 'budget_item', 'description']
         unique_together = ['number', 'budget_item']
