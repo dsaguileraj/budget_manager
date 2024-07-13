@@ -1,3 +1,9 @@
-from django.db import models
+from django.db.models import Model, DateTimeField, ForeignKey, PROTECT
 
-# Create your models here.
+
+class BaseModel(Model):
+    created_at = DateTimeField(auto_now_add=True, editable=False)
+    last_update = DateTimeField(auto_now=True, editable=False)
+
+    class Meta:
+        abstract = True
