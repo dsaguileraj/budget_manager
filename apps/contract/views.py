@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from rest_framework import permissions, viewsets
+from .models import Contract, AdminHistory
+from .serializers import ContractSerializer, AdminHistorySerializer
 
-# Create your views here.
+
+class ContractViewSet(viewsets.ModelViewSet):
+    queryset = Contract.objects.all()
+    serializer_class = ContractSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class AdminHistoryViewSet(viewsets.ModelViewSet):
+    queryset = AdminHistory.objects.all()
+    serializer_class = AdminHistorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

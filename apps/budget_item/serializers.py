@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import BudgetItem
 
 
-class BudgetItemSerializar(serializers.ModelSerializer):
+class BudgetItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = BudgetItem
         fields = '__all__'

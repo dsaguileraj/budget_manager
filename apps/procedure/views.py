@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import permissions, viewsets
+from .models import Procedure
+from .serializers import ProcedureSerializer
 
-# Create your views here.
+
+class ProcedureViewSet(viewsets.ModelViewSet):
+    queryset = Procedure.objects.all()
+    serializer_class = ProcedureSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
