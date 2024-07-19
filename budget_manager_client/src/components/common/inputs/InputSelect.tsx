@@ -35,6 +35,7 @@ const InputSelect: React.FC<Props> = ({
           <option
             key={index}
             value={option.value}
+            disabled={option.disabled}
           >
             {option.label}
           </option>

@@ -1,52 +1,54 @@
 export interface AdminHistory {
-  contract: string;
-  admin: string;
-  resolution: File | undefined;
+  id?: number;
+  contract: string | number | undefined;
+  admin: string | number | undefined;
 }
 
 export interface BudgetItem {
+  id?: number;
   number: string;
   cpc: string;
   description: string;
   activity: string;
-  purchase_type: string;
-  budget_type: string;
-  budget: number;
+  purchase_type: string | number | undefined;
+  budget_type: string | number | undefined;
+  budget: number | string;
   c1: boolean;
   c2: boolean;
   c3: boolean;
 }
 
 export interface Certification {
+  id?: number;
   number: string;
-  department: number;
-  budget_item: number;
-  procedure: number;
+  department: string | number | undefined;
+  budget_item: string | number | undefined;
+  procedure: string | number | undefined;
   description: string;
-  reference_budget: number;
-  awarded_budget: number;
-  certification: File | undefined;
-  resolution: File | undefined;
+  budget: string | number;
 }
 
 export interface Contract {
+  id?: number;
   number: string;
-  certification: number;
+  certification: string | number | undefined;
   contractor: string;
   duration: number;
   date: Date;
-  contract: File | undefined;
 }
 
 export interface Department {
+  id?: number;
   name: string;
   director: string | number | undefined;
 }
 
 export interface Employee {
   ci: string;
-  name: string;
-  last_name: string;
+  first_name: string;
+  middle_name: string;
+  first_last_name: string;
+  middle_last_name: string;
   email: string;
   user: string;
 }
@@ -54,9 +56,11 @@ export interface Employee {
 export interface Option {
   value: string | number | undefined;
   label: string;
+  disabled?: boolean;
 }
 
 export interface Procedure {
+  id?: number;
   name: string;
   regime: string | number | undefined;
   product_type: string | number | undefined;

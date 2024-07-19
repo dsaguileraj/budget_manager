@@ -6,10 +6,10 @@ import InputText from '../../components/common/inputs/InputText';
 import InputSelect from '../../components/common/inputs/InputSelect';
 
 const DepartmentPOST: React.FC = () => {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [form, setForm] = useState<Department>({
     name: '',
-    director: undefined,
+    director: employees[0]?.ci,
   });
 
   useEffect(() => {
@@ -21,11 +21,12 @@ const DepartmentPOST: React.FC = () => {
     axiosGET();
   }, []);
 
-  let employeesOptions: Option[] = [{ value: undefined, label: '---' }];
-  employees.forEach((employee: Employee) =>
+  let employeesOptions: Option[] = [{ value: undefined, label: '---', disabled: true }];
+  employees.forEach(employee =>
     employeesOptions.push({
       value: employee.ci,
-      label: `${employee.last_name} ${employee.name}`,
+      label: `${employee.first_last_name} ${employee.middle_last_name} ${employee.middle_name} ${employee.first_name}`,
+      disabled: false,
     })
   );
 
@@ -51,9 +52,9 @@ const DepartmentPOST: React.FC = () => {
       header={'Registrar Nuevo Procedimiento'}
     >
       <InputText
-        label={'Nombres'}
+        label={'Nombre'}
         field={form.name}
-        setField={event => setForm({ ...form, name: event })}
+        setField={event => setForm({ ...form, name: event.toUpperCase() })}
         maxLength={50}
       />
       <InputSelect

@@ -7,8 +7,10 @@ import InputText from '../../components/common/inputs/InputText';
 const EmployeePOST: React.FC = () => {
   const [form, setForm] = useState<Employee>({
     ci: '',
-    name: '',
-    last_name: '',
+    first_name: '',
+    middle_name: '',
+    first_last_name: '',
+    middle_last_name: '',
     email: '',
     user: '',
   });
@@ -21,8 +23,10 @@ const EmployeePOST: React.FC = () => {
         console.log(response.data);
         setForm({
           ci: '',
-          name: '',
-          last_name: '',
+          first_name: '',
+          middle_name: '',
+          first_last_name: '',
+          middle_last_name: '',
           email: '',
           user: '',
         });
@@ -35,7 +39,7 @@ const EmployeePOST: React.FC = () => {
   return (
     <Form
       handleSubmit={handleSubmit}
-      header={'Registrar Nuevo Procedimiento'}
+      header={'Registrar Nuevo Contacto'}
     >
       <InputText
         label={'Cédula'}
@@ -44,16 +48,30 @@ const EmployeePOST: React.FC = () => {
         maxLength={10}
       />
       <InputText
-        label={'Nombres'}
-        field={form.name}
-        setField={event => setForm({ ...form, name: event })}
+        label={'Primer Nombre'}
+        field={form.first_name}
+        setField={event => setForm({ ...form, first_name: event.toUpperCase() })}
         maxLength={50}
       />
       <InputText
-        label={'Apellidos'}
-        field={form.last_name}
-        setField={event => setForm({ ...form, last_name: event })}
+        label={'Segundo Nombre'}
+        field={form.middle_name}
+        setField={event => setForm({ ...form, middle_name: event.toUpperCase() })}
         maxLength={50}
+        required={false}
+      />
+      <InputText
+        label={'Primer Apellido'}
+        field={form.first_last_name}
+        setField={event => setForm({ ...form, first_last_name: event.toUpperCase() })}
+        maxLength={50}
+      />
+      <InputText
+        label={'Segundo Apellido'}
+        field={form.middle_last_name}
+        setField={event => setForm({ ...form, middle_last_name: event.toUpperCase() })}
+        maxLength={50}
+        required={false}
       />
       <InputText
         label={'Correo'}

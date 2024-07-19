@@ -9,11 +9,11 @@ import InputText from '../../components/common/inputs/InputText';
 const ProcedurePOST: React.FC = () => {
   const [form, setForm] = useState<Procedure>({
     name: '',
-    regime: undefined,
-    product_type: undefined,
-    purchase_type: '',
+    regime: REGIME_TYPE[0].value,
+    product_type: PRODUCT_TYPE[0].value,
+    purchase_type: PURCHASE_TYPE[0].value,
   });
-  
+
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosInstance
@@ -40,7 +40,7 @@ const ProcedurePOST: React.FC = () => {
       <InputText
         label={'Nombre'}
         field={form.name}
-        setField={event => setForm({ ...form, name: event })}
+        setField={event => setForm({ ...form, name: event.toUpperCase() })}
         maxLength={50}
       />
       <InputSelect

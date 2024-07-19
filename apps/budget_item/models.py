@@ -15,7 +15,7 @@ class BudgetItem(BaseModel):
     # Contability
     purchase_type = models.CharField(max_length=1, choices=PurchaseType)
     budget_type = models.CharField(max_length=2, choices=BudgetType)
-    budget = models.DecimalField(max_digits=20, decimal_places=5, validators=[
+    budget = models.DecimalField(max_digits=20, decimal_places=5, default=0.00001, validators=[
                                  MinValueValidator(0.00001)])
     # Period
     c1 = models.BooleanField(default=False)

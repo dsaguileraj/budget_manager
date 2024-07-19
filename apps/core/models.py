@@ -1,4 +1,4 @@
-from django.db.models import Model, DateTimeField, ForeignKey, PROTECT
+from django.db.models import Model, DateTimeField
 
 
 class BaseModel(Model):

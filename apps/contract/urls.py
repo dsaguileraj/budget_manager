@@ -4,8 +4,8 @@ from .views import ContractViewSet, AdminHistoryViewSet
 
 router = DefaultRouter()
 
-router.register(r'', ContractViewSet)
-router.register(r'history', AdminHistoryViewSet)
+router.register(r'c', ContractViewSet)
+router.register(r'h', AdminHistoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls))

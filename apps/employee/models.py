@@ -3,8 +3,10 @@ from django.db import models
 
 class Employee(models.Model):
     ci = models.CharField(primary_key=True, max_length=10)
-    name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, blank=True)
+    first_last_name = models.CharField(max_length=50)
+    middle_last_name = models.CharField(max_length=50, blank=True)
     email = models.EmailField(max_length=100, unique=True)
     user = models.CharField(max_length=50, unique=True)
 
@@ -12,4 +14,4 @@ class Employee(models.Model):
         return {self.ci}
 
     class Meta:
-        ordering = ['last_name', 'name', 'ci']
+        ordering = ['first_last_name', 'middle_last_name', 'first_name', 'middle_name', 'ci']

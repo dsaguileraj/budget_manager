@@ -12,7 +12,7 @@ const InputCheck: React.FC<Props> = ({ label, field, setField, required = true, 
     <div>
       <label htmlFor={id}>{label}</label>
       <input
-        type='number'
+        type='checkbox'
         id={id}
         value={field.toString()}
         onChange={event => setField(event.target.checked)}

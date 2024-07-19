@@ -1,3 +1,8 @@
+export const BUDGET_TYPE = [
+  { value: 'GC', label: 'Gasto Corriente' },
+  { value: 'PI', label: 'Proyecto de Inversión' },
+];
+
 export const PRODUCT_TYPE = [
   { value: undefined, label: 'No Aplica' },
   { value: 'N', label: 'Normalizado' },

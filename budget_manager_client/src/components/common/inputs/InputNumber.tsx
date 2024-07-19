@@ -1,9 +1,9 @@
 interface Props {
   label: string;
-  field: number;
+  field: number | string | undefined;
   setField: (value: number) => void;
-  max?: number | undefined;
-  min?: number | undefined;
+  max?: number;
+  min?: number;
   required?: boolean;
   disabled?: boolean;
 }
@@ -12,8 +12,8 @@ const InputNumber: React.FC<Props> = ({
   label,
   field,
   setField,
-  max = undefined,
-  min = undefined,
+  max,
+  min,
   required = true,
   disabled = false,
 }) => {
