@@ -6,4 +6,4 @@ from .serializers import CertificationSerializer
 class CertificactionViewSet(viewsets.ModelViewSet):
     queryset = Certification.objects.all()
     serializer_class = CertificationSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]

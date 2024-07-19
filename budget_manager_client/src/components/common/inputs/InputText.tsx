@@ -7,20 +7,14 @@ interface Props {
   disabled?: boolean;
 }
 
-const InputText: React.FC<Props> = ({
-  label,
-  field,
-  setField,
-  maxLength = 255,
-  required = true,
-  disabled = false
-}) => {
+const InputText: React.FC<Props> = ({ label, field, setField, maxLength = 255, required = true, disabled = false }) => {
+  const id: string = Math.random().toString();
   return (
     <div>
-      <label htmlFor={field}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
         type='text'
-        id={field}
+        id={id}
         value={field}
         onChange={event => setField(event.target.value)}
         maxLength={maxLength}

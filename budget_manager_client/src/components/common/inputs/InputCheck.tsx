@@ -6,19 +6,14 @@ interface Props {
   disabled?: boolean;
 }
 
-const InputCheck: React.FC<Props> = ({
-  label,
-  field,
-  setField,
-  required = true,
-  disabled = false,
-}) => {
+const InputCheck: React.FC<Props> = ({ label, field, setField, required = true, disabled = false }) => {
+  const id: string = Math.random().toString();
   return (
     <div>
-      <label htmlFor={field.toString()}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
         type='number'
-        id={field.toString()}
+        id={id}
         value={field.toString()}
         onChange={event => setField(event.target.checked)}
         required={required}

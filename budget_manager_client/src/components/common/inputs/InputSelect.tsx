@@ -1,12 +1,9 @@
-interface Option {
-  value: string | number;
-  label: string;
-}
+import { Option } from "../../../../utils/interfaces";
 
 interface Props {
   label: string;
-  field: string | number;
-  setField: (value: string | number) => void;
+  field: string | number | undefined;
+  setField: (value: string | number | undefined) => void;
   options: Option[];
   multiple?: boolean;
   required?: boolean;
@@ -22,20 +19,21 @@ const InputSelect: React.FC<Props> = ({
   required = true,
   disabled = false,
 }) => {
+  const id: string = Math.random().toString();
   return (
     <div>
-      <label htmlFor={field.toString()}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <select
-        id={field.toString()}
+        id={id}
         value={field}
         onChange={event => setField(event.target.value)}
         multiple={multiple}
         required={required}
         disabled={disabled}
       >
-        {options.map(option => (
+        {options.map((option, index) => (
           <option
-            key={option.value}
+            key={index}
             value={option.value}
           >
             {option.label}

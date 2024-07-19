@@ -17,12 +17,13 @@ const InputNumber: React.FC<Props> = ({
   required = true,
   disabled = false,
 }) => {
+  const id: string = Math.random().toString();
   return (
     <div>
-      <label htmlFor={field.toString()}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
         type='number'
-        id={field.toString()}
+        id={id}
         value={field}
         onChange={event => setField(Number(event.target.value))}
         max={max}

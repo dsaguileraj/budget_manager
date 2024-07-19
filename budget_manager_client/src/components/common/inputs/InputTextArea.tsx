@@ -7,11 +7,12 @@ interface Props {
 }
 
 const InputTextArea: React.FC<Props> = ({ label, field, setField, required = true, disabled = false }) => {
+  const id: string = Math.random().toString();
   return (
     <div>
-      <label htmlFor={field}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <textarea
-        id={field}
+        id={id}
         value={field}
         onChange={event => setField(event.target.value)}
         required={required}

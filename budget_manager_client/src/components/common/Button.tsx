@@ -1,6 +1,6 @@
 interface ButtonProps {
-  text: String;
-  onClick: () => void;
+  text?: String;
+  onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({ text = 'Guardar', onClick }) => {
