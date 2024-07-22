@@ -38,7 +38,7 @@ const DepartmentPOST: React.FC = () => {
         console.log(response.data);
         setForm({
           name: '',
-          director: undefined,
+          director: employees[0]?.ci,
         });
       })
       .catch(error => {

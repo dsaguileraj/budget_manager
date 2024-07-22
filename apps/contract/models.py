@@ -6,8 +6,8 @@ from apps.employee.models import Employee
 
 class Contract(BaseModel):
     number = models.CharField(max_length=25, unique=True)
-    certification = models.ForeignKey(
-        Certification, on_delete=models.PROTECT)
+    certification = models.ForeignKey(Certification, on_delete=models.PROTECT)
+    admin = models.ForeignKey(Employee, on_delete=models.PROTECT)
     contractor = models.CharField(max_length=100)
     duration = models.PositiveSmallIntegerField()
     date = models.DateTimeField()
@@ -17,11 +17,3 @@ class Contract(BaseModel):
 
     class Meta:
         ordering = ['number']
-
-
-class AdminHistory(BaseModel):
-    contract = models.ForeignKey(Contract, on_delete=models.PROTECT)
-    admin = models.ForeignKey(Employee, on_delete=models.PROTECT)
-
-    class Meta:
-        ordering = ['created_at']

@@ -1,9 +1,3 @@
-export interface AdminHistory {
-  id?: number;
-  contract: string | number | undefined;
-  admin: string | number | undefined;
-}
-
 export interface BudgetItem {
   id?: number;
   number: string;
@@ -32,6 +26,7 @@ export interface Contract {
   id?: number;
   number: string;
   certification: string | number | undefined;
+  admin: string | number | undefined;
   contractor: string;
   duration: number;
   date: Date;

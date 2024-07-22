@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import { Navigation } from './components/Navigation.jsx';
-import AdminHistoryPOST from './pages/create/AdminHistoryPOST';
 import BudgetItemPOST from './pages/create/BudgetItemPOST';
 import CertificationPOST from './pages/create/CertificationPOST';
 import ContractPOST from './pages/create/ContractPOST';
@@ -16,7 +15,6 @@ function App() {
         <Route path='/budget_item/create' element={<BudgetItemPOST />}/>
         <Route path='/certification/create' element={<CertificationPOST />}/>
         <Route path='/contract/create' element={<ContractPOST />}/>
-        <Route path='/contract/history/create' element={<AdminHistoryPOST />}/>
         <Route path='/department/create' element={<DepartmentPOST />}/>
         <Route path='/employee/create' element={<EmployeePOST />}/>
         <Route path='/procedure/create' element={<ProcedurePOST />}/>

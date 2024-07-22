@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../../utils/api';
-import { Certification, Contract, Option } from '../../../utils/interfaces';
+import { Certification, Contract, Employee, Option } from '../../../utils/interfaces';
 import Form from '../../components/common/Form';
 import InputText from '../../components/common/inputs/InputText';
 import InputSelect from '../../components/common/inputs/InputSelect';
@@ -8,10 +8,12 @@ import InputNumber from '../../components/common/inputs/InputNumber';
 import InputDate from '../../components/common/inputs/InputDate';
 
 const ContractPOST: React.FC = () => {
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [form, setForm] = useState<Contract>({
     number: '',
-    certification: 1,
+    certification: certifications[0]?.id,
+    admin: employees[0]?.ci,
     contractor: '',
     duration: 0,
     date: new Date(),
@@ -19,9 +21,19 @@ const ContractPOST: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const response = await axiosInstance.get('/certification/');
-      const data = response.data;
-      setCertifications(data);
+      const certification = await axiosInstance.get('/certification/');
+      const employee = await axiosInstance.get('/employee/');
+      const data = { certification: certification.data, employee: employee.data };
+      setCertifications(data.certification);
+      setEmployees(data.employee);
+      setForm({
+        number: '',
+        certification: certifications[0]?.id,
+        admin: employees[0]?.ci,
+        contractor: '',
+        duration: 0,
+        date: new Date(),
+      });
     };
     axiosGET();
   }, []);
@@ -35,6 +47,15 @@ const ContractPOST: React.FC = () => {
     });
   });
 
+  let employeesOptions: Option[] = [];
+  employees.forEach(employee => {
+    employeesOptions.push({
+      value: employee.ci,
+      label: `${employee.first_last_name} ${employee.middle_last_name} ${employee.first_name} ${employee.middle_name} (${employee.ci})`,
+      disabled: false,
+    });
+  });
+
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosInstance
@@ -43,7 +64,8 @@ const ContractPOST: React.FC = () => {
         console.log(response.data);
         setForm({
           number: '',
-          certification: 1,
+          certification: certifications[0]?.id,
+          admin: employees[0]?.ci,
           contractor: '',
           duration: 0,
           date: new Date(),
@@ -70,6 +92,12 @@ const ContractPOST: React.FC = () => {
         field={form.certification}
         setField={event => setForm({ ...form, certification: event })}
         options={certOptions}
+      />
+      <InputSelect
+        label={'Administrador'}
+        field={form.admin}
+        setField={event => setForm({ ...form, admin: event })}
+        options={employeesOptions}
       />
       <InputText
         label={'Contratista'}

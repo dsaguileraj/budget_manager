@@ -22,9 +22,9 @@ const ProcedurePOST: React.FC = () => {
         console.log(response.data);
         setForm({
           name: '',
-          regime: undefined,
-          product_type: undefined,
-          purchase_type: '',
+          regime: REGIME_TYPE[0].value,
+          product_type: PRODUCT_TYPE[0].value,
+          purchase_type: PURCHASE_TYPE[0].value,
         });
       })
       .catch(error => {
