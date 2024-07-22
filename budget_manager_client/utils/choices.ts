@@ -4,7 +4,7 @@ export const BUDGET_TYPE = [
 ];
 
 export const PRODUCT_TYPE = [
-  { value: undefined, label: 'No Aplica' },
+  { value: '', label: 'No Aplica' },
   { value: 'N', label: 'Normalizado' },
   { value: '!N', label: 'No Normalizado' },
 ];
@@ -17,7 +17,7 @@ export const PURCHASE_TYPE = [
 ];
 
 export const REGIME_TYPE = [
-  { value: undefined, label: 'No Aplica' },
+  { value: '', label: 'No Aplica' },
   { value: 'C', label: 'Común' },
   { value: 'E', label: 'Especial' },
 ];

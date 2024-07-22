@@ -28,8 +28,8 @@ const ContractPOST: React.FC = () => {
       setEmployees(data.employee);
       setForm({
         number: '',
-        certification: certifications[0]?.id,
-        admin: employees[0]?.ci,
+        certification: data.certification[0].id,
+        admin: data.employee[0].ci,
         contractor: '',
         duration: 0,
         date: new Date(),

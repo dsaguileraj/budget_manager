@@ -16,12 +16,16 @@ const DepartmentPOST: React.FC = () => {
     const axiosGET = async () => {
       const response = await axiosInstance.get('/employee/');
       const data = response.data;
-      setEmployees(data);
+    setEmployees(data);
+    setForm({
+      name: '',
+      director: data[0].ci,
+    });
     };
     axiosGET();
   }, []);
 
-  let employeesOptions: Option[] = [{ value: undefined, label: '---', disabled: true }];
+  let employeesOptions: Option[] = [];
   employees.forEach(employee =>
     employeesOptions.push({
       value: employee.ci,
@@ -49,7 +53,7 @@ const DepartmentPOST: React.FC = () => {
   return (
     <Form
       handleSubmit={handleSubmit}
-      header={'Registrar Nuevo Procedimiento'}
+      header={'Registrar Nuevo Departmaneto'}
     >
       <InputText
         label={'Nombre'}

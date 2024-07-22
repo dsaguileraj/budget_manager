@@ -48,12 +48,14 @@ const ProcedurePOST: React.FC = () => {
         field={form.regime}
         setField={event => setForm({ ...form, regime: event })}
         options={REGIME_TYPE}
+        required={false}
       />
       <InputSelect
         label={'Tipo de Producto'}
         field={form.product_type}
         setField={event => setForm({ ...form, product_type: event })}
         options={PRODUCT_TYPE}
+        required={false}
       />
       <InputSelect
         label={'Tipo de Compra'}

@@ -13,9 +13,9 @@ const CertificationPOST: React.FC = () => {
   const [procedures, setProcedures] = useState<Procedure[]>([]);
   const [form, setForm] = useState<Certification>({
     number: '',
-    department: 1,
-    budget_item: 1,
-    procedure: 1,
+    department: departments[0]?.id,
+    budget_item: budgetItems[0]?.id,
+    procedure: procedures[0]?.id,
     description: '',
     budget: '',
   });
@@ -29,6 +29,14 @@ const CertificationPOST: React.FC = () => {
       setBudgetItems(data.budgetItem);
       setDepartments(data.department);
       setProcedures(data.procedure);
+      setForm({
+        number: '',
+        department: data.department[0].id,
+        budget_item: data.budgetItem[0].id,
+        procedure: data.procedure[0].id,
+        description: '',
+        budget: '',
+      });
     };
     axiosGET();
   }, []);
@@ -68,9 +76,9 @@ const CertificationPOST: React.FC = () => {
         console.log(response.data);
         setForm({
           number: '',
-          department: 1,
-          budget_item: 1,
-          procedure: 1,
+          department: departments[0]?.id,
+          budget_item: budgetItems[0]?.id,
+          procedure: procedures[0]?.id,
           description: '',
           budget: '',
         });

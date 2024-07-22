@@ -4,10 +4,9 @@ from apps.core.choices import ProductType, PurchaseType, RegimeType
 
 class Procedure(models.Model):
     name = models.CharField(max_length=50)
-    regime = models.CharField(max_length=1, null=True,
-                              default=None, choices=RegimeType)
+    regime = models.CharField(max_length=1, blank=True, choices=RegimeType)
     product_type = models.CharField(
-        max_length=2, null=True, default=None, choices=ProductType)
+        max_length=2, blank=True, choices=ProductType)
     purchase_type = models.CharField(max_length=1, choices=PurchaseType)
 
     def __str__(self):
