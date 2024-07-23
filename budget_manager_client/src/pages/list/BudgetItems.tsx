@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../utils/api';
-import Button from "../../components/common/Button";
+import Button from '../../components/common/Button';
 import { BudgetItem } from '../../../utils/interfaces';
 
-const BudgetItems = () => {
+const BudgetItems: React.FC = () => {
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
 
   useEffect(() => {
@@ -14,6 +15,8 @@ const BudgetItems = () => {
     };
     axiosGET();
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,8 +46,30 @@ const BudgetItems = () => {
               <th>{budgetItem.c2 && 'X'}</th>
               <th>{budgetItem.c3 && 'X'}</th>
               <th>USD {budgetItem.budget}</th>
-              <th><Button text={'Ver'}/></th>
-              <th><Button text={'Eliminar'}/></th>
+              <th>
+                <Button
+                  text={'Ver'}
+                  onClick={() => navigate(`/budget_item/${budgetItem.id}/`)}
+                />
+              </th>
+              <th>
+                <Button
+                  text={'Eliminar'}
+                  onClick={async () => {
+                    try {
+                      const confirm = window.confirm('¿Está seguro de que desea eliminar?');
+                      confirm && (await axiosInstance.delete(`/budget_item/${budgetItem.id}/`));
+                      confirm && window.location.reload();
+                    } catch (error) {
+                      if (error == 'AxiosError: Request failed with status code 500') {
+                        alert(
+                          'No se pudo eliminar la instancia debido a que se hace referencia a ella a través de claves externas protegidas. Primero elimine las instancias hijas que lo referencian.'
+                        );
+                      }
+                    }
+                  }}
+                />
+              </th>
             </tr>
           ))}
         </tbody>

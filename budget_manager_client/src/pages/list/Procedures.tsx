@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../utils/api';
-import Button from "../../components/common/Button";
+import Button from '../../components/common/Button';
 import { Certification, Procedure } from '../../../utils/interfaces';
 
-const Procedures = () => {
+const Procedures: React.FC = () => {
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [procedures, setProcedures] = useState<Procedure[]>([]);
 
@@ -17,6 +18,8 @@ const Procedures = () => {
     };
     axiosGET();
   }, []);
+
+  const navigate = useNavigate();
 
   const getCertifications = (id: number | undefined) => {
     let count = 0;
@@ -46,8 +49,30 @@ const Procedures = () => {
               <th>{procedure.product_type}</th>
               <th>{procedure.purchase_type}</th>
               <th>{getCertifications(procedure.id)}</th>
-              <th><Button text={'Ver'}/></th>
-              <th><Button text={'Eliminar'}/></th>
+              <th>
+                <Button
+                  text={'Ver'}
+                  onClick={() => navigate(`/procedure/${procedure.id}/`)}
+                />
+              </th>
+              <th>
+                <Button
+                  text={'Eliminar'}
+                  onClick={async () => {
+                    try {
+                      const confirm = window.confirm('¿Está seguro de que desea eliminar?');
+                      confirm && (await axiosInstance.delete(`/procedure/${procedure.id}/`));
+                      confirm && window.location.reload();
+                    } catch (error) {
+                      if (error == 'AxiosError: Request failed with status code 500') {
+                        alert(
+                          'No se pudo eliminar la instancia debido a que se hace referencia a ella a través de claves externas protegidas. Primero elimine las instancias hijas que lo referencian.'
+                        );
+                      }
+                    }
+                  }}
+                />
+              </th>
             </tr>
           ))}
         </tbody>

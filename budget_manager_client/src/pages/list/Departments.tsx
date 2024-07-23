@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../utils/api';
-import Button from "../../components/common/Button";
+import Button from '../../components/common/Button';
 import { Certification, Department, Employee } from '../../../utils/interfaces';
 
-const Departments = () => {
+const Departments: React.FC = () => {
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -21,15 +22,17 @@ const Departments = () => {
     axiosGET();
   }, []);
 
+  const navigate = useNavigate();
+
   const getCertifications = (id: number | undefined) => {
     let count = 0;
     certifications.forEach(certification => certification.procedure == id && count++);
     return count;
   };
 
-  const getDirector = (id: string | number |undefined) => {
-    const index = employees.findIndex(employee => employee.ci == id)
-    return `${employees[index].first_last_name} ${employees[index].middle_last_name} ${employees[index].first_name} ${employees[index].middle_name}`
+  const getDirector = (id: string | number | undefined) => {
+    const index = employees.findIndex(employee => employee.ci == id);
+    return `${employees[index].first_last_name} ${employees[index].middle_last_name} ${employees[index].first_name} ${employees[index].middle_name}`;
   };
 
   return (
@@ -50,8 +53,30 @@ const Departments = () => {
               <th>{department.name}</th>
               <th>{getDirector(department.director)}</th>
               <th>{getCertifications(department.id)}</th>
-              <th><Button text={'Ver'}/></th>
-              <th><Button text={'Eliminar'}/></th>
+              <th>
+                <Button
+                  text={'Ver'}
+                  onClick={() => navigate(`/department/${department.id}/`)}
+                />
+              </th>
+              <th>
+                <Button
+                  text={'Eliminar'}
+                  onClick={async () => {
+                    try {
+                      const confirm = window.confirm('¿Está seguro de que desea eliminar?');
+                      confirm && (await axiosInstance.delete(`/department/${department.id}/`));
+                      confirm && window.location.reload();
+                    } catch (error) {
+                      if (error == 'AxiosError: Request failed with status code 500') {
+                        alert(
+                          'No se pudo eliminar la instancia debido a que se hace referencia a ella a través de claves externas protegidas. Primero elimine las instancias hijas que lo referencian.'
+                        );
+                      }
+                    }
+                  }}
+                />
+              </th>
             </tr>
           ))}
         </tbody>
