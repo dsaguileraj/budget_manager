@@ -9,7 +9,7 @@ const BudgetItems: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const response = await axiosInstance.get('/budget_item/');
+      const response = await axiosInstance.get('budget_item/');
       const data = response.data;
       setBudgetItems(data);
     };

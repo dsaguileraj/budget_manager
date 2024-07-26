@@ -11,13 +11,12 @@ const Departments: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const certification = await axiosInstance.get('/certification/');
-      const department = await axiosInstance.get('/department/');
-      const employee = await axiosInstance.get('/employee/');
-      const data = { certification: certification.data, department: department.data, employee: employee.data };
-      setCertifications(data.certification);
-      setDepartments(data.department);
-      setEmployees(data.employee);
+      const certification = await axiosInstance.get('certification/');
+      const department = await axiosInstance.get('department/');
+      const employee = await axiosInstance.get('employee/');
+      setCertifications(certification.data);
+      setDepartments(department.data);
+      setEmployees(employee.data);      
     };
     axiosGET();
   }, []);
@@ -31,8 +30,8 @@ const Departments: React.FC = () => {
   };
 
   const getDirector = (id: string | number | undefined) => {
-    const index = employees.findIndex(employee => employee.ci == id);
-    return `${employees[index].first_last_name} ${employees[index].middle_last_name} ${employees[index].first_name} ${employees[index].middle_name}`;
+    const index = employees.findIndex(employee => employee?.ci == id);
+    return `${employees[index]?.first_last_name} ${employees[index]?.middle_last_name} ${employees[index]?.first_name} ${employees[index]?.middle_name}`;
   };
 
   return (

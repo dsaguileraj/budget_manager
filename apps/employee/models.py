@@ -4,9 +4,9 @@ from django.db import models
 class Employee(models.Model):
     ci = models.CharField(primary_key=True, max_length=10)
     first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50, blank=True)
+    middle_name = models.CharField(max_length=50)
     first_last_name = models.CharField(max_length=50)
-    middle_last_name = models.CharField(max_length=50, blank=True)
+    middle_last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     user = models.CharField(max_length=50, unique=True)
 

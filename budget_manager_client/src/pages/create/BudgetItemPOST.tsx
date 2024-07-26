@@ -26,7 +26,7 @@ const BudgetItemPOST: React.FC = () => {
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosPOST(
-      '/budget_item/',
+      'budget_item/',
       form,
       setForm({
         number: '',

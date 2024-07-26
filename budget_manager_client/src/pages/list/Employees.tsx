@@ -10,8 +10,8 @@ const Employees: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const contract = await axiosInstance.get('/contract/');
-      const employee = await axiosInstance.get('/employee/');
+      const contract = await axiosInstance.get('contract/');
+      const employee = await axiosInstance.get('employee/');
       const data = { contract: contract.data, employee: employee.data };
       setContracts(data.contract);
       setEmployees(data.employee);

@@ -22,18 +22,17 @@ const CertificationPOST: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const budgetItem = await axiosInstance.get('/budget_item/');
-      const department = await axiosInstance.get('/department/');
-      const procedure = await axiosInstance.get('/procedure/');
-      const data = { budgetItem: budgetItem.data, department: department.data, procedure: procedure.data };
-      setBudgetItems(data.budgetItem);
-      setDepartments(data.department);
-      setProcedures(data.procedure);
+      const budgetItem = await axiosInstance.get('budget_item/');
+      const department = await axiosInstance.get('department/');
+      const procedure = await axiosInstance.get('procedure/');
+      setBudgetItems(budgetItem.data);
+      setDepartments(department.data);
+      setProcedures(procedure.data);
       setForm({
         number: '',
-        department: data.department[0]?.id,
-        budget_item: data.budgetItem[0]?.id,
-        procedure: data.procedure[0]?.id,
+        department: department.data[0]?.id,
+        budget_item: budgetItem.data[0]?.id,
+        procedure: procedure.data[0]?.id,
         description: '',
         budget: '',
       });
@@ -71,7 +70,7 @@ const CertificationPOST: React.FC = () => {
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosPOST(
-      '/certification/',
+      'certification/',
       form,
       setForm({
         number: '',

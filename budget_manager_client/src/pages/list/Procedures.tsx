@@ -10,8 +10,8 @@ const Procedures: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const certification = await axiosInstance.get('/certification/');
-      const procedure = await axiosInstance.get('/procedure/');
+      const certification = await axiosInstance.get('certification/');
+      const procedure = await axiosInstance.get('procedure/');
       const data = { certification: certification.data, procedure: procedure.data };
       setCertifications(data.certification);
       setProcedures(data.procedure);

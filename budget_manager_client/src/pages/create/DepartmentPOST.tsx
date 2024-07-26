@@ -14,7 +14,7 @@ const DepartmentPOST: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const employee = await axiosInstance.get('/employee/');
+      const employee = await axiosInstance.get('employee/');
       setEmployees(employee.data);
       setForm({
         name: '',
@@ -36,7 +36,7 @@ const DepartmentPOST: React.FC = () => {
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosPOST(
-      '/department/',
+      'department/',
       form,
       setForm({
         name: '',

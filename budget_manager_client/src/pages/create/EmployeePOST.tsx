@@ -18,7 +18,7 @@ const EmployeePOST: React.FC = () => {
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosPOST(
-      '/employee/',
+      'employee/',
       form,
       setForm({
         ci: '',
@@ -54,7 +54,6 @@ const EmployeePOST: React.FC = () => {
         field={form.middle_name}
         setField={event => setForm({ ...form, middle_name: event.toUpperCase() })}
         maxLength={50}
-        required={false}
       />
       <InputText
         label={'Primer Apellido'}
@@ -67,7 +66,6 @@ const EmployeePOST: React.FC = () => {
         field={form.middle_last_name}
         setField={event => setForm({ ...form, middle_last_name: event.toUpperCase() })}
         maxLength={50}
-        required={false}
       />
       <InputText
         label={'Correo'}

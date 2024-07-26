@@ -17,7 +17,7 @@ const ProcedurePOST: React.FC = () => {
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosPOST(
-      '/procedure/',
+      'procedure/',
       form,
       setForm({
         name: '',

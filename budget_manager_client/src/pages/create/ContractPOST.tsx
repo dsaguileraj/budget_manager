@@ -21,15 +21,14 @@ const ContractPOST: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const certification = await axiosInstance.get('/certification/');
-      const employee = await axiosInstance.get('/employee/');
-      const data = { certification: certification.data, employee: employee.data };
-      setCertifications(data.certification);
-      setEmployees(data.employee);
+      const certification = await axiosInstance.get('certification/');
+      const employee = await axiosInstance.get('employee/');
+      setCertifications(certification.data);
+      setEmployees(employee.data);
       setForm({
         number: '',
-        certification: data.certification[0]?.id,
-        admin: data.employee[0]?.ci,
+        certification: certification.data[0]?.id,
+        admin: employee.data[0]?.ci,
         contractor: '',
         duration: 0,
         date: new Date(),
@@ -59,7 +58,7 @@ const ContractPOST: React.FC = () => {
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
     axiosPOST(
-      '/contract/',
+      'contract/',
       form,
       setForm({
         number: '',

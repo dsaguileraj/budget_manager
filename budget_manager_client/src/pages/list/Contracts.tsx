@@ -11,9 +11,9 @@ const Contracts: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const certification = await axiosInstance.get('/certification/');
-      const contract = await axiosInstance.get('/contract/');
-      const employee = await axiosInstance.get('/employee/');
+      const certification = await axiosInstance.get('certification/');
+      const contract = await axiosInstance.get('contract/');
+      const employee = await axiosInstance.get('employee/');
       const data = { certification: certification.data, contract: contract.data, employee: employee.data };
       setCertifications(data.certification);
       setContracts(data.contract);

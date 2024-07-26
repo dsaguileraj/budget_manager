@@ -10,8 +10,8 @@ const Certifications: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const budgetItem = await axiosInstance.get('/budget_item/');
-      const certification = await axiosInstance.get('/certification/');
+      const budgetItem = await axiosInstance.get('budget_item/');
+      const certification = await axiosInstance.get('certification/');
       const data = { budgetItem: budgetItem.data, certification: certification.data };
       setBudgetItems(data.budgetItem);
       setCertifications(data.certification);
