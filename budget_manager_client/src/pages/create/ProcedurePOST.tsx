@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { axiosInstance } from '../../../utils/api';
+import { axiosPOST } from '../../../utils/api';
 import { Procedure } from '../../../utils/interfaces';
 import { PRODUCT_TYPE, PURCHASE_TYPE, REGIME_TYPE } from '../../../utils/choices';
 import Form from '../../components/common/Form';
@@ -16,20 +16,16 @@ const ProcedurePOST: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
-    axiosInstance
-      .post('/procedure/', form)
-      .then(response => {
-        console.log(response.data);
-        setForm({
-          name: '',
-          regime: REGIME_TYPE[0].value,
-          product_type: PRODUCT_TYPE[0].value,
-          purchase_type: PURCHASE_TYPE[0].value,
-        });
+    axiosPOST(
+      '/procedure/',
+      form,
+      setForm({
+        name: '',
+        regime: REGIME_TYPE[0].value,
+        product_type: PRODUCT_TYPE[0].value,
+        purchase_type: PURCHASE_TYPE[0].value,
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   };
 
   return (

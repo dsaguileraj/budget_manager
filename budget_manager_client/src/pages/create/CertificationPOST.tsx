@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosInstance } from '../../../utils/api';
+import { axiosPOST, axiosInstance } from '../../../utils/api';
 import { BudgetItem, Certification, Department, Option, Procedure } from '../../../utils/interfaces';
 import Form from '../../components/common/Form';
 import InputNumber from '../../components/common/inputs/InputNumber';
@@ -31,9 +31,9 @@ const CertificationPOST: React.FC = () => {
       setProcedures(data.procedure);
       setForm({
         number: '',
-        department: data.department[0].id,
-        budget_item: data.budgetItem[0].id,
-        procedure: data.procedure[0].id,
+        department: data.department[0]?.id,
+        budget_item: data.budgetItem[0]?.id,
+        procedure: data.procedure[0]?.id,
         description: '',
         budget: '',
       });
@@ -70,22 +70,18 @@ const CertificationPOST: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
-    axiosInstance
-      .post('/certification/', form)
-      .then(response => {
-        console.log(response.data);
-        setForm({
-          number: '',
-          department: departments[0]?.id,
-          budget_item: budgetItems[0]?.id,
-          procedure: procedures[0]?.id,
-          description: '',
-          budget: '',
-        });
+    axiosPOST(
+      '/certification/',
+      form,
+      setForm({
+        number: '',
+        department: departments[0]?.id,
+        budget_item: budgetItems[0]?.id,
+        procedure: procedures[0]?.id,
+        description: '',
+        budget: '',
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   };
 
   return (

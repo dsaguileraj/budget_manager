@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosInstance } from '../../../utils/api';
+import { axiosPOST, axiosInstance } from '../../../utils/api';
 import { Certification, Contract, Employee, Option } from '../../../utils/interfaces';
 import Form from '../../components/common/Form';
 import InputText from '../../components/common/inputs/InputText';
@@ -8,8 +8,8 @@ import InputNumber from '../../components/common/inputs/InputNumber';
 import InputDate from '../../components/common/inputs/InputDate';
 
 const ContractPOST: React.FC = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
   const [certifications, setCertifications] = useState<Certification[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [form, setForm] = useState<Contract>({
     number: '',
     certification: certifications[0]?.id,
@@ -28,8 +28,8 @@ const ContractPOST: React.FC = () => {
       setEmployees(data.employee);
       setForm({
         number: '',
-        certification: data.certification[0].id,
-        admin: data.employee[0].ci,
+        certification: data.certification[0]?.id,
+        admin: data.employee[0]?.ci,
         contractor: '',
         duration: 0,
         date: new Date(),
@@ -58,22 +58,18 @@ const ContractPOST: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
-    axiosInstance
-      .post('/contract/', form)
-      .then(response => {
-        console.log(response.data);
-        setForm({
-          number: '',
-          certification: certifications[0]?.id,
-          admin: employees[0]?.ci,
-          contractor: '',
-          duration: 0,
-          date: new Date(),
-        });
+    axiosPOST(
+      '/contract/',
+      form,
+      setForm({
+        number: '',
+        certification: certifications[0]?.id,
+        admin: employees[0]?.ci,
+        contractor: '',
+        duration: 0,
+        date: new Date(),
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   };
 
   return (

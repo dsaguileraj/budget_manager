@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { axiosInstance } from '../../../utils/api';
+import { axiosPOST } from '../../../utils/api';
 import { BudgetItem } from '../../../utils/interfaces';
 import { BUDGET_TYPE, PURCHASE_TYPE } from '../../../utils/choices';
 import Form from '../../components/common/Form';
@@ -25,26 +25,22 @@ const BudgetItemPOST: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
-    axiosInstance
-      .post('/budget_item/', form)
-      .then(response => {
-        console.log(response.data);
-        setForm({
-          number: '',
-          cpc: '',
-          description: '',
-          activity: '',
-          purchase_type: PURCHASE_TYPE[0].value,
-          budget_type: BUDGET_TYPE[0].value,
-          budget: '',
-          c1: false,
-          c2: false,
-          c3: false,
-        });
+    axiosPOST(
+      '/budget_item/',
+      form,
+      setForm({
+        number: '',
+        cpc: '',
+        description: '',
+        activity: '',
+        purchase_type: PURCHASE_TYPE[0].value,
+        budget_type: BUDGET_TYPE[0].value,
+        budget: '',
+        c1: false,
+        c2: false,
+        c3: false,
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   };
 
   return (

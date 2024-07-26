@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosInstance } from '../../../utils/api';
+import { axiosPOST, axiosInstance } from '../../../utils/api';
 import { Department, Employee, Option } from '../../../utils/interfaces';
 import Form from '../../components/common/Form';
 import InputText from '../../components/common/inputs/InputText';
@@ -14,13 +14,12 @@ const DepartmentPOST: React.FC = () => {
 
   useEffect(() => {
     const axiosGET = async () => {
-      const response = await axiosInstance.get('/employee/');
-      const data = response.data;
-    setEmployees(data);
-    setForm({
-      name: '',
-      director: data[0].ci,
-    });
+      const employee = await axiosInstance.get('/employee/');
+      setEmployees(employee.data);
+      setForm({
+        name: '',
+        director: employee.data[0]?.ci,
+      });
     };
     axiosGET();
   }, []);
@@ -36,18 +35,14 @@ const DepartmentPOST: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
-    axiosInstance
-      .post('/department/', form)
-      .then(response => {
-        console.log(response.data);
-        setForm({
-          name: '',
-          director: employees[0]?.ci,
-        });
+    axiosPOST(
+      '/department/',
+      form,
+      setForm({
+        name: '',
+        director: employees[0]?.ci,
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   };
 
   return (

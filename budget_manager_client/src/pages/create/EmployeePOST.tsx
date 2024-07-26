@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { axiosInstance } from '../../../utils/api';
+import { axiosPOST } from '../../../utils/api';
 import { Employee } from '../../../utils/interfaces';
 import Form from '../../components/common/Form';
 import InputText from '../../components/common/inputs/InputText';
@@ -17,23 +17,19 @@ const EmployeePOST: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = (event: React.ChangeEvent) => {
     event.preventDefault();
-    axiosInstance
-      .post('/employee/', form)
-      .then(response => {
-        console.log(response.data);
-        setForm({
-          ci: '',
-          first_name: '',
-          middle_name: '',
-          first_last_name: '',
-          middle_last_name: '',
-          email: '',
-          user: '',
-        });
+    axiosPOST(
+      '/employee/',
+      form,
+      setForm({
+        ci: '',
+        first_name: '',
+        middle_name: '',
+        first_last_name: '',
+        middle_last_name: '',
+        email: '',
+        user: '',
       })
-      .catch(error => {
-        console.log(error);
-      });
+    );
   };
 
   return (
