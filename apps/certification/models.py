@@ -7,7 +7,7 @@ from apps.core.models import AuditModel
 
 
 class Certification(AuditModel):
-    number: str = models.CharField(max_length=25)
+    number = models.CharField(max_length=25)
     department: Department = models.ForeignKey(
         'department.Department',
         on_delete=models.PROTECT
@@ -20,8 +20,8 @@ class Certification(AuditModel):
         'procedure.Procedure',
         on_delete=models.PROTECT
     )
-    description: str = models.TextField()
-    budget: float = models.DecimalField(
+    description = models.TextField()
+    budget = models.DecimalField(
         max_digits=20,
         decimal_places=2,
         validators=[MinValueValidator(0)]

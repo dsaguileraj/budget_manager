@@ -18,7 +18,7 @@
     {% csrf_token %}
     <div class="col-md col-12">
       <div class="form-floating">
-        <input type="text" class="form-control" id="name" name="name" value="{{ department.name }}" required />
+        <input type="text" class="form-control" id="name" name="name" maxlength="255" value="{{ department.name }}" required />
         <label for="name">Nombre</label>
       </div>
     </div>
@@ -26,7 +26,11 @@
       <div class="form-floating">
         <select class="form-select" id="director" name="director" required>
           {% for employee in employees %}
-            <option value="{{ employee.ci }}" {% if value == department.director.ci %} selected {% endif %}>{{ employee.name }} {{ employee.surname }}</option>
+            {% if employee.ci == department.director.ci %}
+              <option value="{{ employee.ci }}" selected>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</option>
+            {% else %}
+              <option value="{{ employee.ci }}" selected>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</option>
+            {% endif %}
           {% endfor %}
         </select>
         <label for="director">Director</label>

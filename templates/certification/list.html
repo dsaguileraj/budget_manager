@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block body %}
-  {% if object_list %}
+  {% if page_obj %}
     {% csrf_token %}
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Certificaciones</li>
@@ -37,7 +37,7 @@
             <tr>
               <td>{{ object.number }}</td>
               <td>
-                <a href="{% url 'budget_item:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item }}</a>
+                <a href="{% url 'budget_item:detail' object.budget_item.pk %}" class="text-decoration-none">{{ object.budget_item.number }}</a>
               </td>
               <td>{{ object.description }}</td>
               <td>{{ object.budget_item.activity }}</td>
@@ -62,8 +62,10 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning" role="alert">
-      No se han registrado certificaciones todavía, intente creando <a href="{% url 'certification:create' %}">aquí</a>
-    </div>
+    {% if not message %}
+      <div class="alert alert-warning" role="alert">
+        No se han registrado certificaciones todavía, intente creando <a href="{% url 'certification:create' %}">aquí</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

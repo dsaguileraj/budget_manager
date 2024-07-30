@@ -1,23 +1,22 @@
 import pandas
-from django.db import models
+from django.db import IntegrityError, models
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
-from .models import BudgetItem
+from .models import BudgetItem, BudgetType
 
 
-def list_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+def list_budget_item(request: HttpRequest) -> HttpResponse:
     object_list = BudgetItem.objects.all()
     paginator = Paginator(object_list, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    total = BudgetItem.objects.aggregate(total_budget=models.Sum('budget'))['total_budget']
+    total = BudgetItem.objects.aggregate(
+        total_budget=models.Sum('budget'))['total_budget']
     context = {
-        'object_list': object_list,
         'page_obj': page_obj,
-        'total_budget': f'{total: .2f}'
+        'total_budget': f'{total: .2f}' if total else 0
     }
     query = request.GET.get('q', '')
     if query:
@@ -29,18 +28,25 @@ def list_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirec
             models.Q(budget__icontains=query)
         ).order_by('number')
         if result:
-            context['object_list'] = result
+            context['page_obj'] = result
         if not result:
             context['query_message'] = 'No se encontraron coincidencias'
     return render(request, 'budget_item/list.html', context)
 
 
-class BudgetItemDetailView(DetailView):
-    model = BudgetItem
-    template_name = 'budget_item/detail.html'
+def detail_budget_item(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        budget_item = BudgetItem.objects.get(pk=pk)
+        context = {'budget_item': budget_item}
+    except BudgetItem.DoesNotExist:
+        context = {'message': 'Partida presupuestaria no encontrada'}
+        return render(request, 'budget_item/list.html', context)
+    else:
+        return render(request, 'budget_item/detail.html', context)
 
 
-def create_budget_item(request: HttpRequest)  -> HttpResponse | HttpResponseRedirect:
+def create_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+    context = {'budget_type': BudgetType.choices}
     if request.method == 'POST':
         number = request.POST['number']
         cpc = request.POST['cpc']
@@ -52,22 +58,26 @@ def create_budget_item(request: HttpRequest)  -> HttpResponse | HttpResponseRedi
         c1 = request.POST.get('c1') == 'on'
         c2 = request.POST.get('c2') == 'on'
         c3 = request.POST.get('c3') == 'on'
-        budget_item = BudgetItem.objects.create(
-            number=number,
-            cpc=cpc,
-            budget=budget,
-            budget_type=budget_type,
-            description=description,
-            activity=activity,
-            bid=bid,
-            c1=c1,
-            c2=c2,
-            c3=c3,
-        )
-        budget_item.save()
+        try:
+            budget_item = BudgetItem.objects.create(
+                number=number,
+                cpc=cpc,
+                budget=budget,
+                budget_type=budget_type,
+                description=description,
+                activity=activity,
+                bid=bid,
+                c1=c1,
+                c2=c2,
+                c3=c3,
+            )
+            budget_item.save()
+        except IntegrityError:
+            context['message'] = 'Registro ya existente. Los siguientes campos, en conjunto, deben ser únicos: Número, Descripción, Actividad'
+            return render(request, 'budget_item/create.html', context)
         return redirect(reverse_lazy('budget_item:list'))
     else:
-        return render(request, 'budget_item/create.html')
+        return render(request, 'budget_item/create.html', context)
 
 
 def delete_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
@@ -87,6 +97,10 @@ def delete_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResp
 
 def update_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     budget_item = BudgetItem.objects.get(pk=pk)
+    context = {
+        'budget_item': budget_item,
+        'budget_type': BudgetType.choices
+    }
     if request.method == 'POST':
         budget_item.number = request.POST['number']
         budget_item.cpc = request.POST['cpc']
@@ -98,13 +112,17 @@ def update_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResp
         budget_item.c1 = request.POST.get('c1') == 'on'
         budget_item.c2 = request.POST.get('c2') == 'on'
         budget_item.c3 = request.POST.get('c3') == 'on'
-        budget_item.save()
-        return redirect(reverse_lazy('budget_item:list'))
+        try:
+            budget_item.save()
+            return redirect(reverse_lazy('budget_item:list'))
+        except IntegrityError:
+            context['message'] = 'Registro ya existente. Los siguientes campos, en conjunto, deben ser únicos: Número, Descripción, Actividad'
+            return render(request, 'budget_item/update.html', context)
     else:
-        return render(request, 'budget_item/update.html', {'budget_item': budget_item})
+        return render(request, 'budget_item/update.html', context)
 
 
-def upload_file(request: HttpRequest)  -> HttpResponse | HttpResponseRedirect:
+def upload_file(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == 'POST':
         file = request.FILES['file']
         data = pandas.read_excel(file, engine='openpyxl')

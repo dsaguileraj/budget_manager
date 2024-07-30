@@ -13,7 +13,6 @@ def list_department(request: HttpRequest) -> HttpResponse:
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'object_list': object_list,
         'page_obj': page_obj,
     }
     query = request.GET.get('q', '')
@@ -27,7 +26,7 @@ def list_department(request: HttpRequest) -> HttpResponse:
             models.Q(director__ci__icontains=query)
         ).order_by('name')
         if result:
-            context['object_list'] = result
+            context['page_obj'] = result
         if not result:
             context['query_message'] = 'No se encontraron coincidencias'
     return render(request, 'department/list.html', context)
@@ -39,6 +38,8 @@ class DepartmentDetailView(DetailView):
 
 
 def create_department(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+    employees = Employee.objects.all()
+    context = {'employees': employees}
     if request.method == 'POST':
         name = request.POST['name']
         director = Employee.objects.get(pk=request.POST['director'])
@@ -49,10 +50,11 @@ def create_department(request: HttpRequest) -> HttpResponse | HttpResponseRedire
             )
             department.save()
         except IntegrityError:
-            return render(request, 'department/create.html', {'employees': Employee.objects.all(), 'message': 'Registro ya existente'})
+            context['message'] = 'Registro ya existente'
+            return render(request, 'department/create.html', context)
         return redirect(reverse_lazy('department:list'))
     else:
-        return render(request, 'department/create.html', {'employees': Employee.objects.all()})
+        return render(request, 'department/create.html', context)
 
 
 def delete_department(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
@@ -72,13 +74,15 @@ def delete_department(request: HttpRequest, pk: int) -> HttpResponse | HttpRespo
 
 def update_department(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     department = Department.objects.get(pk=pk)
+    context = {'department': department}
     if request.method == 'POST':
         department.name = request.POST['name']
         department.director = request.POST['director']
         try:
             department.save()
         except IntegrityError:
-            return render(request, 'department/update.html', {'department': department, 'message': 'Registro ya existente'})
+            context['message'] = 'Registro ya existente'
+            return render(request, 'department/update.html', context)
         return redirect(reverse_lazy('department:list'))
     else:
-        return render(request, 'department/update.html', {'department': department})
+        return render(request, 'department/update.html', context)

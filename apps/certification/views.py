@@ -1,9 +1,9 @@
-from django.db import models
+from decimal import Decimal
+from django.db import IntegrityError, models
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
 from .models import BudgetItem, Certification, Department, Procedure
 
 
@@ -12,10 +12,7 @@ def list_certification(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(object_list, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {
-        'object_list': object_list,
-        'page_obj': page_obj,
-    }
+    context = {'page_obj': page_obj}
     query = request.GET.get('q', '')
     if query:
         result = Certification.objects.filter(
@@ -26,18 +23,24 @@ def list_certification(request: HttpRequest) -> HttpResponse:
             models.Q(budget__icontains=query)
         ).order_by('number')
         if result:
-            context['object_list'] = result
+            context['page_obj'] = result
         if not result:
             context['query_message'] = 'No se encontraron coincidencias'
     return render(request, 'certification/list.html', context)
 
 
-class CertificationDetailView(DetailView):
-    model = Certification
-    template_name = 'certification/detail.html'
+def detail_certification(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        certification = Certification.objects.get(pk=pk)
+        context = {'certification': certification}
+    except Certification.DoesNotExist:
+        context = {'message': 'Certificación no encontrada'}
+        return render(request, 'certification/list.html', context)
+    else:
+        return render(request, 'certification/detail.html', context)
 
 
-def create_certification(request: HttpRequest)  -> HttpResponse | HttpResponseRedirect:
+def create_certification(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     context = {
         'procedures': Procedure.objects.all(),
         'budget_items': BudgetItem.objects.all(),
@@ -48,7 +51,7 @@ def create_certification(request: HttpRequest)  -> HttpResponse | HttpResponseRe
         procedure_id = request.POST['procedure']
         budget_item_id = request.POST['budget_item']
         department_id = request.POST['department']
-        budget = float(request.POST['budget'])
+        budget = Decimal(request.POST['budget'])
         description = request.POST['description']
         procedure = Procedure.objects.get(pk=procedure_id)
         budget_item = BudgetItem.objects.get(pk=budget_item_id)
@@ -56,15 +59,19 @@ def create_certification(request: HttpRequest)  -> HttpResponse | HttpResponseRe
         total_certification_budget = Certification.objects.filter(
             budget_item=budget_item).aggregate(models.Sum('budget'))['budget__sum'] or 0
         if total_certification_budget + budget <= budget_item.budget:
-            certification = Certification.objects.create(
-                number=number,
-                procedure=procedure,
-                budget_item=budget_item,
-                department=department,
-                budget=budget,
-                description=description,
-            )
-            certification.save()
+            try:
+                certification = Certification.objects.create(
+                    number=number,
+                    procedure=procedure,
+                    budget_item=budget_item,
+                    department=department,
+                    budget=budget,
+                    description=description,
+                )
+                certification.save()
+            except IntegrityError:
+                context['message'] = 'Registro ya existente. Los siguientes campos, en conjunto, deben ser únicos: Número, Partida Presupuestaria'
+                return render(request, 'certification/create.html', context)
             return redirect(reverse_lazy('certification:list'))
         else:
             context['message'] = 'El presupuesto a certificar excede el saldo disponible de la partida'
@@ -101,12 +108,22 @@ def update_certification(request: HttpRequest, pk: int) -> HttpResponse | HttpRe
         budget_item_id = request.POST['budget_item']
         department_id = request.POST['department']
         certification.number = request.POST['number']
-        certification.budget = request.POST['budget']
+        certification.budget = Decimal(request.POST['budget'])
         certification.description = request.POST['description']
         certification.procedure = Procedure.objects.get(pk=procedure_id)
         certification.budget_item = BudgetItem.objects.get(pk=budget_item_id)
         certification.department = Department.objects.get(pk=department_id)
-        certification.save()
-        return redirect(reverse_lazy('certification:list'))
+        total_certification_budget = Certification.objects.filter(
+            budget_item=certification.budget_item).aggregate(models.Sum('budget'))['budget__sum'] or 0
+        if total_certification_budget + certification.budget <= certification.budget_item.budget:
+            try:
+                certification.save()
+                return redirect(reverse_lazy('certification:list'))
+            except IntegrityError:
+                context['message'] = 'Registro ya existente. Los siguientes campos, en conjunto, deben ser únicos: Número, Partida Presupuestaria'
+                return render(request, 'certification/update.html', context)
+        else:
+            context['message'] = 'El presupuesto a certificar excede el saldo disponible de la partida'
+            return render(request, 'certification/update.html', context)
     else:
         return render(request, 'certification/update.html', context)

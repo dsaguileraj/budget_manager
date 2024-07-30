@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import list_certification, CertificationDetailView, create_certification, delete_certification, update_certification
+from . import views
 
-app_name = "certification"
+app_name = 'certification'
 
 urlpatterns = [
-    path("", list_certification, name="list"),
-    path("create/", create_certification, name="create"),
-    path("<int:pk>/", CertificationDetailView.as_view(), name="detail"),
-    path("delete/<int:pk>/", delete_certification, name="delete"),
-    path("update/<int:pk>/", update_certification, name="update")
+    path('', views.list_certification, name='list'),
+    path('create/', views.create_certification, name='create'),
+    path('<int:pk>/', views.detail_certification, name='detail'),
+    path('delete/<int:pk>/', views.delete_certification, name='delete'),
+    path('update/<int:pk>/', views.update_certification, name='update')
 ]

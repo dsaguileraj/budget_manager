@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block body %}
-  {% if object_list %}
+  {% if page_obj %}
     {% csrf_token %}
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Departamentos</li>
@@ -34,8 +34,8 @@
           {% for object in page_obj %}
             <tr>
               <td>{{ object.name }}</td>
-              <td>{{ object.director }}</td>
-              <td>{{ object.certifications_set.count }}</td>
+              <td>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</td>
+              <td>{{ object.certification_set.count }}</td>
               <td>
                 <a href="{% url 'department:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
               </td>

@@ -7,10 +7,10 @@
 {% block body %}
   <table class="table border">
     <caption>
-      <b>Fecha de Creación:</b> {{ object.create_at }}
+      <b>Fecha de Creación:</b> {{ budget_item.create_at }}
     </caption>
     <caption>
-      <b>Última Modificación:</b> {{ object.update_at }}
+      <b>Última Modificación:</b> {{ budget_item.update_at }}
     </caption>
     <thead class="table-light">
       <tr>
@@ -18,7 +18,7 @@
           <li class="breadcrumb-item h2" aria-current="page">
             <a class="text-decoration-none" href="{% url 'budget_item:list' %}">Partidas Presupuestarias</a>
           </li>
-          <li class="breadcrumb-item h2 active" aria-current="page">{{ object.number }}</li>
+          <li class="breadcrumb-item h2 active" aria-current="page">{{ budget_item.number }}</li>
         </ol>
       </tr>
     </thead>
@@ -27,55 +27,55 @@
         <td style="width: 15%">
           <b>Descripción</b>
         </td>
-        <td>{{ object.description }}</td>
+        <td>{{ budget_item.description }}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>Actividad</b>
         </td>
-        <td>{{ object.activity }}</td>
+        <td>{{ budget_item.activity }}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>CPC</b>
         </td>
-        <td>{{ object.cpc }}</td>
+        <td>{{ budget_item.cpc }}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>Presupuesto</b>
         </td>
-        <td>USD {{ object.budget }}</td>
+        <td>USD {{ budget_item.budget }}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>Tipo de Presupuesto</b>
         </td>
-        <td>{{ object.budget_type }}</td>
+        <td>{{ budget_item.budget_type }}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>BID</b>
         </td>
-        <td>{% if object.bid %} X {% else %} - {% endif %}</td>
+        <td>{% if budget_item.bid %} X {% else %} - {% endif %}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>C1</b>
         </td>
-        <td>{% if object.c1 %} X {% else %} - {% endif %}</td>
+        <td>{% if budget_item.c1 %} X {% else %} - {% endif %}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>C2</b>
         </td>
-        <td>{% if object.c2 %} X {% else %} - {% endif %}</td>
+        <td>{% if budget_item.c2 %} X {% else %} - {% endif %}</td>
       </tr>
       <tr>
         <td style="width: 15%">
           <b>C3</b>
         </td>
-        <td>{% if object.c3 %} X {% else %} - {% endif %}</td>
+        <td>{% if budget_item.c3 %} X {% else %} - {% endif %}</td>
       </tr>
       <tr>
         <td style="width: 15%">
@@ -83,11 +83,11 @@
         </td>
         <td>
           <div class="list-group">
-            {% if object.certifications_set.all %}
-              {% for certification in object.certifications_set.all %}
+            {% if budget_item.certification_set.all %}
+              {% for certification in budget_item.certification_set.all %}
                 <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Certificación No. {{ certification.number }} - {{ certification.department }}</h5>
+                    <h5 class="mb-1">{{ certification.number }}</h5>
                     <small>{{ certification.create_at}}</small>
                   </div>
                   <p class="mb-1">{{ certification.description }}</p>
@@ -104,7 +104,7 @@
   </table>
   <div class="d-flex justify-content-center">
     <a href="{% url 'budget_item:list' %}" class="m-1 btn btn-outline-secondary">Volver</a>
-    <a href="{% url 'budget_item:update' object.pk %}" class="m-1 btn btn-outline-primary">Editar</a>
-    <a href="{% url 'budget_item:delete' object.pk %}" class="m-1 btn btn-outline-danger">Eliminar</a>
+    <a href="{% url 'budget_item:update' budget_item.pk %}" class="m-1 btn btn-outline-primary">Editar</a>
+    <a href="{% url 'budget_item:delete' budget_item.pk %}" class="m-1 btn btn-outline-danger">Eliminar</a>
   </div>
 {% endblock %}

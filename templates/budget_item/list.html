@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block body %}
-  {% if object_list %}
+  {% if page_obj %}
     {% csrf_token %}
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Partidas Presupuestarias</li>
@@ -61,8 +61,10 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning mt-3" role="alert">
-      No se han registrado partidas presupuestarias todavía, intente creando <a href="{% url 'budget_item:create' %}">aquí</a>
-    </div>
+    {% if not message %}
+      <div class="alert alert-warning mt-3" role="alert">
+        No se han registrado partidas presupuestarias todavía, intente creando <a href="{% url 'budget_item:create' %}">aquí</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

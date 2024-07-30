@@ -19,7 +19,7 @@
         <td style="width: 10%">
           <b>Director</b>
         </td>
-        <td>{{ object.director }}</td>
+        <td>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
@@ -27,11 +27,11 @@
         </td>
         <td>
           <div class="list-group">
-            {% if object.certifications_set.all %}
-              {% for certification in object.certifications_set.all %}
+            {% if object.certification_set.all %}
+              {% for certification in object.certification_set.all %}
                 <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Certificación No. {{ certification.number }}</h5>
+                    <h5 class="mb-1">{{ certification.number }}</h5>
                     <small>{{ certification.create_at}}</small>
                   </div>
                   <p class="mb-1">{{ certification.description }}</p>

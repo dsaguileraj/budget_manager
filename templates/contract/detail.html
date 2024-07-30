@@ -11,7 +11,7 @@
         <li class="breadcrumb-item h2" aria-current="page">
           <a class="text-decoration-none" href="{% url 'contract:list' %}">Contratos</a>
         </li>
-        <li class="breadcrumb-item h2 active" aria-current="page">{{ object.pk }}</li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ contract.number }}</li>
       </ol>
     </thead>
     <tbody>
@@ -19,48 +19,70 @@
         <td style="width: 10%">
           <b>Administrador de Contrato</b>
         </td>
-        <td>{{ object.admin.name }} {{ object.admin.surname }}</td>
+        <td>{{ contract.admin.first_name }} {{ contract.admin.middle_name }} {{ contract.admin.first_last_name }} {{ contract.admin.middle_last_name }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Contratista</b>
         </td>
-        <td>{{ object.contractor }}</td>
+        <td>{{ contract.contractor }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Certificación</b>
         </td>
+        
         <td>
           <div class="list-group">
-            <a href="{% url 'certification:detail' object.certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Certificación No. {{ object.certification.number }}</h5>
-                <small>{{ object.certification.date }}</small>
-              </div>
-              <p class="mb-1">{{ object.certification.description }}</p>
-              <small>USD {{ object.certification.budget }}</small>
-            </a>
+            {% if contract.certification %}
+              {% for certification in contract.certification.all %}
+              
+              {% comment %} <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ certification.number }}</h5>
+                    <small>{{ certification.create_at}}</small>
+                  </div>
+                  <p class="mb-1">{{ certification.description }}</p>
+                  <small>USD {{ certification.budget }}</small>
+                </a> {% endcomment %}
+              {% endfor %}
+            {% else %}
+              -
+            {% endif %}
           </div>
+        </td>
+
+        {% comment %} <td>
+          <div class="list-group">
+            <a href="{% url 'certification:detail' contract.certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Certificación No. {{ contract.certification.number }}</h5>
+                <small>{{ contract.certification.date }}</small>
+              </div>
+              <p class="mb-1">{{ contract.certification.description }}</p>
+              <small>USD {{ contract.certification.budget }}</small>
+            </a>
+          </div> {% endcomment %}
+        
         </td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Fecha de Suscripción</b>
         </td>
-        <td>{{ object.date }}</td>
+        <td>{{ contract.suscription }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Plazo de Ejecución</b>
         </td>
-        <td>{{ object.duration }}d</td>
+        <td>{{ contract.duration }}d</td>
       </tr>
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
     <a href="{% url 'contract:list' %}" class="btn m-1 btn-outline-secondary">Volver</a>
-    <a href="{% url 'contract:update' object.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
-    <a href="{% url 'contract:delete' object.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
+    <a href="{% url 'contract:update' contract.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
+    <a href="{% url 'contract:delete' contract.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
   </div>
 {% endblock %}
