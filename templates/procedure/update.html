@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Procedimientos
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'procedure:list' %}">Procedimientos</a>
+    </li>
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'procedure:detail' procedure.pk %}">{{ procedure.name }}</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Editar</li>
+  </ol>
+  <form method="POST" class="row g-2">
+    {% csrf_token %}
+    <div class="col-12 col-md">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" name="name" value="{{ procedure.name }}" required />
+        <label for="name">Nombre</label>
+      </div>
+    </div>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="regime" name="regime" required>
+          {% for regime in regime_choices %}
+            {% if regime.0 == procedure.regime %}
+              <option value="{{ regime.0 }}" selected>{{ regime.1 }}</option>
+            {% else %}
+              <option value="{{ regime.0 }}">{{ regime.1 }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="regime">Régimen</label>
+      </div>
+    </div>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="product_type" name="product_type" required>
+          {% for product_type in product_type_choices %}
+            {% if product_type.0 == procedure.product_type %}
+              <option value="{{ product_type.0 }}" selected>{{ product_type.1 }}</option>
+            {% else %}
+              <option value="{{ product_type.0 }}">{{ product_type.1 }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="product_type">Tipo de Producto</label>
+      </div>
+    </div>
+    <div class="col-4 col-md-2">
+      <div class="form-floating">
+        <select class="form-select" id="purchase_type" name="purchase_type" required>
+          {% for purchase_type in purchase_type_choices %}
+            {% if purchase_type.0 == procedure.purchase_type %}
+              <option value="{{ purchase_type.0 }}" selected>{{ purchase_type.1 }}</option>
+            {% else %}
+              <option value="{{ purchase_type.0 }}">{{ purchase_type.1 }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="purchase_type">Tipo de Compra</label>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a type="button" href="{% url 'procedure:list' %}" class="btn m-1 btn-outline-danger">Cancelar</a>
+      <button type="submit" class="btn m-1 btn-outline-success">Actualizar</button>
+    </div>
+  </form>
+{% endblock %}

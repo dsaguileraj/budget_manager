@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Partidas Presupuestarias
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'budget_item:list' %}">Partidas Presupuestarias</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Crear</li>
+  </ol>
+  <form method="POST" class="row g-2 mt-2">
+    {% csrf_token %}
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="number" name="number" required />
+        <label for="number">Número</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="cpc" name="cpc" required />
+        <label for="cpc">CPC</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="budget" name="budget" step="0.01" min="0" required />
+        <label for="budget">Presupuesto (USD)</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <select class="form-control" id="budget_type" name="budget_type">
+          <option selected disabled>---</option>
+          <option value="GC">Gasto Corriente</option>
+          <option value="PI">Proyecto de Inversión</option>
+        </select>
+        <label for="budget_type">Tipo de Presupuesto</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" style="min-height: 100px" id="description" name="description" rows="3" required></textarea>
+        <label for="description">Descripción</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" style="min-height: 100px" id="activity" name="activity" rows="3" required></textarea>
+        <label for="activity">Actividad</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bid">BID</label>
+      <input type="checkbox" id="bid" name="bid" />
+    </div>
+    <div class="form-group">
+      <label for="c1">C1</label>
+      <input type="checkbox" id="c1" name="c1" />
+    </div>
+    <div class="form-group">
+      <label for="c2">C2</label>
+      <input type="checkbox" id="c2" name="c2" />
+    </div>
+    <div class="form-group">
+      <label for="c3">C3</label>
+      <input type="checkbox" id="c3" name="c3" />
+    </div>
+    
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'budget_item:list' %}" class="m-1 btn btn-outline-danger">Cancelar</a>
+      <button type="submit" class="m-1 btn btn-outline-success">Guardar</button>
+      <a href="{% url 'budget_item:upload' %}" class="m-1 btn btn-outline-primary">Cargar Plantilla</a>
+    </div>
+  </form>
+{% endblock %}

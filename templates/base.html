@@ -22,22 +22,22 @@
             <div class="me-5">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'certifications:list' %}">Certificaciones</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'certification:list' %}">Certificaciones</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'contracts:list' %}">Contratos</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'contract:list' %}">Contratos</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'departments:list' %}">Departamentos</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'department:list' %}">Departamentos</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'employees:list' %}">Empleados</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'employee:list' %}">Empleados</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'budget_items:list' %}">Partidas</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'budget_item:list' %}">Partidas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'procedures_types:list' %}">Procedimientos</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'procedure:list' %}">Procedimientos</a>
                 </li>
               </ul>
             </div>
@@ -54,10 +54,31 @@
         </div>
       </nav>
       <div class="container mt-4 mb-4">
+        {% if message %}
+          <div class="alert alert-warning" role="alert">{{ message }}</div>
+        {% endif %}
         {% block body %}
 
         {% endblock %}
       </div>
+
+      {% if object_list %}
+        <div class="pagination d-flex justify-content-center m-4">
+          <span class="step-links m-4">
+            {% if page_obj.has_previous %}
+              <a class="m-1" href="?page=1">&laquo; Inicio</a>
+              <a class="m-1" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            <span class="current m-3">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+              <a class="m-1" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+              <a class="m-1" href="?page={{ page_obj.paginator.num_pages }}">Último &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
     {% else %}
       <div class="container" style="max-width: 400px; text-align: center;">
         <a href="https://pasaje.gob.ec/"><img src="https://pasaje.gob.ec/wp-content/uploads/2023/08/escudo.png" alt="" class="w-50 mt-5" /></a>
