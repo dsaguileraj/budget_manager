@@ -3,7 +3,6 @@ from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
 from .models import Department, Employee
 
 
@@ -12,9 +11,7 @@ def list_department(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(object_list, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {
-        'page_obj': page_obj,
-    }
+    context = {'page_obj': page_obj}
     query = request.GET.get('q', '')
     if query:
         result = Department.objects.filter(
@@ -32,9 +29,15 @@ def list_department(request: HttpRequest) -> HttpResponse:
     return render(request, 'department/list.html', context)
 
 
-class DepartmentDetailView(DetailView):
-    model = Department
-    template_name = 'department/detail.html'
+def detail_department(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        department = Department.objects.get(pk=pk)
+        context = {'department': department}
+    except Department.DoesNotExist:
+        context = {'message': 'Departamento no encontrado'}
+        return render(request, 'department/list.html', context)
+    else:
+        return render(request, 'department/detail.html', context)
 
 
 def create_department(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
@@ -60,21 +63,21 @@ def create_department(request: HttpRequest) -> HttpResponse | HttpResponseRedire
 def delete_department(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     try:
         department = Department.objects.get(pk=pk)
-        department.delete()
-        deleted = True
     except Department.DoesNotExist:
-        deleted = False
+        return redirect(reverse_lazy('department:list'))
     except models.ProtectedError:
         return redirect(reverse_lazy('authentication:error'))
-    if deleted:
-        return redirect(reverse_lazy('department:list'))
-    else:
-        return render(request, 'department/list.html')
+    department.delete()
+    return redirect(reverse_lazy('department:list'))
 
 
 def update_department(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     department = Department.objects.get(pk=pk)
-    context = {'department': department}
+    employees = Employee.objects.all()
+    context = {
+        'department': department,
+        'employees': employees,
+    }
     if request.method == 'POST':
         department.name = request.POST['name']
         department.director = request.POST['director']

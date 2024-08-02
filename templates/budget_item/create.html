@@ -35,8 +35,8 @@
       <div class="form-floating">
         <select class="form-control" id="budget_type" name="budget_type">
           <option selected disabled>---</option>
-          {% for type in budget_type %}
-            <option value="{{ type.0 }}">{{ type.1 }}</option>
+          {% for budget_type in budget_types %}
+            <option value="{{ budget_type.0 }}">{{ budget_type.1 }}</option>
           {% endfor %}
         </select>
         <label for="budget_type">Tipo de Presupuesto</label>

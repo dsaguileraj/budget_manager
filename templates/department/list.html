@@ -6,7 +6,7 @@
 
 {% block form %}
   <form action="{% url 'department:list' %}" class="d-inline-flex w-100" role="search">
-    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Departamento"/>
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Departamento" />
     <button class="btn btn-outline-primary" type="submit">Buscar</button>
   </form>
 {% endblock %}
@@ -56,8 +56,10 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning mt-3" role="alert">
-      No se han registrado departamentos todavía, intente creando <a href="{% url 'department:create' %}">aquí</a>
-    </div>
+    {% if not message %}
+      <div class="alert alert-warning mt-3" role="alert">
+        No se han registrado departamentos todavía, intente creando <a href="{% url 'department:create' %}">aquí</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

@@ -4,7 +4,8 @@ from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from .models import BudgetItem, BudgetType
+from apps.core.choices import BudgetType
+from .models import BudgetItem
 
 
 def list_budget_item(request: HttpRequest) -> HttpResponse:
@@ -16,8 +17,7 @@ def list_budget_item(request: HttpRequest) -> HttpResponse:
         total_budget=models.Sum('budget'))['total_budget']
     context = {
         'page_obj': page_obj,
-        'total_budget': f'{total: .2f}' if total else 0
-    }
+        'total_budget': f'{total: .2f}' if total else 0}
     query = request.GET.get('q', '')
     if query:
         result = BudgetItem.objects.filter(
@@ -46,7 +46,7 @@ def detail_budget_item(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 def create_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
-    context = {'budget_type': BudgetType.choices}
+    context = {'budget_types': BudgetType.choices}
     if request.method == 'POST':
         number = request.POST['number']
         cpc = request.POST['cpc']
@@ -83,23 +83,19 @@ def create_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedir
 def delete_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     try:
         budget_item = BudgetItem.objects.get(pk=pk)
-        budget_item.delete()
-        deleted = True
     except BudgetItem.DoesNotExist:
-        deleted = False
+        return redirect(reverse_lazy('budget_item:list'))
     except models.ProtectedError:
         return redirect(reverse_lazy('authentication:error'))
-    if deleted:
-        return redirect(reverse_lazy('budget_item:list'))
-    else:
-        return render(request, 'budget_item/list.html')
+    budget_item.delete()
+    return redirect(reverse_lazy('budget_item:list'))
 
 
 def update_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     budget_item = BudgetItem.objects.get(pk=pk)
     context = {
         'budget_item': budget_item,
-        'budget_type': BudgetType.choices
+        'budget_types': BudgetType.choices
     }
     if request.method == 'POST':
         budget_item.number = request.POST['number']
@@ -127,17 +123,22 @@ def upload_file(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
         file = request.FILES['file']
         data = pandas.read_excel(file, engine='openpyxl')
         for index, row in data.iterrows():
-            BudgetItem.objects.create(
-                number=row['Número'],
-                cpc=row['CPC'],
-                budget=row['Presupuesto'],
-                budget_type=row['Tipo de Presupuesto'],
-                description=row['Descripción'],
-                activity=row['Actividad'],
-                bid=row['BID'],
-                c1=row['C1'],
-                c2=row['C2'],
-                c3=row['C3'],
-            )
+            try:
+                BudgetItem.objects.create(
+                    number=row['Número'],
+                    cpc=row['CPC'],
+                    budget=row['Presupuesto'],
+                    budget_type=row['Tipo de Presupuesto'],
+                    description=row['Descripción'],
+                    activity=row['Actividad'],
+                    bid=row['BID'],
+                    c1=row['C1'],
+                    c2=row['C2'],
+                    c3=row['C3'],
+                )
+            except Exception as exception:
+                context = {
+                    'message': f'Error en el fila No.{row}: {exception}'}
+                return render(request, 'budget_item/create_excel.html', context)
         return redirect(reverse_lazy('budget_item:list'))
     return render(request, 'budget_item/create_excel.html')

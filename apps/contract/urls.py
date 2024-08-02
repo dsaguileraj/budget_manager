@@ -8,5 +8,5 @@ urlpatterns = [
     path('create/', views.create_contract, name='create'),
     path('<int:pk>/', views.detail_contract, name='detail'),
     path('delete/<int:pk>/', views.delete_contract, name='delete'),
-    path('update/<int:pk>/', views.update_contract, name='update')
+    path('update/<int:pk>/', views.update, name='update')
 ]

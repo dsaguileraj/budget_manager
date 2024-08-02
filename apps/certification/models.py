@@ -8,24 +8,12 @@ from apps.core.models import AuditModel
 
 class Certification(AuditModel):
     number = models.CharField(max_length=25)
-    department: Department = models.ForeignKey(
-        'department.Department',
-        on_delete=models.PROTECT
-    )
-    budget_item: BudgetItem = models.ForeignKey(
-        'budget_item.BudgetItem',
-        on_delete=models.PROTECT
-    )
-    procedure: Procedure = models.ForeignKey(
-        'procedure.Procedure',
-        on_delete=models.PROTECT
-    )
+    department = models.ForeignKey(Department, on_delete=models.PROTECT)
+    budget_item = models.ForeignKey(BudgetItem, on_delete=models.PROTECT)
+    procedure = models.ForeignKey(Procedure, on_delete=models.PROTECT)
     description = models.TextField()
     budget = models.DecimalField(
-        max_digits=20,
-        decimal_places=2,
-        validators=[MinValueValidator(0)]
-    )
+        max_digits=20, decimal_places=2, validators=[MinValueValidator(0)])
 
     def __str__(self) -> str:
         return f'{self.number} [{self.budget_item.number}]'

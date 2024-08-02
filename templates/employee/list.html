@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block body %}
-  {% if object_list %}
+  {% if page_obj %}
     {% csrf_token %}
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Empleados</li>
@@ -37,7 +37,7 @@
               <td>{{ object.ci }}</td>
               <td>{{ object.first_name }} {{ object.middle_name }} {{ object.first_last_name }} {{ object.middle_last_name }}</td>
               <td>{{ object.email }}</td>
-              <td>{{ object.contracts_set.count }}</td>
+              <td>{{ object.contract_set.count }}</td>
               <td>
                 <a href="{% url 'employee:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
               </td>
@@ -58,8 +58,10 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning mt-3" role="alert">
-      No se han registrado empleados todavía, intente creando <a href="{% url 'employee:create' %}">aquí</a>
-    </div>
+    {% if not message %}
+      <div class="alert alert-warning mt-3" role="alert">
+        No se han registrado empleados todavía, intente creando <a href="{% url 'employee:create' %}">aquí</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

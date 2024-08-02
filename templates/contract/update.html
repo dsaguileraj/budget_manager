@@ -10,59 +10,64 @@
       <a class="text-decoration-none" href="{% url 'contract:list' %}">Contratos</a>
     </li>
     <li class="breadcrumb-item h2" aria-current="page">
-      <a class="text-decoration-none" href="{% url 'contract:detail' contract.pk %}">{{ contract.pk }}</a>
+      <a class="text-decoration-none" href="{% url 'contract:detail' contract.pk %}">{{ contract.number }}</a>
     </li>
     <li class="breadcrumb-item h2 active" aria-current="page">Editar</li>
   </ol>
   <form method="POST" class="row g-2">
     {% csrf_token %}
-    <div class="col-md-4 col-6">
+    <div class="col-md-3 col-6">
       <div class="form-floating">
-        <input type="text" class="form-control" id="id" name="id" value="{{ contract.pk }}" required />
-        <label for="id">ID</label>
+        <input type="text" class="form-control" id="number" name="number" maxlength="30" value="{{ contract.number }}" required />
+        <label for="number">Número</label>
       </div>
     </div>
-    <div class="col-md-4 col-6">
+    <div class="col-md-3 col-6">
       <div class="form-floating">
-        <input type="text" class="form-control" id="contractor" name="contractor" value="{{ contract.contractor }}" required />
+        <input type="text" class="form-control" id="contractor" name="contractor" maxlength="100" value="{{ contract.contractor }}" required />
         <label for="contractor">Contratista</label>
       </div>
     </div>
-    <div class="col-md-4 col-6">
+    <div class="col-md-3 col-6">
       <div class="form-floating">
-        <input type="date" class="form-control" id="date" name="date" value="{{ contract.date }}" required />
-        <label for="date">Fecha de Suscripción</label>
+        <input type="date" class="form-control" id="suscription" name="suscription" value="{{ contract.suscription }}" required />
+        <label for="suscription">Fecha de Suscripción</label>
       </div>
     </div>
-    <div class="col-md-4 col-6">
+    <div class="col-md-3 col-6">
       <div class="form-floating">
         <input type="number" class="form-control" id="duration" name="duration" min="0" value="{{ contract.duration }}" required />
         <label for="duration">Plazo de Ejecución</label>
       </div>
     </div>
-    <div class="col-md-4 col-12">
+    <div class="col-md-6 col-12">
       <div class="form-floating">
-        <select class="form-select" id="certification" name="certification">
-          {% for certification in certifications %}
-            <option value="{{ certification.number }}" {% if value == contract.certification.number %} selected {% endif %}>Cert. #{{ certification.number }} - {{ certification.budget_item }} - USD {{ certification.budget }}</option>
-          {% endfor %}
-        </select>
-        <label for="certification">Certificación</label>
-      </div>
-    </div>
-    <div class="col-md-4 col-12">
-      <div class="form-floating">
-        <select class="form-select" id="admin" name="admin">          
+        <select class="form-select" id="admin" name="admin">
+          <option selected disabled>---</option>
           {% for employee in employees %}
-            <option value="{{ employee.ci }}" {% if value == contract.admin.ci %} selected {% endif %}>{{ employee.name }} {{ employee.surname }}</option>
+            {% if employee.pk == contract.admin.pk %}
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ employee.first_name }} {{ employee.middle_name }} {{ employee.first_last_name }} {{ employee.middle_last_name }}</option>
+            {% else %}
+              <option value="{{ employee.pk }}">[ {{ employee.ci }} ] {{ employee.first_name }} {{ employee.middle_name }} {{ employee.first_last_name }} {{ employee.middle_last_name }}</option>
+            {% endif %}
           {% endfor %}
         </select>
         <label for="admin">Administrador</label>
       </div>
     </div>
+    <div class="col-md-6 col-12">
+      <div class="">
+        <select class="form-select" aria-label="multiple select example" id="procedure" name="certification" multiple>
+          <option selected disabled>---</option>
+          {% for certification in certifications %}
+            <option value="{{ certification.pk }}">{{ certification.number }} [ {{ certification.budget_item.number }} | USD {{ certification.budget }} ]</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
     <div class="d-flex justify-content-center">
       <a href="{% url 'contract:list' %}" class="btn m-1 btn-outline-danger">Cancelar</a>
-      <button type="submit" class="btn m-1 btn-outline-success">Actualizar</button>
+      <button type="submit" class="btn m-1 btn-outline-success">Guardar</button>
     </div>
   </form>
 {% endblock %}

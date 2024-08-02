@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import list_department, DepartmentDetailView, create_department, delete_department, update_department
+from . import views
 
 app_name = 'department'
 
 urlpatterns = [
-    path('', list_department, name='list'),
-    path('create/', create_department, name='create'),
-    path('<str:pk>/', DepartmentDetailView.as_view(), name='detail'),
-    path('delete/<str:pk>/', delete_department, name='delete'),
-    path('update/<str:pk>/', update_department, name='update')
+    path('', views.list_department, name='list'),
+    path('create/', views.create_department, name='create'),
+    path('<str:pk>/', views.detail_department, name='detail'),
+    path('delete/<str:pk>/', views.delete_department, name='delete'),
+    path('update/<str:pk>/', views.update_department, name='update')
 ]

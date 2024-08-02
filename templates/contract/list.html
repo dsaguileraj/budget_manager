@@ -15,7 +15,7 @@
   {% if page_obj %}
     {% csrf_token %}
     <ol class="breadcrumb">
-      <li class="breadcrumb-item h2" aria-current="page">Contratos</li>      
+      <li class="breadcrumb-item h2" aria-current="page">Contratos</li>
     </ol>
     {% if query_message %}
       <div class="alert alert-warning" role="alert">{{ query_message }}</div>
@@ -60,8 +60,10 @@
       </table>
     </div>
   {% else %}
-    <div class="alert alert-warning" role="alert">
-      No se han registrado contratos todavía, intente creando <a href="{% url 'contract:create' %}">aquí</a>
-    </div>
+    {% if not message %}
+      <div class="alert alert-warning" role="alert">
+        No se han registrado contratos todavía, intente creando <a href="{% url 'contract:create' %}">aquí</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

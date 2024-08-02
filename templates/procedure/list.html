@@ -12,9 +12,9 @@
 {% endblock %}
 
 {% block body %}
-  {% if object_list %}
+  {% if page_obj %}
     {% csrf_token %}
-    <ol class="breadcrumb">      
+    <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Procedimientos</li>
     </ol>
     {% if query_message %}
@@ -37,7 +37,7 @@
               <td>{{ object.name }}</td>
               <td>{{ object.regime }}</td>
               <td>{{ object.purchase_type }}</td>
-              <td>{{ object.certifications_set.count }}</td>
+              <td>{{ object.certification_set.count }}</td>
               <td>
                 <a href="{% url 'procedure:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
               </td>
@@ -58,8 +58,10 @@
       </table>
     </div>
   {% else %}
-  <div class="alert alert-warning mt-3" role="alert">
-    No se han registrado procedimientos todavía, intente creando <a href="{% url 'procedure:create' %}">aquí</a>
-  </div>
+    {% if not message %}
+      <div class="alert alert-warning mt-3" role="alert">
+        No se han registrado procedimientos todavía, intente creando <a href="{% url 'procedure:create' %}">aquí</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

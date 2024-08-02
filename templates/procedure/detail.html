@@ -11,7 +11,7 @@
         <li class="breadcrumb-item h2" aria-current="page">
           <a class="text-decoration-none" href="{% url 'procedure:list' %}">Procedimientos</a>
         </li>
-        <li class="breadcrumb-item h2 active" aria-current="page">{{ object.name }}</li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ procedure.name }}</li>
       </ol>
     </thead>
     <tbody>
@@ -19,19 +19,19 @@
         <td style="width: 10%">
           <b>Régimen</b>
         </td>
-        <td>{{ object.regime }}</td>
+        <td>{{ procedure.regime }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Tipo de Producto</b>
         </td>
-        <td>{{ object.product_type }}</td>
+        <td>{{ procedure.product_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
           <b>Tipo de Compra</b>
         </td>
-        <td>{{ object.purchase_type }}</td>
+        <td>{{ procedure.purchase_type }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
@@ -39,12 +39,12 @@
         </td>
         <td>
           <div class="list-group">
-            {% if object.certifications_set.all %}
-              {% for certification in object.certifications_set.all %}
+            {% if procedure.certification_set.all %}
+              {% for certification in procedure.certification_set.all %}
                 <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Certificación No. {{ certification.number }} - {{ certification.department }}</h5>
-                    <small>{{ certification.create_at}}</small>
+                    <h5 class="mb-1">{{ certification.number }}</h5>
+                    <small>{{ certification.create_at }}</small>
                   </div>
                   <p class="mb-1">{{ certification.description }}</p>
                   <small>USD {{ certification.budget }}</small>
@@ -59,8 +59,8 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
-    <a href="{% url 'procedure:list' %}" class="btn m-1 btn-outline-secondary">Volver</button></a>
-    <a href="{% url 'procedure:update' object.pk %}" class="btn m-1 btn-outline-primary">Editar</button></a>
-    <a href="{% url 'procedure:delete' object.pk %}" class="btn m-1 btn-outline-danger">Eliminar</button></a>
+    <a href="{% url 'procedure:list' %}" class="btn m-1 btn-outline-secondary">Volver</a>
+    <a href="{% url 'procedure:update' procedure.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
+    <a href="{% url 'procedure:delete' procedure.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
   </div>
 {% endblock %}

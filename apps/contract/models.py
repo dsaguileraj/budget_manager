@@ -6,15 +6,9 @@ from apps.core.models import AuditModel
 
 
 class Contract(AuditModel):
-    number = models.CharField(
-        max_length=30,
-        unique=True
-    )
+    number = models.CharField(max_length=30, unique=True)
     certification = models.ManyToManyField(Certification)
-    admin: Employee = models.ForeignKey(
-        'employee.Employee',
-        on_delete=models.PROTECT
-    )
+    admin = models.ForeignKey(Employee, on_delete=models.PROTECT)
     contractor = models.CharField(max_length=100)
     suscription = models.DateField()
     duration = models.PositiveIntegerField()
@@ -23,7 +17,7 @@ class Contract(AuditModel):
         return self.number
 
     @property
-    def budget(self):
+    def total_budget(self):
         return self.certification.aggregate(total=models.Sum('budget'))['total'] or 0
 
     class Meta:

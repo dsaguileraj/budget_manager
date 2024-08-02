@@ -18,43 +18,43 @@
     {% csrf_token %}
     <div class="col-12 col-md-3">
       <div class="form-floating">
-        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ employee.first_name }}" required />
+        <input type="text" class="form-control" id="first_name" name="first_name" maxlength="20" value="{{ employee.first_name }}" required />
         <label for="first_name">Primer Nombre</label>
       </div>
     </div>
     <div class="col-12 col-md-3">
       <div class="form-floating">
-        <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ employee.middle_name }}"required />
+        <input type="text" class="form-control" id="middle_name" name="middle_name" maxlength="20" value="{{ employee.middle_name }}" required />
         <label for="middle_name">Segundo Nombre</label>
       </div>
     </div>
     <div class="col-12 col-md-3">
       <div class="form-floating">
-        <input type="text" class="form-control" id="first_last_name" name="first_last_name" value="{{ employee.first_last_name }}" required />
+        <input type="text" class="form-control" id="first_last_name" name="first_last_name" maxlength="20" value="{{ employee.first_last_name }}" required />
         <label for="first_last_name">Primer Apellido</label>
       </div>
     </div>
     <div class="col-12 col-md-3">
       <div class="form-floating">
-        <input type="text" class="form-control" id="middle_last_name" name="middle_last_name" value="{{ employee.middle_last_name }}" required />
+        <input type="text" class="form-control" id="middle_last_name" name="middle_last_name" maxlength="20" value="{{ employee.middle_last_name }}" required />
         <label for="middle_last_name">Segundo Apellido</label>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="form-floating">
-        <input type="text" class="form-control" id="ci" name="ci" value="{{ employee.ci }}" required />
+        <input type="text" class="form-control" id="ci" name="ci" maxlength="10" value="{{ employee.ci }}" required />
         <label for="ci">CI</label>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="form-floating">
-        <input type="email" class="form-control" id="email" name="email" value="{{ employee.email }}" required />
+        <input type="email" class="form-control" id="email" name="email" maxlength="100" value="{{ employee.email }}" required />
         <label for="email">Email</label>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="form-floating">
-        <input type="text" class="form-control" id="user" name="user" value="{{ employee.user }}" required />
+        <input type="text" class="form-control" id="user" name="user" maxlength="50" value="{{ employee.user }}" required />
         <label for="user">Usuario</label>
       </div>
     </div>

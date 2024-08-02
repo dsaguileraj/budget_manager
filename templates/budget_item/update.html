@@ -37,11 +37,11 @@
     <div class="col-md-3 col-6">
       <div class="form-floating">
         <select class="form-control" id="budget_type" name="budget_type">
-          {% for type in budget_type %}
-            {% if type.0 == budget_item.budget_type %}
-              <option value="{{ type.0 }}" selected>{{ type.1 }}</option>
+          {% for budget_type in budget_types %}
+            {% if budget_type.0 == budget_item.budget_type %}
+              <option value="{{ budget_type.0 }}" selected>{{ budget_type.1 }}</option>
             {% else %}
-              <option value="{{ type.0 }}">{{ type.1 }}</option>
+              <option value="{{ budget_type.0 }}">{{ budget_type.1 }}</option>
             {% endif %}
           {% endfor %}
         </select>

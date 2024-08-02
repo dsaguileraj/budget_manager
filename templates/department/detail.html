@@ -11,7 +11,7 @@
         <li class="breadcrumb-item h2" aria-current="page">
           <a class="text-decoration-none" href="{% url 'department:list' %}">Departamentos</a>
         </li>
-        <li class="breadcrumb-item h2 active" aria-current="page">{{ object.name }}</li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ department.name }}</li>
       </ol>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
         <td style="width: 10%">
           <b>Director</b>
         </td>
-        <td>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</td>
+        <td>{{ department.director.first_name }} {{ department.director.middle_name }} {{ department.director.first_last_name }} {{ department.director.middle_last_name }}</td>
       </tr>
       <tr>
         <td style="width: 10%">
@@ -27,12 +27,12 @@
         </td>
         <td>
           <div class="list-group">
-            {% if object.certification_set.all %}
-              {% for certification in object.certification_set.all %}
+            {% if department.certification_set.all %}
+              {% for certification in department.certification_set.all %}
                 <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ certification.number }}</h5>
-                    <small>{{ certification.create_at}}</small>
+                    <small>{{ certification.create_at }}</small>
                   </div>
                   <p class="mb-1">{{ certification.description }}</p>
                   <small>USD {{ certification.budget }}</small>
@@ -48,7 +48,7 @@
   </table>
   <div class="d-flex justify-content-center">
     <a href="{% url 'department:list' %}" class="btn m-1 btn-outline-secondary">Volver</a>
-    <a href="{% url 'department:update' object.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
-    <a href="{% url 'department:delete' object.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
+    <a href="{% url 'department:update' department.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
+    <a href="{% url 'department:delete' department.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
   </div>
 {% endblock %}

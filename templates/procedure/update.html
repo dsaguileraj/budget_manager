@@ -18,14 +18,14 @@
     {% csrf_token %}
     <div class="col-12 col-md">
       <div class="form-floating">
-        <input type="text" class="form-control" id="name" name="name" value="{{ procedure.name }}" required />
+        <input type="text" class="form-control" id="name" name="name" maxlength="50" value="{{ procedure.name }}" required />
         <label for="name">Nombre</label>
       </div>
     </div>
     <div class="col-4 col-md-2">
       <div class="form-floating">
         <select class="form-select" id="regime" name="regime" required>
-          {% for regime in regime_choices %}
+          {% for regime in regimes %}
             {% if regime.0 == procedure.regime %}
               <option value="{{ regime.0 }}" selected>{{ regime.1 }}</option>
             {% else %}
@@ -39,7 +39,7 @@
     <div class="col-4 col-md-2">
       <div class="form-floating">
         <select class="form-select" id="product_type" name="product_type" required>
-          {% for product_type in product_type_choices %}
+          {% for product_type in product_types %}
             {% if product_type.0 == procedure.product_type %}
               <option value="{{ product_type.0 }}" selected>{{ product_type.1 }}</option>
             {% else %}
@@ -53,7 +53,7 @@
     <div class="col-4 col-md-2">
       <div class="form-floating">
         <select class="form-select" id="purchase_type" name="purchase_type" required>
-          {% for purchase_type in purchase_type_choices %}
+          {% for purchase_type in purchase_types %}
             {% if purchase_type.0 == procedure.purchase_type %}
               <option value="{{ purchase_type.0 }}" selected>{{ purchase_type.1 }}</option>
             {% else %}

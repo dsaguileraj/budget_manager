@@ -1,6 +1,6 @@
 from decimal import Decimal
-from django.db import IntegrityError, models
 from django.core.paginator import Paginator
+from django.db import IntegrityError, models
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -48,14 +48,24 @@ def create_certification(request: HttpRequest) -> HttpResponse | HttpResponseRed
     }
     if request.method == 'POST':
         number = request.POST['number']
-        procedure_id = request.POST['procedure']
-        budget_item_id = request.POST['budget_item']
-        department_id = request.POST['department']
         budget = Decimal(request.POST['budget'])
         description = request.POST['description']
-        procedure = Procedure.objects.get(pk=procedure_id)
-        budget_item = BudgetItem.objects.get(pk=budget_item_id)
-        department = Department.objects.get(pk=department_id)
+        try:
+            procedure = Procedure.objects.get(pk=request.POST['procedure'])
+        except Procedure.DoesNotExist:
+            context['message'] = 'Procedimiento seleccionado no existente'
+            return render(request, 'certificaion/create.html', context)
+        try:
+            budget_item = BudgetItem.objects.get(
+                pk=request.POST['budget_item'])
+        except BudgetItem.DoesNotExist:
+            context['message'] = 'Partida seleccionada no existente'
+            return render(request, 'certificaion/create.html', context)
+        try:
+            department = Department.objects.get(pk=request.POST['department'])
+        except Department.DoesNotExist:
+            context['message'] = 'Departamento seleccionado no existente'
+            return render(request, 'certificaion/create.html', context)
         total_certification_budget = Certification.objects.filter(
             budget_item=budget_item).aggregate(models.Sum('budget'))['budget__sum'] or 0
         if total_certification_budget + budget <= budget_item.budget:
@@ -83,16 +93,12 @@ def create_certification(request: HttpRequest) -> HttpResponse | HttpResponseRed
 def delete_certification(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     try:
         certification = Certification.objects.get(pk=pk)
-        certification.delete()
-        deleted = True
     except Certification.DoesNotExist:
-        deleted = False
+        return redirect(reverse_lazy('certification:list'))
     except models.ProtectedError:
         return redirect(reverse_lazy('authentication:error'))
-    if deleted:
-        return redirect(reverse_lazy('certification:list'))
-    else:
-        return render(request, 'certification/list.html')
+    certification.delete()
+    return redirect(reverse_lazy('certification:list'))
 
 
 def update_certification(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
@@ -104,15 +110,27 @@ def update_certification(request: HttpRequest, pk: int) -> HttpResponse | HttpRe
         'certification': certification,
     }
     if request.method == 'POST':
-        procedure_id = request.POST['procedure']
-        budget_item_id = request.POST['budget_item']
-        department_id = request.POST['department']
         certification.number = request.POST['number']
         certification.budget = Decimal(request.POST['budget'])
         certification.description = request.POST['description']
-        certification.procedure = Procedure.objects.get(pk=procedure_id)
-        certification.budget_item = BudgetItem.objects.get(pk=budget_item_id)
-        certification.department = Department.objects.get(pk=department_id)
+        try:
+            certification.procedure = Procedure.objects.get(
+                pk=request.POST['procedure'])
+        except Procedure.DoesNotExist:
+            context['message'] = 'Procedimiento seleccionado no existente'
+            return render(request, 'certificaion/create.html', context)
+        try:
+            certification.budget_item = BudgetItem.objects.get(
+                pk=request.POST['budget_item'])
+        except BudgetItem.DoesNotExist:
+            context['message'] = 'Partida seleccionada no existente'
+            return render(request, 'certificaion/create.html', context)
+        try:
+            certification.department = Department.objects.get(
+                pk=request.POST['department'])
+        except Department.DoesNotExist:
+            context['message'] = 'Departamento seleccionado no existente'
+            return render(request, 'certificaion/create.html', context)
         total_certification_budget = Certification.objects.filter(
             budget_item=certification.budget_item).aggregate(models.Sum('budget'))['budget__sum'] or 0
         if total_certification_budget + certification.budget <= certification.budget_item.budget:

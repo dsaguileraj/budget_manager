@@ -26,10 +26,10 @@
       <div class="form-floating">
         <select class="form-select" id="director" name="director" required>
           {% for employee in employees %}
-            {% if employee.ci == department.director.ci %}
-              <option value="{{ employee.ci }}" selected>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</option>
+            {% if employee.pk == department.director.ci %}
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ department.director.first_name }} {{ department.director.middle_name }} {{ department.director.first_last_name }} {{ department.director.middle_last_name }}</option>
             {% else %}
-              <option value="{{ employee.ci }}" selected>{{ object.director.first_name }} {{ object.director.middle_name }} {{ object.director.first_last_name }} {{ object.director.middle_last_name }}</option>
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ department.director.first_name }} {{ department.director.middle_name }} {{ department.director.first_last_name }} {{ department.director.middle_last_name }}</option>
             {% endif %}
           {% endfor %}
         </select>

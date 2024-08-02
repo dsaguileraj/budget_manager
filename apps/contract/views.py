@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import IntegrityError, models
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
@@ -45,54 +46,37 @@ def detail_contract(request: HttpRequest, pk: int) -> HttpResponse:
 def create_contract(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     context = {
         'employees': Employee.objects.all(),
-        'certifications': Certification.objects.all()
+        'certifications': Certification.objects.all(),
     }
     if request.method == 'POST':
-        number = request.POST['number']
-        certifications = request.POST.getlist('certifications')
-        admin_id = request.POST['admin']
-        contractor = request.POST['contractor']
-        suscription = request.POST['suscription']
-        duration = request.POST['duration']
+        number = request.POST.get('number')
+        contractor = request.POST.get('contractor')
+        suscription_str = request.POST.get('suscription')
+        duration = request.POST.get('duration')
+        selected_certifications = request.POST.getlist('certification')
 
         try:
-            admin = Employee.objects.get(pk=admin_id)
+            admin = Employee.objects.get(pk=request.POST.get('admin'))
         except Employee.DoesNotExist:
-            context['message'] = 'Empleado no encontrado'
+            context = {'message': 'El administrador seleccionado no existe'}
             return render(request, 'contract/create.html', context)
 
         try:
-            contract = Contract.objects.create(
+            new_contract = Contract.objects.create(
                 number=number,
                 admin=admin,
                 contractor=contractor,
-                suscription=suscription,
+                suscription=datetime.strptime(
+                    suscription_str, '%Y-%m-%d').date(),
                 duration=duration,
             )
-            contract.certification.set(certifications)
-            # contract.save()
-
-        # id = request.POST['id']
-        # certification_id = request.POST['certification']
-        # admin_id = request.POST['admin']
-        # contractor = request.POST['contractor']
-        # date = request.POST['date']
-        # duration = request.POST['duration']
-        # certification = Certification.objects.get(pk=certification_id)
-        # admin = Employee.objects.get(pk=admin_id)
-        # try:
-        #     contract = Contract.objects.create(
-        #         id=id,
-        #         certification=certification,
-        #         admin=admin,
-        #         contractor=contractor,
-        #         date=date,
-        #         duration=duration
-        #     )
-        #     contract.save()
+            certs = Certification.objects.filter(
+                pk__in=selected_certifications)
+            new_contract.certification.add(*certs)
         except IntegrityError:
             context['message'] = 'Registro ya existente'
             return render(request, 'contract/create.html', context)
+
         return redirect(reverse_lazy('contract:list'))
     else:
         return render(request, 'contract/create.html', context)
@@ -101,51 +85,46 @@ def create_contract(request: HttpRequest) -> HttpResponse | HttpResponseRedirect
 def delete_contract(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     try:
         contract = Contract.objects.get(pk=pk)
-        contract.delete()
-        deleted = True
     except Contract.DoesNotExist:
-        deleted = False
+        return redirect(reverse_lazy('contract:list'))
     except models.ProtectedError:
         return redirect(reverse_lazy('authentication:error'))
-    if deleted:
-        return redirect(reverse_lazy('contract:list'))
-    else:
-        return render(request, 'contract/list.html')
+    contract.delete()
+    return redirect(reverse_lazy('contract:list'))
 
 
-def update_contract(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
+def update(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     contract = Contract.objects.get(pk=pk)
     context = {
         'employees': Employee.objects.all(),
         'certifications': Certification.objects.all(),
-        'contract': contract
+        'contract': Contract.objects.get(pk=pk),
     }
     if request.method == 'POST':
-        contract.number = request.POST['number']
-        certifications = request.POST.getlist('certifications')
-        contract.certification.set(certifications)
-        admin_id = request.POST['admin']
-        contract.admin = Employee.objects.get(pk=admin_id)
-        contract.contractor = request.POST['contractor']
-        contract.suscription = request.POST['suscription']
-        contract.duration = request.POST['duration']
-        
-        # admin_id = request.POST['admin']
-        # certification_id = request.POST['certification']
-        # contract.pk = request.POST['id']
-        # contract.advance = request.POST.get('advance') == 'on'
-        # contract.contractor = request.POST['contractor']
-        # contract.date = request.POST['date']
-        # contract.duration = request.POST['duration']
-        # contract.certification = Certification.objects.get(
-        #     pk=certification_id)
-        # contract.admin = Employee.objects.get(pk=admin_id)
-        
+        selected_certifications = request.POST.getlist('certification')
+        suscription_str = request.POST.get('suscription')
+
+        contract.number = request.POST.get('number')
+        contract.contractor = request.POST.get('contractor')
+        contract.duration = request.POST.get('duration')
+        contract.suscription = datetime.strptime(
+            suscription_str, '%Y-%m-%d').date(),
+
         try:
+            contract.admin = Employee.objects.get(pk=request.POST.get('admin'))
+        except Employee.DoesNotExist:
+            context = {'message': 'Administrador seleccionado no existente'}
+            return render(request, 'contract/create.html', context)
+
+        try:
+            certs = Certification.objects.filter(
+                pk__in=selected_certifications)
+            contract.certification.add(*certs)
             contract.save()
-            return redirect(reverse_lazy('contract:list'))
         except IntegrityError:
             context['message'] = 'Registro ya existente'
-            return render(request, 'contract/update.html', context)    
+            return render(request, 'contract/update.html', context)
+
+        return redirect(reverse_lazy('contract:list'))
     else:
         return render(request, 'contract/update.html', context)

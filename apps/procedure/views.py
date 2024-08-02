@@ -3,7 +3,6 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
 from .models import Procedure, ProductType, PurchaseType, Regime
 
 
@@ -12,10 +11,7 @@ def list_procedure(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(object_list, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {
-        'object_list': object_list,
-        'page_obj': page_obj,
-    }
+    context = {'page_obj': page_obj}
     query = request.GET.get('q', '')
     if query:
         result = Procedure.objects.filter(
@@ -25,22 +21,28 @@ def list_procedure(request: HttpRequest) -> HttpResponse:
             models.Q(purchase_type__icontains=query)
         ).order_by('name')
         if result:
-            context['object_list'] = result
+            context['page_obj'] = result
         if not result:
             context['query_message'] = 'No se encontraron coincidencias'
     return render(request, 'procedure/list.html', context)
 
 
-class ProcedureDetailView(DetailView):
-    model = Procedure
-    template_name = 'procedure/detail.html'
+def detail_procedure(request: HttpRequest, pk: int) -> HttpResponse:
+    try:
+        procedure = Procedure.objects.get(pk=pk)
+        context = {'procedure': procedure}
+    except Procedure.DoesNotExist:
+        context = {'message': 'Procedimiento no encontrado'}
+        return render(request, 'procedure/list.html', context)
+    else:
+        return render(request, 'procedure/detail.html', context)
 
 
 def create_procedure(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     context = {
-        'regime_choices': Regime.choices,
-        'product_type_choices': ProductType.choices,
-        'purchase_type_choices': PurchaseType.choices,
+        'regimes': Regime.choices,
+        'product_types': ProductType.choices,
+        'purchase_types': PurchaseType.choices,
     }
     if request.method == 'POST':
         name = request.POST['name']
@@ -66,24 +68,20 @@ def create_procedure(request: HttpRequest) -> HttpResponse | HttpResponseRedirec
 def delete_procedure(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     try:
         procedure = Procedure.objects.get(pk=pk)
-        procedure.delete()
-        deleted = True
     except Procedure.DoesNotExist:
-        deleted = False
+        return redirect(reverse_lazy('procedure:list'))
     except models.ProtectedError:
         return redirect(reverse_lazy('authentication:error'))
-    if deleted:
-        return redirect(reverse_lazy('procedure:list'))
-    else:
-        return render(request, 'procedure/list.html')
+    procedure.delete()
+    return redirect(reverse_lazy('procedure:list'))
 
 
 def update_procedure(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
     procedure = Procedure.objects.get(pk=pk)
     context = {
-        'regime_choices': Regime.choices,
-        'product_type_choices': ProductType.choices,
-        'purchase_type_choices': PurchaseType.choices,
+        'regimes': Regime.choices,
+        'product_types': ProductType.choices,
+        'purchase_types': PurchaseType.choices,
         'procedure': procedure
     }
     if request.method == 'POST':

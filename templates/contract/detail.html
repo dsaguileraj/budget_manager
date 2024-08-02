@@ -31,16 +31,15 @@
         <td style="width: 10%">
           <b>Certificación</b>
         </td>
-        
+
         <td>
           <div class="list-group">
             {% if contract.certification %}
               {% for certification in contract.certification.all %}
-              
-              {% comment %} <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                {% comment %} <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ certification.number }}</h5>
-                    <small>{{ certification.create_at}}</small>
+                    <small>{{ certification.create_at }}</small>
                   </div>
                   <p class="mb-1">{{ certification.description }}</p>
                   <small>USD {{ certification.budget }}</small>
@@ -63,7 +62,6 @@
               <small>USD {{ contract.certification.budget }}</small>
             </a>
           </div> {% endcomment %}
-        
         </td>
       </tr>
       <tr>

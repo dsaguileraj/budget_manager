@@ -3,11 +3,8 @@ from apps.employee.models import Employee
 
 
 class Department(models.Model):
-    name: str = models.CharField(max_length=255, unique=True)
-    director: Employee = models.ForeignKey(
-        'employee.Employee',
-        on_delete=models.PROTECT,
-    )
+    name = models.CharField(max_length=255, unique=True)
+    director = models.ForeignKey(Employee, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return self.name
