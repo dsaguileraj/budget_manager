@@ -10,6 +10,7 @@ class Contract(AuditModel):
     certification = models.ManyToManyField(Certification)
     admin = models.ForeignKey(Employee, on_delete=models.PROTECT)
     contractor = models.CharField(max_length=100)
+    description = models.TextField()
     suscription = models.DateField()
     duration = models.PositiveIntegerField()
 

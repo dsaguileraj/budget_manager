@@ -36,8 +36,8 @@
           {% for object in page_obj %}
             <tr>
               <td>{{ object.number }}</td>
-              <td>{{ object.certification.description }}</td>
-              <td>{{ object.certification.budget }}</td>
+              <td>{{ object.description }}</td>
+              <td>USD {{ object.total_budget }}</td>
               <td>{{ object.admin.first_name }} {{ object.admin.middle_name }} {{ object.admin.first_last_name }} {{ object.admin.middle_last_name }}</td>
               <td>{{ object.contractor }}</td>
               <td>

@@ -2,7 +2,7 @@ import pandas
 from django.db import IntegrityError, models
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from apps.core.choices import BudgetType
 from .models import BudgetItem
@@ -30,19 +30,21 @@ def list_budget_item(request: HttpRequest) -> HttpResponse:
         if result:
             context['page_obj'] = result
         if not result:
-            context['query_message'] = 'No se encontraron coincidencias'
+            context['message'] = 'No se encontraron coincidencias'
     return render(request, 'budget_item/list.html', context)
 
 
 def detail_budget_item(request: HttpRequest, pk: int) -> HttpResponse:
     try:
         budget_item = BudgetItem.objects.get(pk=pk)
-        context = {'budget_item': budget_item}
     except BudgetItem.DoesNotExist:
         context = {'message': 'Partida presupuestaria no encontrada'}
         return render(request, 'budget_item/list.html', context)
-    else:
-        return render(request, 'budget_item/detail.html', context)
+    except Exception as error:
+        context = {'Exception': error}
+        return render(request, 'budget_item/list.html', context)
+    context = {'budget_item': budget_item}
+    return render(request, 'budget_item/detail.html', context)
 
 
 def create_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
@@ -72,9 +74,12 @@ def create_budget_item(request: HttpRequest) -> HttpResponse | HttpResponseRedir
                 c3=c3,
             )
             budget_item.save()
-        except IntegrityError:
-            context['message'] = 'Registro ya existente. Los siguientes campos, en conjunto, deben ser únicos: Número, Descripción, Actividad'
+        except IntegrityError as error:
+            context['IntegrityError'] = error
             return render(request, 'budget_item/create.html', context)
+        except Exception as error:
+            context = {'Exception': error}
+            return render(request, 'budget_item/list.html', context)
         return redirect(reverse_lazy('budget_item:list'))
     else:
         return render(request, 'budget_item/create.html', context)
@@ -84,15 +89,25 @@ def delete_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResp
     try:
         budget_item = BudgetItem.objects.get(pk=pk)
     except BudgetItem.DoesNotExist:
-        return redirect(reverse_lazy('budget_item:list'))
-    except models.ProtectedError:
-        return redirect(reverse_lazy('authentication:error'))
-    budget_item.delete()
+        context = {'message': 'Partida presupuestaria no encontrada'}
+        return render(request, 'budget_item/list.html', context)
+    try:
+        budget_item.delete()
+    except models.ProtectedError as error:
+        context = {'ProtectedError': error}
+        return render(request, 'budget_item/list.html', context)
+    except Exception as error:
+        context = {'Exception': error}
+        return render(request, 'budget_item/list.html', context)
     return redirect(reverse_lazy('budget_item:list'))
 
 
 def update_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResponseRedirect:
-    budget_item = BudgetItem.objects.get(pk=pk)
+    try:
+        budget_item = BudgetItem.objects.get(pk=pk)
+    except BudgetItem.DoesNotExist:
+        context = {'message': 'Partida presupuestaria no encontrada'}
+        return render(request, 'budget_item/update.html', context)
     context = {
         'budget_item': budget_item,
         'budget_types': BudgetType.choices
@@ -110,10 +125,13 @@ def update_budget_item(request: HttpRequest, pk: int) -> HttpResponse | HttpResp
         budget_item.c3 = request.POST.get('c3') == 'on'
         try:
             budget_item.save()
-            return redirect(reverse_lazy('budget_item:list'))
-        except IntegrityError:
-            context['message'] = 'Registro ya existente. Los siguientes campos, en conjunto, deben ser únicos: Número, Descripción, Actividad'
+        except IntegrityError as error:
+            context['IntegrityError'] = error
             return render(request, 'budget_item/update.html', context)
+        except Exception as error:
+            context = {'Exception': error}
+            return render(request, 'budget_item/list.html', context)
+        return redirect(reverse_lazy('budget_item:detail', args=[pk]))
     else:
         return render(request, 'budget_item/update.html', context)
 
@@ -136,9 +154,11 @@ def upload_file(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
                     c2=row['C2'],
                     c3=row['C3'],
                 )
-            except Exception as exception:
-                context = {
-                    'message': f'Error en el fila No.{row}: {exception}'}
+            except KeyError:
+                context = {'message': f'ERROR: Fila no. {index + 1} inválida'}
                 return render(request, 'budget_item/create_excel.html', context)
+            except Exception as error:
+                context = {'Exception': error}
+                return render(request, 'budget_item/list.html', context)
         return redirect(reverse_lazy('budget_item:list'))
     return render(request, 'budget_item/create_excel.html')

@@ -74,9 +74,10 @@ def delete_employee(request: HttpRequest, pk: str) -> HttpResponse | HttpRespons
         employee = Employee.objects.get(pk=pk)
     except Employee.DoesNotExist:
         return redirect(reverse_lazy('employee:list'))
+    try:
+        employee.delete()
     except models.ProtectedError:
         return redirect(reverse_lazy('authentication:error'))
-    employee.delete()
     return redirect(reverse_lazy('employee:list'))
 
 
