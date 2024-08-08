@@ -17,9 +17,6 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Empleados</li>
     </ol>
-    {% if query_message %}
-      <div class="alert alert-warning" role="alert">{{ query_message }}</div>
-    {% endif %}
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
@@ -35,7 +32,7 @@
           {% for object in page_obj %}
             <tr>
               <td>{{ object.ci }}</td>
-              <td>{{ object.first_name }} {{ object.middle_name }} {{ object.first_last_name }} {{ object.middle_last_name }}</td>
+              <td>{{ object.full_name }}</td>
               <td>{{ object.email }}</td>
               <td>{{ object.contract_set.count }}</td>
               <td>
@@ -58,7 +55,7 @@
       </table>
     </div>
   {% else %}
-    {% if not message %}
+    {% if not message and not ProtectedError and not IntegrityError and not Exception %}
       <div class="alert alert-warning mt-3" role="alert">
         No se han registrado empleados todavía, intente creando <a href="{% url 'employee:create' %}">aquí</a>
       </div>

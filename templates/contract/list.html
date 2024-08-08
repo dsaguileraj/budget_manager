@@ -17,9 +17,6 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Contratos</li>
     </ol>
-    {% if query_message %}
-      <div class="alert alert-warning" role="alert">{{ query_message }}</div>
-    {% endif %}
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
@@ -38,7 +35,7 @@
               <td>{{ object.number }}</td>
               <td>{{ object.description }}</td>
               <td>USD {{ object.total_budget }}</td>
-              <td>{{ object.admin.first_name }} {{ object.admin.middle_name }} {{ object.admin.first_last_name }} {{ object.admin.middle_last_name }}</td>
+              <td>{{ object.admin.full_name }}</td>
               <td>{{ object.contractor }}</td>
               <td>
                 <a href="{% url 'contract:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
@@ -60,7 +57,7 @@
       </table>
     </div>
   {% else %}
-    {% if not message %}
+    {% if not message and not ProtectedError and not IntegrityError and not Exception %}
       <div class="alert alert-warning" role="alert">
         No se han registrado contratos todavía, intente creando <a href="{% url 'contract:create' %}">aquí</a>
       </div>

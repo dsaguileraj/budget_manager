@@ -46,9 +46,9 @@
           <option selected disabled>---</option>
           {% for employee in employees %}
             {% if employee.pk == contract.admin.pk %}
-              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ employee.first_name }} {{ employee.middle_name }} {{ employee.first_last_name }} {{ employee.middle_last_name }}</option>
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ employee.full_name }}</option>
             {% else %}
-              <option value="{{ employee.pk }}">[ {{ employee.ci }} ] {{ employee.first_name }} {{ employee.middle_name }} {{ employee.first_last_name }} {{ employee.middle_last_name }}</option>
+              <option value="{{ employee.pk }}">[ {{ employee.ci }} ] {{ employee.full_name }}</option>
             {% endif %}
           {% endfor %}
         </select>

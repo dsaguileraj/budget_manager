@@ -17,9 +17,6 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item h2" aria-current="page">Certificaciones</li>
     </ol>
-    {% if query_message %}
-      <div class="alert alert-warning" role="alert">{{ query_message }}</div>
-    {% endif %}
     <div class="table-responsive-xxl border">
       <table class="table table-hover">
         <thead class="table-light">
@@ -62,7 +59,7 @@
       </table>
     </div>
   {% else %}
-    {% if not message %}
+    {% if not message and not ProtectedError and not IntegrityError and not Exception %}
       <div class="alert alert-warning" role="alert">
         No se han registrado certificaciones todavía, intente creando <a href="{% url 'certification:create' %}">aquí</a>
       </div>

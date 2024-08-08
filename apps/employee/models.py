@@ -13,6 +13,10 @@ class Employee(models.Model):
     def __str__(self) -> str:
         return self.ci
 
+    @property
+    def full_name(self) -> str:
+        return f'{self.first_name} {self.middle_name} {self.first_last_name} {self.middle_last_name}'
+
     class Meta:
         ordering = ['first_last_name', 'middle_last_name',
                     'first_name', 'middle_name', 'ci']

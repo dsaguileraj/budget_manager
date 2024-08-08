@@ -11,7 +11,7 @@
         <li class="breadcrumb-item h2" aria-current="page">
           <a class="text-decoration-none" href="{% url 'employee:list' %}">Empleados</a>
         </li>
-        <li class="breadcrumb-item h2 active" aria-current="page">{{ employee.first_name }} {{ employee.middle_name }} {{ employee.first_last_name }} {{ employee.middle_last_name }}</li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ employee.full_name }}</li>
       </ol>
     </thead>
     <tbody>

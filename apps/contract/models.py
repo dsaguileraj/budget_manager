@@ -18,7 +18,7 @@ class Contract(AuditModel):
         return self.number
 
     @property
-    def total_budget(self):
+    def total_budget(self) -> Decimal | int:
         return self.certification.aggregate(total=models.Sum('budget'))['total'] or 0
 
     class Meta:

@@ -27,9 +27,9 @@
         <select class="form-select" id="director" name="director" required>
           {% for employee in employees %}
             {% if employee.pk == department.director.ci %}
-              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ department.director.first_name }} {{ department.director.middle_name }} {{ department.director.first_last_name }} {{ department.director.middle_last_name }}</option>
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ department.director.full_name }}</option>
             {% else %}
-              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ department.director.first_name }} {{ department.director.middle_name }} {{ department.director.first_last_name }} {{ department.director.middle_last_name }}</option>
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ department.director.full_name }}</option>
             {% endif %}
           {% endfor %}
         </select>
