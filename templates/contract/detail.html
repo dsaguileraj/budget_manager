@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Contratos
+{% endblock %}
+
+{% block body %}
+  <table class="table border">
+    <thead class="table-light">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item h2" aria-current="page">
+          <a class="text-decoration-none" href="{% url 'contract:list' %}">Contratos</a>
+        </li>
+        <li class="breadcrumb-item h2 active" aria-current="page">{{ contract.number }}</li>
+      </ol>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 10%">
+          <b>Administrador de Contrato</b>
+        </td>
+        <td>{{ contract.admin.full_name }}</td>
+      </tr>
+      <tr>
+        <td style="width: 10%">
+          <b>Contratista</b>
+        </td>
+        <td>{{ contract.contractor }}</td>
+      </tr>
+      <tr>
+        <td style="width: 10%">
+          <b>Presupuesto</b>
+        </td>
+        <td>USD {{ contract.total_budget }}</td>
+      </tr>
+      <tr>
+        <td style="width: 10%">
+          <b>Certificaciones</b>
+        </td>
+
+        <td>
+          <div class="list-group">
+            {% if contract.certification %}
+              {% for certification in contract.certification.all %}
+                <a href="{% url 'certification:detail' certification.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ certification.number }}</h5>
+                    <small>{{ certification.create_at }}</small>
+                  </div>
+                  <p class="mb-1">{{ certification.description }}</p>
+                  <small>USD {{ certification.budget }}</small>
+                </a>
+              {% endfor %}
+            {% else %}
+              -
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 10%">
+          <b>Fecha de Suscripción</b>
+        </td>
+        <td>{{ contract.suscription }}</td>
+      </tr>
+      <tr>
+        <td style="width: 10%">
+          <b>Plazo de Ejecución</b>
+        </td>
+        <td>{{ contract.duration }}d</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <a href="{% url 'contract:list' %}" class="btn m-1 btn-outline-secondary">Volver</a>
+    <a href="{% url 'contract:update' contract.pk %}" class="btn m-1 btn-outline-primary">Editar</a>
+    <a href="{% url 'contract:delete' contract.pk %}" class="btn m-1 btn-outline-danger">Eliminar</a>
+  </div>
+{% endblock %}

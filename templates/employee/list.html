@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Empleados
+{% endblock %}
+
+{% block form %}
+  <form action="{% url 'employee:list' %}" class="d-inline-flex w-100" role="search">
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Empleado" />
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+  </form>
+{% endblock %}
+
+{% block body %}
+  {% if page_obj %}
+    {% csrf_token %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item h2" aria-current="page">Empleados</li>
+    </ol>
+    <div class="table-responsive-xxl border">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>CI</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Contratos</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in page_obj %}
+            <tr>
+              <td>{{ object.ci }}</td>
+              <td>{{ object.full_name }}</td>
+              <td>{{ object.email }}</td>
+              <td>{{ object.contract_set.count }}</td>
+              <td>
+                <a href="{% url 'employee:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
+              </td>
+              <td>
+                <a href="{% url 'employee:delete' object.pk %}" class="btn btn-outline-danger w-100">Eliminar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4" class="text-end"></th>
+            <th colspan="2">
+              <a href="{% url 'employee:create' %}" class="btn btn-outline-primary w-100">Crear</a>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  {% else %}
+    {% if not message and not ProtectedError and not IntegrityError and not Exception %}
+      <div class="alert alert-warning mt-3" role="alert">
+        No se han registrado empleados todavía, intente creando <a href="{% url 'employee:create' %}">aquí</a>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

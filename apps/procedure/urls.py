@@ -1,9 +1,12 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ProcedureViewSet
+from django.urls import path
+from . import views
 
-router = DefaultRouter()
-router.register(r'', ProcedureViewSet)
+app_name = "procedure"
+
 urlpatterns = [
-    path('', include(router.urls))
+    path("", views.list_procedure, name="list"),
+    path("create/", views.create_procedure, name="create"),
+    path("<int:pk>/", views.detail_procedure, name="detail"),
+    path("delete/<int:pk>/", views.delete_procedure, name="delete"),
+    path("update/<int:pk>/", views.update_procedure, name="update")
 ]

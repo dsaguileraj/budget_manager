@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Contratos
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'contract:list' %}">Contratos</a>
+    </li>
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'contract:detail' contract.pk %}">{{ contract.number }}</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Editar</li>
+  </ol>
+  <form method="POST" class="row g-2">
+    {% csrf_token %}
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="number" name="number" maxlength="30" value="{{ contract.number }}" required />
+        <label for="number">Número</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="contractor" name="contractor" maxlength="100" value="{{ contract.contractor }}" required />
+        <label for="contractor">Contratista</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="date" class="form-control" id="suscription" name="suscription" value="{{ date }}" required />
+        <label for="suscription">Fecha de Suscripción</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="duration" name="duration" min="0" value="{{ contract.duration }}" required />
+        <label for="duration">Plazo de Ejecución</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="admin" name="admin">
+          <option selected disabled>---</option>
+          {% for employee in employees %}
+            {% if employee.pk == contract.admin.pk %}
+              <option value="{{ employee.pk }}" selected>[ {{ employee.ci }} ] {{ employee.full_name }}</option>
+            {% else %}
+              <option value="{{ employee.pk }}">[ {{ employee.ci }} ] {{ employee.full_name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="admin">Administrador</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" id="description" name="description" rows="3" required>{{ contract.description }}</textarea>
+        <label for="description">Descripción</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <select class="form-select" aria-label="multiple select example" id="procedure" name="certification" multiple>
+        <option selected disabled>---</option>
+        {% for certification in certifications %}
+          <option value="{{ certification.pk }}">{{ certification.number }} [ {{ certification.budget_item.number }} | USD {{ certification.budget }} ]</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'contract:list' %}" class="btn m-1 btn-outline-danger">Cancelar</a>
+      <button type="submit" class="btn m-1 btn-outline-success">Guardar</button>
+    </div>
+  </form>
+{% endblock %}

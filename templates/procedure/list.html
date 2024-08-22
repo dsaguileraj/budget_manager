@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Procedimientos
+{% endblock %}
+
+{% block form %}
+  <form action="{% url 'procedure:list' %}" class="d-inline-flex w-100" role="search">
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Procedimiento" />
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+  </form>
+{% endblock %}
+
+{% block body %}
+  {% if page_obj %}
+    {% csrf_token %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item h2" aria-current="page">Procedimientos</li>
+    </ol>
+    <div class="table-responsive-xxl border">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Nombre</th>
+            <th>Régimen</th>
+            <th>Tipo de Compra</th>
+            <th>Certificaciones</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in page_obj %}
+            <tr>
+              <td>{{ object.name }}</td>
+              <td>{{ object.regime }}</td>
+              <td>{{ object.purchase_type }}</td>
+              <td>{{ object.certification_set.count }}</td>
+              <td>
+                <a href="{% url 'procedure:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
+              </td>
+              <td>
+                <a href="{% url 'procedure:delete' object.pk %}" class="btn btn-outline-danger w-100">Eliminar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4" class="text-end"></th>
+            <th colspan="2">
+              <a href="{% url 'procedure:create' %}" class="btn btn-outline-primary w-100">Crear</a>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  {% else %}
+    {% if not message and not ProtectedError and not IntegrityError and not Exception %}
+      <div class="alert alert-warning mt-3" role="alert">
+        No se han registrado procedimientos todavía, intente creando <a href="{% url 'procedure:create' %}">aquí</a>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

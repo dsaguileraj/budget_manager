@@ -3,22 +3,22 @@ from django.utils.translation import gettext_lazy as _
 
 
 class BudgetType(TextChoices):
-    CURRENT_EXPENSE = 'GC', _('Gasto Corriente')
-    INVESTMENT_PROJECT = 'PI', _('Proyecto de Inversion')
+    GC = "Gasto Corriente", _("Gasto Corriente")
+    PI = "Proyecto de Inversión", _("Proyecto de Inversión")
 
 
 class ProductType(TextChoices):
-    NORMALIZED = 'N', _('Normalizado')
-    NOT_NORMALIZED = '!N', _('No Normalizado')
+    N = "Normalizado", _("Normalizado")
+    NN = "No Normalizado", _("No Normalizado")
 
 
 class PurchaseType(TextChoices):
-    GOOD = 'B', _('Bien')
-    CONSULTING = 'C', _('Consultoría')
-    CIVIL_WORK = 'O', _('Obra')
-    SERVICE = 'S', _('Servicio')
+    B = "Bien", _("Bien")
+    C = "Consultoría", _("Consultoría")
+    O = "Obra", _("Obra")
+    S = "Servicio", _("Servicio")
 
 
-class RegimeType(TextChoices):
-    COMMON = 'C', _('Común')
-    SPECIAL = 'E', _('Especial')
+class Regime(TextChoices):
+    C = "Común", _("Común")
+    E = "Especial", _("Especial")

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Partidas Presupuestarias
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'budget_item:list' %}">Partidas Presupuestarias</a>
+    </li>
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'budget_item:detail' budget_item.pk %}">{{ budget_item.number }}</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Editar</li>
+  </ol>
+  <form method="POST" class="row g-2">
+    {% csrf_token %}
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="number" name="number" maxlength="255" value="{{ budget_item.number }}" required />
+        <label for="number">Número</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="cpc" name="cpc" maxlength="15" value="{{ budget_item.cpc }}" required />
+        <label for="cpc">CPC</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="budget" name="budget" value="{{ budget_item.budget }}" step="0.01" min="0" required />
+        <label for="budget">Presupuesto (USD)</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="form-floating">
+        <select class="form-control" id="budget_type" name="budget_type">
+          {% for budget_type in budget_types %}
+            {% if budget_type.0 == budget_item.budget_type %}
+              <option value="{{ budget_type.0 }}" selected>{{ budget_type.1 }}</option>
+            {% else %}
+              <option value="{{ budget_type.0 }}">{{ budget_type.1 }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="budget_type">Tipo de Presupuesto</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" style="min-height: 100px" id="description" name="description" rows="3" required>{{ budget_item.description }}</textarea>
+        <label for="description">Descripción</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" style="min-height: 100px" id="activity" name="activity" rows="3" required>{{ budget_item.activity }}</textarea>
+        <label for="activity">Actividad</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bid">BID</label>
+      {% if budget_item.bid %}
+        <input type="checkbox" id="bid" name="bid" checked />
+      {% else %}
+        <input type="checkbox" id="bid" name="bid" />
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="c1">C1</label>
+      {% if budget_item.c1 %}
+        <input type="checkbox" id="c1" name="c1" checked />
+      {% else %}
+        <input type="checkbox" id="c1" name="c1" />
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="c2">C2</label>
+      {% if budget_item.c2 %}
+        <input type="checkbox" id="c2" name="c2" checked />
+      {% else %}
+        <input type="checkbox" id="c2" name="c2" />
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="c3">C3</label>
+      {% if budget_item.c3 %}
+        <input type="checkbox" id="c3" name="c3" checked />
+      {% else %}
+        <input type="checkbox" id="c3" name="c3" />
+      {% endif %}
+    </div>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'budget_item:list' %}" class="m-1 btn btn-outline-danger">Cancelar</a>
+      <button type="submit" class="m-1 btn btn-outline-success">Actualizar</button>
+    </div>
+  </form>
+{% endblock %}

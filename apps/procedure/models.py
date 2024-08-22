@@ -1,17 +1,17 @@
 from django.db import models
-from apps.core.choices import ProductType, PurchaseType, RegimeType
+from apps.core.choices import ProductType, PurchaseType, Regime
 
 
 class Procedure(models.Model):
     name = models.CharField(max_length=50)
-    regime = models.CharField(max_length=1, blank=True, choices=RegimeType)
-    product_type = models.CharField(
-        max_length=2, blank=True, choices=ProductType)
-    purchase_type = models.CharField(max_length=1, choices=PurchaseType)
+    product_type = models.CharField(max_length=14, choices=ProductType.choices)
+    purchase_type = models.CharField(
+        max_length=11, blank=True, choices=PurchaseType.choices)
+    regime = models.CharField(max_length=8, blank=True, choices=Regime.choices)
 
     def __str__(self):
-        return f'{self.name} - {self.purchase_type}'
+        return self.name
 
     class Meta:
-        ordering = ['name', 'purchase_type']
-        unique_together = ['name', 'regime', 'product_type', 'purchase_type']
+        unique_together = ["name", "purchase_type", "product_type", "regime"]
+        ordering = ["name", "purchase_type", "product_type", "regime"]

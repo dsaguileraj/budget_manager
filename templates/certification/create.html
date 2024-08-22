@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Certificaciones
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'certification:list' %}">Certificaciones</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Crear</li>
+  </ol>
+  <form method="POST" class="row g-2">
+    {% csrf_token %}
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="number" name="number" maxlength="25" required />
+        <label for="number">Número</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="budget" name="budget" step="0.01" min="0" required />
+        <label for="budget">Presupuesto (USD)</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="budget_item" name="budget_item">
+          <option selected disabled>---</option>
+          {% for budget_item in budget_items %}
+            <option value="{{ budget_item.pk }}">{{ budget_item.number }} - {{ budget_item.activity }}</option>
+          {% endfor %}
+        </select>
+        <label for="budget_item">Partida Presupuestaria</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="procedure" name="procedure">
+          <option selected disabled>---</option>
+          {% for procedure in procedures %}
+            <option value="{{ procedure.pk }}">{{ procedure.name }} ({{ procedure.purchase_type }})</option>
+          {% endfor %}
+        </select>
+        <label for="procedure">Procedimiento</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="department" name="department">
+          <option selected disabled>---</option>
+          {% for department in departments %}
+            <option value="{{ department.pk }}">{{ department.name }}</option>
+          {% endfor %}
+        </select>
+        <label for="department">Departamento</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        <label for="description">Descripción</label>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'certification:list' %}" class="m-1 btn btn-outline-danger">Cancelar</a>
+      <button type="submit" class="m-1 btn btn-outline-success">Guardar</button>
+    </div>
+  </form>
+{% endblock %}

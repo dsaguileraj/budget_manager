@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Partidas Presupuestarias
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'budget_item:list' %}">Partidas Presupuestarias</a>
+    </li>
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'budget_item:create' %}">Crear Partida</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Cargar Partidas</li>
+  </ol>
+  <form class="d-flex flex-row" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="input-group">
+      <input class="form-control" type="file" name="file" accept=".xlsx" style="max-width: 600px ;" required />
+      <button type="submit" class="btn btn-outline-secondary">Procesar</button>
+    </div>    
+  </form>  
+{% endblock %}

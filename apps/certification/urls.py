@@ -1,9 +1,12 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import CertificactionViewSet
+from django.urls import path
+from . import views
 
-router = DefaultRouter()
-router.register(r'', CertificactionViewSet)
+app_name = "certification"
+
 urlpatterns = [
-    path('', include(router.urls))
+    path("", views.list_certification, name="list"),
+    path("create/", views.create_certification, name="create"),
+    path("<int:pk>/", views.detail_certification, name="detail"),
+    path("delete/<int:pk>/", views.delete_certification, name="delete"),
+    path("update/<int:pk>/", views.update_certification, name="update")
 ]

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Certificaciones
+{% endblock %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'certification:list' %}">Certificaciones</a>
+    </li>
+    <li class="breadcrumb-item h2" aria-current="page">
+      <a class="text-decoration-none" href="{% url 'certification:detail' certification.pk %}">{{ certification.number }}</a>
+    </li>
+    <li class="breadcrumb-item h2 active" aria-current="page">Editar</li>
+  </ol>
+  <form method="POST" class="row g-2">
+    {% csrf_token %}
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="number" name="number" maxlength="25" value="{{ certification.number }}" required />
+        <label for="number">Número</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-8">
+      <div class="form-floating">
+        <input type="number" class="form-control" id="budget" name="budget" value="{{ certification.budget }}" step="0.01" min="0" required />
+        <label for="budget">Presupuesto (USD)</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="budget_item" name="budget_item">
+          <option selected disabled value="">---</option>
+          {% for budget_item in budget_items %}
+            {% if budget_item.pk == certification.budget_item.pk %}
+              <option value="{{ budget_item.pk }}" selected>{{ budget_item.number }} - {{ budget_item.activity }}</option>
+            {% else %}
+              <option value="{{ budget_item.pk }}">{{ budget_item.number }} - {{ budget_item.activity }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="budget_item">Partida Presupuestaria</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="procedure" name="procedure">
+          {% for procedure in procedures %}
+            {% if procedure.pk == certification.procedure.pk %}
+              <option value="{{ procedure.pk }}" selected>{{ procedure.name }}</option>
+            {% else %}
+              <option value="{{ procedure.pk }}">{{ procedure.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="procedure">Procedimiento</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <select class="form-select" id="department" name="department">
+          {% for department in departments %}
+            {% if department.pk == certification.department.pk %}
+              <option value="{{ department.pk }}" selected>{{ department.name }}</option>
+            {% else %}
+              <option value="{{ department.pk }}">{{ department.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="department">Departamento</label>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="form-floating">
+        <textarea class="form-control" id="description" name="description" rows="3" required>{{ certification.description }}</textarea>
+        <label for="description">Descripción</label>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'certification:list' %}" class="btn m-1 btn-outline-danger">Cancelar</a>
+      <button type="submit" class="btn m-1 btn-outline-success">Actualizar</button>
+    </div>
+  </form>
+{% endblock %}

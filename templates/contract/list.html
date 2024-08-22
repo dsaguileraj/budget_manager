@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Contratos
+{% endblock %}
+
+{% block form %}
+  <form action="{% url 'contract:list' %}" class="d-inline-flex w-100" role="search">
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar Contrato" />
+    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+  </form>
+{% endblock %}
+
+{% block body %}
+  {% if page_obj %}
+    {% csrf_token %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item h2" aria-current="page">Contratos</li>
+    </ol>
+    <div class="table-responsive-xxl border">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Número</th>
+            <th>Descripción</th>
+            <th>Presupuesto</th>
+            <th>Administrador</th>
+            <th>Contratista</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in page_obj %}
+            <tr>
+              <td>{{ object.number }}</td>
+              <td>{{ object.description }}</td>
+              <td>USD {{ object.total_budget }}</td>
+              <td>{{ object.admin.full_name }}</td>
+              <td>{{ object.contractor }}</td>
+              <td>
+                <a href="{% url 'contract:detail' object.pk %}" class="btn btn-outline-success w-100">Ver</a>
+              </td>
+              <td>
+                <a href="{% url 'contract:delete' object.pk %}" class="btn btn-outline-danger w-100">Eliminar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="5" class="text-end"></th>
+            <th colspan="2">
+              <a href="{% url 'contract:create' %}" class="btn btn-outline-primary w-100">Crear</a>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  {% else %}
+    {% if not message and not ProtectedError and not IntegrityError and not Exception %}
+      <div class="alert alert-warning" role="alert">
+        No se han registrado contratos todavía, intente creando <a href="{% url 'contract:create' %}">aquí</a>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}
